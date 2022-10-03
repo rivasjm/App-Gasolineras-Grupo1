@@ -35,4 +35,14 @@
         app:layout_constraintEnd_toEndOf="@+id/tvRotulo"
         app:layout_constraintStart_toStartOf="@+id/tvRotulo"
         app:layout_constraintTop_toBottomOf="@+id/tvRotulo" />
+
+    <TextView
+        android:id="@+id/tvHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/tvMunicipio"
+        app:layout_constraintStart_toStartOf="@+id/tvMunicipio"
+        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
 </androidx.constraintlayout.widget.ConstraintLayout>
