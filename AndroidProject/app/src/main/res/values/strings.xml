@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App Gasolineras</string>
+    <string name="app_name">GasFinder</string>
     <string name="gasolina95label">Gasolina</string>
     <string name="dieselAlabel">Diesel</string>
     <string name="refresh">Recargar</string>

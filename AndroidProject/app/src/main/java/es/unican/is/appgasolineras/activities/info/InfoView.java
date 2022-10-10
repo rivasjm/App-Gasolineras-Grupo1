@@ -12,6 +12,9 @@ public class InfoView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_view);
 
+        getSupportActionBar().setTitle("Información GasFinder");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         TextView tv = findViewById(R.id.tvInfoMessage);
         tv.setText("Aplicación creada para el Proyecto Integrado 2022");
     }

@@ -38,7 +38,8 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         IDetailContract.Presenter presenter = new GasolineraDetailPresenter(g,this);
         presenter.init();
 
-
+        getSupportActionBar().setTitle("Vista detallada");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // Set Texts

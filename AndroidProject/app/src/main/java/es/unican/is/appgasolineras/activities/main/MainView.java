@@ -38,6 +38,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle("Lista gasolineras");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         presenter = new MainPresenter(this);
         presenter.init();
         this.init();
