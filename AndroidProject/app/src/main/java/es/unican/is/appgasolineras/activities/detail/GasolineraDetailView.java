@@ -1,9 +1,11 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +46,16 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
 
         // Set Texts
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setInfo(String municipio, String rotulo, String horario, String normal95,

@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarPrecioView;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -72,6 +74,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             case R.id.menuRefresh:
                 presenter.onRefreshClicked();
                 return true;
+            case R.id.btnFiltroPrecio:
+                presenter.onPrecioClicked();
+                return true;
+            case android.R.id.home:
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -87,6 +95,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
         lvGasolineras.setOnItemClickListener((parent, view, position, id) -> {
             presenter.onGasolineraClicked(position);
+        });
+        Button precio = findViewById(R.id.btnFiltroPrecio);
+        precio.setOnClickListener(view ->  {
+                presenter.onPrecioClicked();
         });
     }
 
@@ -124,6 +136,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openInfoView() {
         Intent intent = new Intent(this, InfoView.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void openFiltroPrecio() {
+        Intent intent = new Intent(this, FiltrarPrecioView.class);
         startActivity(intent);
     }
 }

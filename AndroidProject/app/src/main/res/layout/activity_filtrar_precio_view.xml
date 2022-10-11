@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activities.filtrar.FiltrarPrecioView">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:background="#C7D5C4"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btnBajarPrecio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circular_button"
+                    android:contentDescription="@string/boton_para_bajar_el_precio"
+                    app:srcCompat="@drawable/ic_menos"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+                <TextView
+                    android:id="@+id/tvPrecioLimite"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.5"
+                    android:gravity="center"
+                    android:text="0.00"
+                    android:textColor="#000000"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
+
+                <ImageButton
+                    android:id="@+id/btnSubirPrecio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circular_button"
+                    android:contentDescription="@string/boton_para_subir_el_precio"
+                    app:srcCompat="@drawable/ic_mas"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnResetear"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="150dp"
+                android:gravity="center"
+                android:text="@string/resetear" />
+
+            <Button
+                android:id="@+id/btnMostrarResultados"
+                android:layout_width="350dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/mostrar_resultados" />
+
+            <TextView
+                android:id="@+id/textDummy2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

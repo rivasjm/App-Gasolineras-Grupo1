@@ -6,4 +6,11 @@
     <string name="info">Info</string>
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
+    <string name="precio">Precio</string>
+    <string name="filtros">Filtros:</string>
+    <string name="boton_para_resetear_los_filtros">boton para resetear los filtros</string>
+    <string name="mostrar_resultados">Mostrar Resultados</string>
+    <string name="resetear">Resetear</string>
+    <string name="boton_para_subir_el_precio">Boton para subir el precio</string>
+    <string name="boton_para_bajar_el_precio">Boton para bajar el precio</string>
 </resources>

@@ -76,4 +76,7 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onRefreshClicked() {
         init();
     }
+
+    @Override
+    public void onPrecioClicked() {view.openFiltroPrecio();}
 }

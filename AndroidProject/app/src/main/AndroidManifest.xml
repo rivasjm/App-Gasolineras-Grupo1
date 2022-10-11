@@ -16,12 +16,13 @@
         android:theme="@style/Theme.AppGasolineras"
         tools:targetApi="32">
         <activity
+            android:name=".activities.filtrar.FiltrarPrecioView"
+            android:exported="false" />
+        <activity
             android:name=".activities.info.InfoView"
-            android:parentActivityName=".activities.main.MainView"
             android:exported="false" />
         <activity
             android:name=".activities.detail.GasolineraDetailView"
-            android:parentActivityName=".activities.main.MainView"
             android:exported="false" />
         <activity
             android:name=".activities.main.MainView"
