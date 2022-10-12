@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.filtrosPermanentes.FiltroPermanentePresente">
+    tools:context=".activities.filtrosPermanentes.FiltroPermanentePresenter">
 
     <TextView
         android:id="@+id/textView3"
