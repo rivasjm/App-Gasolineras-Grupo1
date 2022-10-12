@@ -39,6 +39,12 @@ public interface IMainContract {
          * Refresh button has been clicked
          */
         void onRefreshClicked();
+
+        /**
+         * This method should be used by the View to notify the Presenter that the filter Precio
+         * has been clicked
+         */
+        void onPrecioClicked();
     }
 
     /**
@@ -91,6 +97,11 @@ public interface IMainContract {
          * The View is requested to open the Info view
          */
         void openInfoView();
+
+        /**
+         * The View is requested to open the Filtro Precio View
+         */
+        void openFiltroPrecio();
     }
 
 }

@@ -49,4 +49,9 @@ public interface IPrefs {
      */
     public void putInt(String key, int value);
 
+    /**
+     * Deletes an element from the preferences store
+     * @param key the key from the element which we want to remove
+     */
+    public void delete(String key);
 }
