@@ -22,6 +22,9 @@
             android:name=".activities.info.InfoView"
             android:exported="false" />
         <activity
+            android:name=".activities.filtrosPermanentes.FiltroPermanenteView"
+            android:exported="false" />
+        <activity
             android:name=".activities.detail.GasolineraDetailView"
             android:exported="false" />
         <activity
