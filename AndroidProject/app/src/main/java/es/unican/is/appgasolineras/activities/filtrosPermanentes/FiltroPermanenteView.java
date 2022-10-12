@@ -16,11 +16,11 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtro_permanente);
+        setContentView(R.layout.activity_filtros_permanentes);
         presenter = new FiltroPermanentePresenter(this, getApplicationContext());
 
         //Falta anhadir botones Aceptar y Reset
-        spinner1 = findViewById(R.id.spinner1);
-        spinner2 = findViewById(R.id.spinner2);
+        spinner1 = findViewById(R.id.spinner_combustible);
+        spinner2 = findViewById(R.id.spinner_CCAA);
     }
 }
