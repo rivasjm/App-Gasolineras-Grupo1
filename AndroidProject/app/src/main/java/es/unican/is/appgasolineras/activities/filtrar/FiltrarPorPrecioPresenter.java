@@ -2,6 +2,10 @@ package es.unican.is.appgasolineras.activities.filtrar;
 
 import android.content.Context;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 
@@ -27,38 +31,38 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
     }
 
     @Override
-    public String subePrecio(String actual) {
-       double actualDouble = Math.floor (Double.parseDouble(actual) * 100) / 100;
-       double maxPrecioDouble = Math.floor (Double.parseDouble(maxPrecio) * 100) / 100;
-        if (actualDouble == maxPrecioDouble){
-            return actual;
+    public String subePrecio(String act) {
+        String devolver;
+        BigDecimal actual = new BigDecimal(act).setScale(2, RoundingMode.UP);
+        BigDecimal maxPrecioDouble = new BigDecimal(maxPrecio.substring(0,4)).setScale(2, RoundingMode.UP);
+        if (actual.compareTo(maxPrecioDouble) < 0){
+            BigDecimal sum = new BigDecimal(0.01);
+            actual = actual.add(sum, MathContext.DECIMAL32);
         }
-        double precio = Double.parseDouble(actual.replace(",", "."));
-        precio =  Math.floor (precio * 100) / 100;
-        System.out.println("A:"+precio);
-        precio += 0.01;
-        System.out.println("D:"+precio);
-        if (String.valueOf(precio).length() == 3) {
-            return String.valueOf(precio).substring(0,2) + "00";
+        if (actual.toString().length() == 3) {
+            devolver = actual.toString().substring(0,3) + "0";
+        } else {
+            devolver = actual.toString().substring(0,4);
         }
-        return String.valueOf(precio).substring(0,4);
-
+        return devolver;
     }
 
     @Override
-    public String bajaPrecio(String actual) {
-        double actualDouble = Math.floor (Double.parseDouble(actual) * 100) / 100;
-        if (actualDouble == 0.00){
-            return actual;
+    public String bajaPrecio(String act) {
+        String devolver;
+        BigDecimal actual = new BigDecimal(act).setScale(2, RoundingMode.UP);
+        BigDecimal cero = new BigDecimal(0.01).setScale(2, RoundingMode.UP);
+        if (actual.compareTo(cero) >= 0){
+            BigDecimal res = new BigDecimal(0.01000000);
+            actual = actual.subtract(res, MathContext.DECIMAL32);
+        } else {
+            actual = new BigDecimal(0).setScale(2, RoundingMode.UP);;
         }
-        double precio = Double.parseDouble(actual.replace(",", "."));
-        System.out.println("A:"+precio);
-        precio =  Math.floor (precio * 100) / 100;
-        precio -= 0.01;
-        System.out.println("D:"+precio);
-        if (String.valueOf(precio).length() == 3) {
-            return String.valueOf(precio).substring(0,3) + "0";
+        if (actual.toString().length() == 3) {
+            devolver = actual.toString().substring(0,3) + "0";
+        } else {
+            devolver = actual.toString().substring(0,4);
         }
-        return String.valueOf(precio).substring(0,4) ;
+        return devolver;
     }
 }
