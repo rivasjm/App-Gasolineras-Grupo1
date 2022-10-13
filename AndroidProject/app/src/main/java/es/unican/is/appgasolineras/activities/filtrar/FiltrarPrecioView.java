@@ -56,7 +56,7 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
         btnResetear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvPrecioLimite.setText(max);
+                tvPrecioLimite.setText(max.substring(0,4));
             }
         });
         btnMostrarResultados.setOnClickListener(new View.OnClickListener() {

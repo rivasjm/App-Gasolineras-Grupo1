@@ -28,10 +28,13 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public String subePrecio(String actual) {
-        if (actual.equals(maxPrecio)){
+       double actualDouble = Math.floor (Double.parseDouble(actual) * 100) / 100;
+       double maxPrecioDouble = Math.floor (Double.parseDouble(maxPrecio) * 100) / 100;
+        if (actualDouble == maxPrecioDouble){
             return actual;
         }
         double precio = Double.parseDouble(actual.replace(",", "."));
+        precio =  Math.floor (precio * 100) / 100;
         System.out.println("A:"+precio);
         precio += 0.01;
         System.out.println("D:"+precio);
@@ -44,15 +47,17 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public String bajaPrecio(String actual) {
-        if (actual.equals("0.00")) {
+        double actualDouble = Math.floor (Double.parseDouble(actual) * 100) / 100;
+        if (actualDouble == 0.00){
             return actual;
         }
         double precio = Double.parseDouble(actual.replace(",", "."));
         System.out.println("A:"+precio);
+        precio =  Math.floor (precio * 100) / 100;
         precio -= 0.01;
         System.out.println("D:"+precio);
         if (String.valueOf(precio).length() == 3) {
-            return String.valueOf(precio).substring(0,2) + "00";
+            return String.valueOf(precio).substring(0,3) + "0";
         }
         return String.valueOf(precio).substring(0,4) ;
     }
