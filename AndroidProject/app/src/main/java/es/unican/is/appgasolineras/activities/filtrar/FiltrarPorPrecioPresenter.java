@@ -2,6 +2,8 @@ package es.unican.is.appgasolineras.activities.filtrar;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -19,6 +21,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
         this.view = view;
         this.maxPrecio = maxPrecio;
     }
+
     @Override
     public void init() {
 
@@ -27,7 +30,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
     @Override
     public void estableceRango(String max) {
         prefs.putString("RangoPrecio", max);
-
+        view.openMainView();
     }
 
     @Override
@@ -39,11 +42,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
             BigDecimal sum = new BigDecimal(0.01);
             actual = actual.add(sum, MathContext.DECIMAL32);
         }
-        if (actual.toString().length() == 3) {
-            devolver = actual.toString().substring(0,3) + "0";
-        } else {
-            devolver = actual.toString().substring(0,4);
-        }
+        devolver = getStringCorrecto(actual);
         return devolver;
     }
 
@@ -58,6 +57,13 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
         } else {
             actual = new BigDecimal(0).setScale(2, RoundingMode.UP);;
         }
+        devolver = getStringCorrecto(actual);
+        return devolver;
+    }
+
+    @NonNull
+    private String getStringCorrecto(@NonNull BigDecimal actual) {
+        String devolver;
         if (actual.toString().length() == 3) {
             devolver = actual.toString().substring(0,3) + "0";
         } else {

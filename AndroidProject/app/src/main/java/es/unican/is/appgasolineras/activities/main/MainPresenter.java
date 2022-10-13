@@ -24,7 +24,6 @@ public class MainPresenter implements IMainContract.Presenter {
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
-
         if (repository != null) {
             doSyncInit();
         }
@@ -82,24 +81,23 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void onPrecioClicked() {view.openFiltroPrecio();}
-    public List <Gasolinera> filtra (List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio){
+
+    public List <Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio){
         for (Gasolinera g : data) {
-            if (g.getIDCCAAInt() != CCAA && CCAA!= 0) {
+            if (g.getIDCCAAInt() != CCAA && CCAA != 0) {
                 data.remove(g);
-            } else if (tipoCombustible.equals("dieselA") && !tipoCombustible.equals("") ) {
+            } else if (tipoCombustible.equals("dieselA")) {
                 if(g.getDieselA() == null ||
                         (Double.parseDouble(g.getDieselA().replace(",", ".")) > Double.parseDouble(maxPrecio.replace(",", "."))) && maxPrecio != "") {
                     data.remove(g);
                 }
-            } else if (tipoCombustible.equals("Normal95") && !tipoCombustible.equals("") ) {
+            } else if (tipoCombustible.equals("Normal95")) {
                 if(g.getNormal95() == null ||
                         (Double.parseDouble(g.getNormal95().replace(",", ".")) > Double.parseDouble(maxPrecio.replace(",", "."))) && maxPrecio != "") {
                     data.remove(g);
                 }
             }
         }
-
-
         return data;
     }
 }

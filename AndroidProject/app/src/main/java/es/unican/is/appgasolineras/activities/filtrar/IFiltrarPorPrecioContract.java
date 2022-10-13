@@ -1,13 +1,23 @@
 package es.unican.is.appgasolineras.activities.filtrar;
 
-public interface IFiltrarPorPrecioContract {
-    public interface Presenter {
-        public void init();
-        public void estableceRango(String max);
-        public String subePrecio(String actual);
-        public String bajaPrecio(String actual);
+import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+
+import java.math.BigDecimal;
+
+public interface IFiltrarPorPrecioContract {
+
+    public interface Presenter {
+        void init();
+        void estableceRango(String max);
+        String subePrecio(String actual);
+        String bajaPrecio(String actual);
     }
+
     public interface View {
+        boolean onOptionsItemSelected(@NonNull MenuItem item);
+        void openMainView();
     }
 }

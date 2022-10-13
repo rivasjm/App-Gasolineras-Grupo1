@@ -78,9 +78,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             case R.id.menuRefresh:
                 presenter.onRefreshClicked();
                 return true;
-            case R.id.btnFiltroPrecio:
-                presenter.onPrecioClicked();
-                return true;
             case android.R.id.home:
                 finish();
                 return true;
@@ -115,7 +112,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showGasolineras(List<Gasolinera> gasolineras) {
         for (Gasolinera g : gasolineras) {
             if (g.getNormal95() == null || g.getNormal95().equals("")
-                    || g.getDieselA() == null || g.getNormal95().equals("")) {
+                    || g.getDieselA() == null || g.getDieselA().equals("")) {
                 break;
             }
             Double maximo = Double.max(Double.parseDouble(g.getNormal95().replace(',','.')),
@@ -126,7 +123,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
         gasolineras = presenter.filtra
                 (gasolineras, prefs.getString("tipoGasolina"),
-                        prefs.getInt("IDCAAA"), prefs.getString("maxPrecio"));
+                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
         prefs.delete("maxPrecio");
         GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras);
         ListView list = findViewById(R.id.lvGasolineras);

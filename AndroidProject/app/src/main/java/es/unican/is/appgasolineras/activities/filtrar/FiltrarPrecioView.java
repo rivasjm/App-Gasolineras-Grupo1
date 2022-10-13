@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,9 +23,10 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
     ImageButton btnSubirPrecio;
     Button btnResetear;
     Button btnMostrarResultados;
-    IFiltrarPorPrecioContract.Presenter presenter;
     TextView tvPrecioLimite;
-    @SuppressLint("WrongViewCast")
+    IFiltrarPorPrecioContract.Presenter presenter;
+
+    @SuppressLint({"WrongViewCast", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,54 +36,101 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
 
         getSupportActionBar().setTitle("Filtro Precio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         btnBajarPrecio = findViewById(R.id.btnBajarPrecio);
         btnSubirPrecio = findViewById(R.id.btnSubirPrecio);
         btnResetear = findViewById(R.id.btnResetear);
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
         tvPrecioLimite = findViewById(R.id.tvPrecioLimite);
         tvPrecioLimite.setText(max.substring(0,4));
-        btnBajarPrecio.setOnClickListener(new View.OnClickListener() {
+
+        btnBajarPrecio.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+
             @Override
-            public void onClick(View view) {
-                String actual = String.valueOf(tvPrecioLimite.getText());
-                tvPrecioLimite.setText(presenter.bajaPrecio(actual));
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
             }
-        });;
-        btnSubirPrecio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String actual = String.valueOf(tvPrecioLimite.getText());
-                tvPrecioLimite.setText(presenter.subePrecio(actual));
-            }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    String actual = String.valueOf(tvPrecioLimite.getText());
+                    tvPrecioLimite.setText(presenter.bajaPrecio(actual));
+                    mHandler.postDelayed(this, 50);
+                }
+            };
         });
+
+        btnSubirPrecio.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 50);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
+            }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    String actual = String.valueOf(tvPrecioLimite.getText());
+                    tvPrecioLimite.setText(presenter.subePrecio(actual));
+                    mHandler.postDelayed(this, 50);
+                }
+            };
+        });
+
         btnResetear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tvPrecioLimite.setText(max.substring(0,4));
             }
         });
+
         btnMostrarResultados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()));
-                openMainView();
             }
         });
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void openMainView (){
+    public void openMainView(){
         Intent myIntent = new Intent(this, MainView.class);
         startActivity(myIntent);
     }
