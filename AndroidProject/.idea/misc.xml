@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Git/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/drawable/circular_button.xml" value="0.1" />
         <entry key="..\:/Git/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1705" />
         <entry key="..\:/Git/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_filtrar_precio_view.xml" value="0.253125" />
         <entry key="..\:/Git/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_gasolinera_detail_view.xml" value="0.25416666666666665" />
@@ -17,6 +16,8 @@
         <entry key="..\:/Users/Public/AndroidIntegrado/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_info_view.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Public/AndroidIntegrado/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_main.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Public/AndroidIntegrado/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_main_item.xml" value="0.20572916666666666" />
+        <entry key="..\:/Users/alvar/Documents/repoProy/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_filtrar_precio_view.xml" value="0.13677536231884058" />
+        <entry key="..\:/Users/alvar/Documents/repoProy/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_filtro_permanente.xml" value="0.13677536231884058" />
         <entry key="..\:/Users/alvar/Documents/repoProy/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_gasolinera_detail_view.xml" value="0.22" />
         <entry key="..\:/Users/alvar/Documents/repoProy/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/alvar/Documents/repoProy/App-Gasolineras-Grupo1/AndroidProject/app/src/main/res/layout/activity_main_item.xml" value="0.1" />

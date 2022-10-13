@@ -3,6 +3,8 @@ package es.unican.is.appgasolineras.activities.main;
 import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
@@ -32,6 +34,7 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
+
                 view.showGasolineras(data);
                 shownGasolineras = data;
                 view.showLoadCorrect(data.size());
@@ -79,4 +82,24 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void onPrecioClicked() {view.openFiltroPrecio();}
+    public List <Gasolinera> filtra (List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio){
+        for (Gasolinera g : data) {
+            if (g.getIDCCAAInt() != CCAA && CCAA!= 0) {
+                data.remove(g);
+            } else if (tipoCombustible.equals("dieselA") && !tipoCombustible.equals("") ) {
+                if(g.getDieselA() == null ||
+                        (Double.parseDouble(g.getDieselA().replace(",", ".")) > Double.parseDouble(maxPrecio.replace(",", "."))) && maxPrecio != "") {
+                    data.remove(g);
+                }
+            } else if (tipoCombustible.equals("Normal95") && !tipoCombustible.equals("") ) {
+                if(g.getNormal95() == null ||
+                        (Double.parseDouble(g.getNormal95().replace(",", ".")) > Double.parseDouble(maxPrecio.replace(",", "."))) && maxPrecio != "") {
+                    data.remove(g);
+                }
+            }
+        }
+
+
+        return data;
+    }
 }
