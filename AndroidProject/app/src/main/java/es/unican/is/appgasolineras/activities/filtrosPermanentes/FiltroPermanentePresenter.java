@@ -33,4 +33,10 @@ public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
         p.putString("tipoGasolina", tipoGasolina);
         p.putInt("idComunidad", idComunidad);
     }
+
+    @Override
+    public void reseteaFiltroPermanente(){
+        p.putString(null);
+        p.putInt(null);
+    }
 }

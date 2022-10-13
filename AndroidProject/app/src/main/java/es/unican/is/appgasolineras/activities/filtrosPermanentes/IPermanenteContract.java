@@ -7,10 +7,13 @@ public interface IPermanenteContract {
 
         void guardaFiltro(String tipoGasolina, int idComunidad);
 
+        void reseteaFiltroPermanente();
+
     }
 
 
     public interface view{
 
     }
+
 }
