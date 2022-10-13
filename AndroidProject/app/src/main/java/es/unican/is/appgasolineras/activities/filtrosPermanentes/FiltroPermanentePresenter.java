@@ -29,14 +29,14 @@ public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
     }
 
     @Override
-    public void guardaFiltro(String tipoGasolina, int idComunidad) {
+    public void guardaFiltroPermanente(String tipoGasolina, int idComunidad) {
         p.putString("tipoGasolina", tipoGasolina);
         p.putInt("idComunidad", idComunidad);
     }
 
     @Override
     public void reseteaFiltroPermanente(){
-        p.putString(null);
-        p.putInt(null);
+       // p.delete("tipoGasolina");
+       // p.delete("idComunidad");
     }
 }

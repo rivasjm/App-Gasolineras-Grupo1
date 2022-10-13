@@ -1,6 +1,7 @@
 package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -14,6 +15,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     Spinner spnCCAA;
     Button btnResetPermanentes;
     Button btnGuardarPermanentes;
+
 
 
     IPermanenteContract.presenter presenter;
@@ -40,9 +42,29 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
                 R.array.combustiblesArray, android.R.layout.simple_spinner_item);
         adapterCombustibles.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spnCombustible.setAdapter(adapterCombustibles);
-
-
     }
+
+    /**
+     * Listener del boton Guardar. La asignacion de este listener con el boton se realiza en el
+     * layout: atributo onclick del boton
+     * @param view
+     */
+    public void guardaPermanentes(View view) {
+        FiltroPermanentePresenter f = new FiltroPermanentePresenter((IPermanenteContract.view) view, null);
+        f.guardaFiltroPermanente(spnCCAA.getTransitionName(), spnCombustible.getBaseline());
+    }
+
+    /**
+     * Listener del boton Resetear. La asignacion de este listener con el boton se realiza en el
+     * layout: atributo onclick del boton
+     * @param view
+     */
+    public void reseteaPermanentes(View view) {
+        FiltroPermanentePresenter f = new FiltroPermanentePresenter((IPermanenteContract.view) view, null);
+        f.reseteaFiltroPermanente();
+    }
+
+
 
 }
 
