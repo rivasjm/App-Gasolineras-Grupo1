@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.filtrar.FiltrarPrecioView;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -23,8 +26,10 @@ import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.info.InfoView;
 
 public class MainView extends AppCompatActivity implements IMainContract.View {
-
+    IPrefs prefs;
     private IMainContract.Presenter presenter;
+
+
 
     /*
     Activity lifecycle methods
@@ -42,8 +47,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         getSupportActionBar().setTitle("Lista gasolineras");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        presenter = new MainPresenter(this);
+        prefs = new Prefs(this, "MY_APP");
+        presenter = new MainPresenter(this, prefs);
         presenter.init();
         this.init();
     }
@@ -74,9 +79,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             case R.id.menuRefresh:
                 presenter.onRefreshClicked();
                 return true;
-            case R.id.btnFiltroPrecio:
-                presenter.onPrecioClicked();
-                return true;
             case android.R.id.home:
                 finish();
                 return true;
@@ -98,7 +100,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
         Button precio = findViewById(R.id.btnFiltroPrecio);
         precio.setOnClickListener(view ->  {
-                presenter.onPrecioClicked();
+            presenter.onPrecioClicked();
+        });
+        ImageButton resetFiltroPrecio = findViewById(R.id.btnResetearFiltros);
+        resetFiltroPrecio.setOnClickListener(view ->  {
+            presenter.onResetFiltroPrecioClicked();
         });
     }
 
@@ -142,6 +148,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openFiltroPrecio() {
         Intent intent = new Intent(this, FiltrarPrecioView.class);
+        intent.putExtra("max", presenter.maximoEntreTodas());
         startActivity(intent);
     }
 }

@@ -30,6 +30,7 @@ public class Gasolinera implements Parcelable {
     @SerializedName("Horario")                      private String horario;
     @SerializedName("Precio Gasoleo A")             private String dieselA;
     @SerializedName("Precio Gasolina 95 E5")        private String normal95;  // 95 octanes
+    @SerializedName("IDCCAA")                       private String IDCCAA;
 
     public Gasolinera() {
 
@@ -95,6 +96,12 @@ public class Gasolinera implements Parcelable {
     public String getHorario() { return horario;}
 
     public void setHorario(String horario) { this.horario = horario; }
+
+    public int getIDCCAAInt(){return Integer.parseInt(IDCCAA);}
+    public String getIDCCAA(){return this.IDCCAA;}
+
+    public void setIDCCAA(String IDCCAA) { this.IDCCAA = IDCCAA;}
+
 
     /*
      * Methods for Parcelable interface. Needed to send this object in an Intent.
