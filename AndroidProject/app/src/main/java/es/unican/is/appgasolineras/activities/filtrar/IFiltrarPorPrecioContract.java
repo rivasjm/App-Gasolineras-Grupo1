@@ -14,6 +14,7 @@ public interface IFiltrarPorPrecioContract {
         void estableceRango(String max);
         String subePrecio(String actual);
         String bajaPrecio(String actual);
+
     }
 
     public interface View {

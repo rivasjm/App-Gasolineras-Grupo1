@@ -27,7 +27,7 @@ import es.unican.is.appgasolineras.activities.info.InfoView;
 public class MainView extends AppCompatActivity implements IMainContract.View {
     IPrefs prefs;
     private IMainContract.Presenter presenter;
-    Double max = Double.MIN_VALUE;
+
 
 
     /*
@@ -46,8 +46,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         getSupportActionBar().setTitle("Lista gasolineras");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        prefs = new Prefs(getApplicationContext(), "MY_APP");
-        presenter = new MainPresenter(this);
+        prefs = new Prefs(this, "MY_APP");
+        presenter = new MainPresenter(this, prefs);
         presenter.init();
         this.init();
     }
@@ -110,21 +110,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showGasolineras(List<Gasolinera> gasolineras) {
-        for (Gasolinera g : gasolineras) {
-            if (g.getNormal95() == null || g.getNormal95().equals("")
-                    || g.getDieselA() == null || g.getDieselA().equals("")) {
-                break;
-            }
-            Double maximo = Double.max(Double.parseDouble(g.getNormal95().replace(',','.')),
-                    Double.parseDouble(g.getDieselA().replace(',', '.')));
-            if (max < maximo) {
-                max = maximo;
-            }
-        }
-        gasolineras = presenter.filtra
-                (gasolineras, prefs.getString("tipoGasolina"),
-                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
-        prefs.delete("maxPrecio");
+
         GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras);
         ListView list = findViewById(R.id.lvGasolineras);
         list.setAdapter(adapter);
@@ -158,7 +144,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openFiltroPrecio() {
         Intent intent = new Intent(this, FiltrarPrecioView.class);
-        intent.putExtra("max", String.valueOf(max));
+        intent.putExtra("max", presenter.maximoEntreTodas());
         startActivity(intent);
     }
 }

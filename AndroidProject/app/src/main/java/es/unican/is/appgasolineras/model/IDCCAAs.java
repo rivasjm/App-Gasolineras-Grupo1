@@ -9,6 +9,7 @@ public enum IDCCAAs {
 
     CANTABRIA("06");
 
+
     public final String id;
 
     private IDCCAAs(String id) {

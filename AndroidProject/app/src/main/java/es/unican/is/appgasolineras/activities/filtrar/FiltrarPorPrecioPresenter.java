@@ -16,6 +16,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
     IFiltrarPorPrecioContract.View view;
     String maxPrecio;
 
+
     public FiltrarPorPrecioPresenter(IFiltrarPorPrecioContract.View view, Context c, String maxPrecio){
         prefs = new Prefs(c, "MY_APP");
         this.view = view;
@@ -29,7 +30,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public void estableceRango(String max) {
-        prefs.putString("RangoPrecio", max);
+        prefs.putString("maxPrecio", max);
         view.openMainView();
     }
 

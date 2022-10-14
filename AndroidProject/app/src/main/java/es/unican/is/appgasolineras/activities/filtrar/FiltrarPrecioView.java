@@ -32,8 +32,8 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrar_precio_view);
         String max = getIntent().getStringExtra("max");
-        presenter = new FiltrarPorPrecioPresenter(this, getApplicationContext(), max);
-
+        presenter = new FiltrarPorPrecioPresenter(this, this, max);
+        presenter.init();
         getSupportActionBar().setTitle("Filtro Precio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
