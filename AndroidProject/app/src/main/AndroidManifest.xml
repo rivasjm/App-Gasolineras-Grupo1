@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppGasolineras"
         tools:targetApi="32">
         <activity
-            android:name=".FiltroPermanentePresente"
+            android:name=".activities.filtrosPermanentes.FiltroPermanenteView"
             android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"
