@@ -133,6 +133,7 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
     public void openMainView(){
         Intent myIntent = new Intent(this, MainView.class);
         startActivity(myIntent);
+        finish();
     }
 
 }

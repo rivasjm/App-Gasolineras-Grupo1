@@ -49,6 +49,8 @@ public interface IMainContract {
         List<Gasolinera> filtra(List<Gasolinera> gasolineras, String tipoGasolina, int idcaaa, String maxPrecio);
 
         String maximoEntreTodas();
+
+        void onResetFiltroPrecioClicked();
     }
 
     /**

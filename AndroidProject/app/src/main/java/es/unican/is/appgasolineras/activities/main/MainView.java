@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -99,7 +100,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
         Button precio = findViewById(R.id.btnFiltroPrecio);
         precio.setOnClickListener(view ->  {
-                presenter.onPrecioClicked();
+            presenter.onPrecioClicked();
+        });
+        ImageButton resetFiltroPrecio = findViewById(R.id.btnResetearFiltros);
+        resetFiltroPrecio.setOnClickListener(view ->  {
+            presenter.onResetFiltroPrecioClicked();
         });
     }
 
@@ -110,7 +115,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showGasolineras(List<Gasolinera> gasolineras) {
-
         GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras);
         ListView list = findViewById(R.id.lvGasolineras);
         list.setAdapter(adapter);
