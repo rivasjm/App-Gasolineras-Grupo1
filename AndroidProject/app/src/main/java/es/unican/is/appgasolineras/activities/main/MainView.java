@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -38,7 +41,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new MainPresenter(this);
+        presenter = new MainPresenter(this, Prefs.from(this));
         presenter.init();
         this.init();
     }
@@ -84,6 +87,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
         lvGasolineras.setOnItemClickListener((parent, view, position, id) -> {
             presenter.onGasolineraClicked(position);
+        });
+        Button botonPrueba = findViewById(R.id.button2);
+        botonPrueba.setOnClickListener(view -> {
+            Intent intent = new Intent(this, FiltroPermanenteView.class);
+            startActivity(intent);
         });
     }
 

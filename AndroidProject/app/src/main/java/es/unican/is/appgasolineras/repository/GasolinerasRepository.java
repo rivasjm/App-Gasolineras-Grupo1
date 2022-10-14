@@ -47,8 +47,8 @@ public class GasolinerasRepository implements IGasolinerasRepository {
     }
 
     @Override
-    public List<Gasolinera> getGasolineras() {
-        GasolinerasResponse response = GasolinerasService.getGasolineras();
+    public List<Gasolinera> getGasolineras(String idCCAA) {
+        GasolinerasResponse response = GasolinerasService.getGasolineras(idCCAA);
         List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
         persistToDB(gasolineras);
         return gasolineras;

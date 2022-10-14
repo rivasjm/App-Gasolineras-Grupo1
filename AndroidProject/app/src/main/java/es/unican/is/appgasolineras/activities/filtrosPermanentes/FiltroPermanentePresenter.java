@@ -1,26 +1,15 @@
 package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 
-import androidx.appcompat.app.AppCompatActivity;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-import java.sql.Array;
-import java.util.ArrayList;
-
-import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.detail.IDetailContract;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 
 public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
     private final IPermanenteContract.view view;
-    private Prefs p;
+    private IPrefs pref;
 
-    public FiltroPermanentePresenter(IPermanenteContract.view view, Context c){
+    public FiltroPermanentePresenter(IPermanenteContract.view view, IPrefs pref){
         this.view = view;
-        p = new Prefs(c);
+        this.pref = pref;
     }
 
     @Override
@@ -29,9 +18,20 @@ public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
     }
 
     @Override
-    public void guardaFiltroPermanente(String tipoGasolina, int idComunidad) {
-        p.putString("tipoGasolina", tipoGasolina);
-        p.putInt("idComunidad", idComunidad);
+    public void guardaFiltroPermanente(int idComunidad, int tipoGasolina) {
+        System.out.println(pref.getInt("idComunidad"));
+        System.out.println(pref.getInt("tipoGasolina"));
+
+        System.out.println(idComunidad);
+        System.out.println(tipoGasolina);
+
+        pref.putInt("tipoGasolina", tipoGasolina);
+        pref.putInt("idComunidad", idComunidad);
+
+        System.out.println(pref.getInt("idComunidad"));
+        System.out.println(pref.getInt("tipoGasolina"));
+
+
     }
 
     @Override

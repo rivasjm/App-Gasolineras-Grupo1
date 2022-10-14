@@ -5,7 +5,7 @@ public interface IPermanenteContract {
     public interface presenter {
         void init();
 
-        void guardaFiltroPermanente(String tipoGasolina, int idComunidad);
+        void guardaFiltroPermanente(int idComunidad, int tipoGasolina);
 
         void reseteaFiltroPermanente();
 
@@ -13,7 +13,7 @@ public interface IPermanenteContract {
 
 
     public interface view{
-
+        void init();
     }
 
 }

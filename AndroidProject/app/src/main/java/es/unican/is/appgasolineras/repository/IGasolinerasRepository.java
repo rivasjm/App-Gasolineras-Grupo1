@@ -24,8 +24,9 @@ public interface IGasolinerasRepository {
      * Request gas stations synchronously
      * This method returns the list of gas stations directly, therefore it may impose a delay in
      * the execution until the list is retrieved from the source.
+     * @param idCCAA id de la comunidad autonoma
      * @return the list of gas stations, or null if some error occurred
      */
-    public List<Gasolinera> getGasolineras();
+    public List<Gasolinera> getGasolineras(String idCCAA);
 
 }
