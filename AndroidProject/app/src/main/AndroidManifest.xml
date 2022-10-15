@@ -30,7 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.main.MainView"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".activities.menuPrincipal.MenuPrincipalView"
             android:exported="true">

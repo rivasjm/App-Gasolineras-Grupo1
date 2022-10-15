@@ -50,8 +50,9 @@ public class GasolinerasService {
      * @return the response object that contains the gasolineras located in Cantabria
      */
     public static GasolinerasResponse getGasolineras(String id) {
-        //final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
-        final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
+        final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
+        // Arreglar esto
+        // final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
 
         List<Gasolinera> gasolineras;
         ExecutorService executor = Executors.newFixedThreadPool(1);
