@@ -46,8 +46,8 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
-                data = filtra(data, prefs.getString("tipoGasolina"),
-                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
+                data = repository.getGasolineras("06");
+                data = filtra(data, prefs.getString("tipoGasolina"), prefs.getString("maxPrecio"));
                 prefs.putString("maxPrecio", maximoEntreTodas());
                 view.showGasolineras(data);
                 shownGasolineras = data;
@@ -69,8 +69,7 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Gasolinera> data = repository.getGasolineras(idCCAA);
 
         if (data != null) {
-            data = filtra(data, prefs.getString("tipoGasolina"),
-                    prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
+            data = filtra(data, prefs.getString("tipoGasolina"), prefs.getString("maxPrecio"));
             prefs.putString("maxPrecio", maximoEntreTodas());
             view.showGasolineras(data);
             shownGasolineras = data;
@@ -112,15 +111,13 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public List<Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio){
+    public List<Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, String maxPrecio){
         List<Gasolinera> listaDevolver = new ArrayList<Gasolinera>();
         if (maxPrecio.equals("")) {
             return data;
         } else {
             for (Gasolinera g : data) {
-            /*if (g.getIDCCAAInt() != CCAA && CCAA != 0) {
-                data.remove(g);
-            } else if (tipoCombustible.equals("dieselA")) {
+            /*if (tipoCombustible.equals("dieselA")) {
                 if(g.getDieselA().equals("")) {
                     data.remove(g);
                     continue;
@@ -131,7 +128,6 @@ public class MainPresenter implements IMainContract.Presenter {
                     continue;
                 }
             }*/
-                /*else */
                 BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
                 BigDecimal min;
                 if (g.getNormal95().equals("") && g.getDieselA().equals("")) {

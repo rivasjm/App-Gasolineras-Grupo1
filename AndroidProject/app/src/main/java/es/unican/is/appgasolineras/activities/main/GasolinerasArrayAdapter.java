@@ -15,12 +15,14 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
-
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    private IPrefs prefs;
+    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, IPrefs prefs) {
         super(context, 0, objects);
+        this.prefs = prefs;
     }
 
     @NonNull
@@ -65,27 +67,68 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
             TextView tv = convertView.findViewById(R.id.tvAddress);
             tv.setText(gasolinera.getDireccion());
         }
+        if (prefs.getString("tipoGasolina").equals("")) {
+            // 95 octanes price
+            {
+                TextView tvLabel = convertView.findViewById(R.id.tv95Label);
+                String label = getContext().getResources().getString(R.string.gasolina95label);
+                tvLabel.setText(label + ":");
 
-        // 95 octanes price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tv95Label);
-            String label = getContext().getResources().getString(R.string.gasolina95label);
-            tvLabel.setText(label + ":");
+                TextView tv = convertView.findViewById(R.id.tv95);
+                tv.setText(gasolinera.getNormal95());
+            }
 
-            TextView tv = convertView.findViewById(R.id.tv95);
-            tv.setText(gasolinera.getNormal95());
+            // diesel A price
+            {
+                TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
+                String label = getContext().getResources().getString(R.string.dieselAlabel);
+                tvLabel.setText(label + ":");
+
+                TextView tv = convertView.findViewById(R.id.tvDieselA);
+                tv.setText(gasolinera.getDieselA());
+            }
+        } else {
+            if (prefs.getInt("tipoGasolina") == 0){
+
+                {
+                    TextView tvLabel = convertView.findViewById(R.id.tv95Label);
+
+                    String label = getContext().getResources().getString(R.string.gasolina95label);
+                    tvLabel.setText(label + ":");
+
+                    TextView tv = convertView.findViewById(R.id.tv95);
+                    tv.setText(gasolinera.getNormal95());
+                }
+                {
+
+                    TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
+                    String label = getContext().getResources().getString(R.string.dieselAlabel);
+                    tvLabel.setText("");
+
+                    TextView tv = convertView.findViewById(R.id.tvDieselA);
+                    tv.setText("");
+                }
+            } else if (prefs.getInt("tipoGasolina") == 1) {
+                {
+                    TextView tvLabel = convertView.findViewById(R.id.tv95Label);
+
+                    String label = getContext().getResources().getString(R.string.dieselAlabel);
+                    tvLabel.setText(label + ":");
+
+                    TextView tv = convertView.findViewById(R.id.tv95);
+                    tv.setText(gasolinera.getDieselA());
+                }
+                {
+
+                    TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
+                    String label = getContext().getResources().getString(R.string.dieselAlabel);
+                    tvLabel.setText("");
+
+                    TextView tv = convertView.findViewById(R.id.tvDieselA);
+                    tv.setText("");
+                }
+            }
         }
-
-        // diesel A price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
-            String label = getContext().getResources().getString(R.string.dieselAlabel);
-            tvLabel.setText(label + ":");
-
-            TextView tv = convertView.findViewById(R.id.tvDieselA);
-            tv.setText(gasolinera.getDieselA());
-        }
-
         return convertView;
     }
 }

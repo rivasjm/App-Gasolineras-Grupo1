@@ -128,7 +128,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showGasolineras(List<Gasolinera> gasolineras) {
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras, prefs);
         ListView list = findViewById(R.id.lvGasolineras);
         list.setAdapter(adapter);
     }

@@ -62,11 +62,10 @@ public interface IMainContract {
          * This method is used to filter the gas stations repository
          * @param data list with all the gas stations
          * @param tipoCombustible type of fuel we want
-         * @param CCAA autonomic cominity we want to search
          * @param maxPrecio maximum price we want
          * @return a list with the gas stations filtered
          */
-        List<Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio);
+        List<Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, String maxPrecio);
 
         /**
          * This method takes the highest fuel price

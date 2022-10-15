@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainPresenter;
+import es.unican.is.appgasolineras.activities.main.MainView;
+import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 
@@ -66,9 +68,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
         btnGuardarPermanentes.setOnClickListener(view -> {
             presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition());
-            /***HAY QUE METER AQUI EL METODO    doSyncInit()    PARA QUE CARGUE LAS GASOLINERAS DE LA COMUNIDAD AUTONOMA****/
-            //doSyncInit();
-            finish();
+            openMainView();
         });
 
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
@@ -83,6 +83,12 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openMainView(){
+        Intent myIntent = new Intent(this, MenuPrincipalView.class);
+        startActivity(myIntent);
+        finish();
     }
 }
 
