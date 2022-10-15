@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+
 import es.unican.is.appgasolineras.activities.filtrar.FiltrarPrecioView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;

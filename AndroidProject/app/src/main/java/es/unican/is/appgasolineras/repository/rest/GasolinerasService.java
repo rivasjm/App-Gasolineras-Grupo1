@@ -49,8 +49,9 @@ public class GasolinerasService {
      * Download gas stations located in Cantabria from the REST API synchronously
      * @return the response object that contains the gasolineras located in Cantabria
      */
-    public static GasolinerasResponse getGasolineras() {
-        final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
+    public static GasolinerasResponse getGasolineras(String id) {
+        //final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
+        final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
 
         List<Gasolinera> gasolineras;
         ExecutorService executor = Executors.newFixedThreadPool(1);

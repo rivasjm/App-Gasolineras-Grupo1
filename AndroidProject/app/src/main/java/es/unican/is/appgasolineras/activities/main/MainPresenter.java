@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import androidx.annotation.NonNull;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -7,7 +9,6 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
@@ -62,7 +63,11 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     private void doSyncInit() {
-        List<Gasolinera> data = repository.getGasolineras();
+        String idCCAA = getIDCCAACorrecto();
+
+        //aqui hago arriba que el getInt sea de la CCAA que debe  ser
+        List<Gasolinera> data = repository.getGasolineras(idCCAA);
+
         if (data != null) {
             data = filtra(data, prefs.getString("tipoGasolina"),
                     prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
@@ -155,7 +160,8 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public String maximoEntreTodas(){
         String devolver;
-        List<Gasolinera> data = repository.getGasolineras();
+        String idCCAA = getIDCCAACorrecto();
+        List<Gasolinera> data = repository.getGasolineras(idCCAA);
         if (data == null) {
             devolver = "";
         } else {
@@ -173,5 +179,22 @@ public class MainPresenter implements IMainContract.Presenter {
             devolver = String.valueOf(max);
         }
         return devolver;
+    }
+
+    @NonNull
+    private String getIDCCAACorrecto() {
+        String idCCAA = "00";
+
+        int aux1 = prefs.getInt("idComunidad");
+        int aux2;
+
+        //el 0 es "Todas", el 1 es Cantabria y el 7 vuelve a ser Cantabria ordenado alfabeticamente
+        if (aux1 == 1 || aux1 == 7) {
+            idCCAA = "06";
+        } else if (aux1 > 1){
+            aux2 = (aux1 - 1);
+            idCCAA = String.valueOf(aux2);
+        }
+        return idCCAA;
     }
 }
