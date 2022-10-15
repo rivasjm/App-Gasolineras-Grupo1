@@ -17,12 +17,14 @@ public class MainPresenter implements IMainContract.Presenter {
     private IGasolinerasRepository repository;
     private IPrefs prefs;
     double max = Double.MIN_VALUE;
+    Boolean red;
 
     private List<Gasolinera> shownGasolineras;
 
-    public MainPresenter(IMainContract.View view, IPrefs prefs) {
+    public MainPresenter(IMainContract.View view, IPrefs prefs, Boolean red) {
         this.view = view;
         this.prefs = prefs;
+        this.red = red;
     }
 
     @Override
@@ -31,7 +33,11 @@ public class MainPresenter implements IMainContract.Presenter {
             repository = view.getGasolineraRepository();
         }
         if (repository != null) {
-            doSyncInit();
+            if (red) {
+                doSyncInit();
+            } else {
+                doAsyncInit();
+            }
         }
     }
 
@@ -39,7 +45,9 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
-
+                data = filtra(data, prefs.getString("tipoGasolina"),
+                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
+                prefs.putString("maxPrecio", maximoEntreTodas());
                 view.showGasolineras(data);
                 shownGasolineras = data;
                 view.showLoadCorrect(data.size());
@@ -48,23 +56,23 @@ public class MainPresenter implements IMainContract.Presenter {
             @Override
             public void onFailure() {
                 shownGasolineras = null;
-                view.showLoadError();
+                view.showLoadErrorRed();
             }
         });
     }
 
     private void doSyncInit() {
         List<Gasolinera> data = repository.getGasolineras();
-        data = filtra(data, prefs.getString("tipoGasolina"),
-                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
-        prefs.putString("maxPrecio", maximoEntreTodas());
         if (data != null) {
+            data = filtra(data, prefs.getString("tipoGasolina"),
+                    prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
+            prefs.putString("maxPrecio", maximoEntreTodas());
             view.showGasolineras(data);
             shownGasolineras = data;
             view.showLoadCorrect(data.size());
         } else {
             shownGasolineras = null;
-            view.showLoadError();
+            view.showLoadErrorServidor();
         }
     }
 
@@ -85,6 +93,9 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onRefreshClicked() {
         init();
     }
+
+    @Override
+    public void onHomeClicked() { view.openMenuPrincipal(); }
 
     @Override
     public void onPrecioClicked() {view.openFiltroPrecio();}

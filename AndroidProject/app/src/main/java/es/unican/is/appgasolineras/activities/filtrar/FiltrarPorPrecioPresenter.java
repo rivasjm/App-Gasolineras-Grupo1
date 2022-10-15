@@ -40,7 +40,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
         BigDecimal actual = new BigDecimal(act).setScale(2, RoundingMode.UP);
         BigDecimal maxPrecioDouble = new BigDecimal(maxPrecio.substring(0,4)).setScale(2, RoundingMode.UP);
         if (actual.compareTo(maxPrecioDouble) < 0){
-            BigDecimal sum = new BigDecimal(0.01);
+            BigDecimal sum = BigDecimal.valueOf(0.01);
             actual = actual.add(sum, MathContext.DECIMAL32);
         }
         devolver = getStringCorrecto(actual);
@@ -51,9 +51,9 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
     public String bajaPrecio(String act) {
         String devolver;
         BigDecimal actual = new BigDecimal(act).setScale(2, RoundingMode.UP);
-        BigDecimal cero = new BigDecimal(0.01).setScale(2, RoundingMode.UP);
+        BigDecimal cero = BigDecimal.valueOf(0.01);
         if (actual.compareTo(cero) >= 0){
-            BigDecimal res = new BigDecimal(0.01000000);
+            BigDecimal res = BigDecimal.valueOf(0.01000000);
             actual = actual.subtract(res, MathContext.DECIMAL32);
         } else {
             actual = new BigDecimal(0).setScale(2, RoundingMode.UP);;

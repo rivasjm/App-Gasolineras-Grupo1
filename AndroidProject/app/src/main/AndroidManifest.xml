@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="es.unican.is.appgasolineras">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -29,6 +30,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.main.MainView"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.menuPrincipal.MenuPrincipalView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
