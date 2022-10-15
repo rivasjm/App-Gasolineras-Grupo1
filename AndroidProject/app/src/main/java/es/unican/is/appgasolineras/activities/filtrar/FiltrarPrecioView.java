@@ -24,26 +24,32 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
     Button btnResetear;
     Button btnMostrarResultados;
     TextView tvPrecioLimite;
+
     IFiltrarPorPrecioContract.Presenter presenter;
 
-    @SuppressLint({"WrongViewCast", "ClickableViewAccessibility"})
+    String max;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrar_precio_view);
-        String max = getIntent().getStringExtra("max");
-        presenter = new FiltrarPorPrecioPresenter(this, this, max);
-        presenter.init();
+
         getSupportActionBar().setTitle("Filtro Precio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnBajarPrecio = findViewById(R.id.btnBajarPrecio);
-        btnSubirPrecio = findViewById(R.id.btnSubirPrecio);
-        btnResetear = findViewById(R.id.btnResetear);
-        btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
+        max = getIntent().getStringExtra("max");
+        presenter = new FiltrarPorPrecioPresenter(this, this, max);
+        presenter.init();
+        this.init();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public void init() {
         tvPrecioLimite = findViewById(R.id.tvPrecioLimite);
         tvPrecioLimite.setText(max.substring(0,4));
 
+        btnBajarPrecio = findViewById(R.id.btnBajarPrecio);
         btnBajarPrecio.setOnTouchListener(new View.OnTouchListener() {
 
             private Handler mHandler;
@@ -75,6 +81,7 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
             };
         });
 
+        btnSubirPrecio = findViewById(R.id.btnSubirPrecio);
         btnSubirPrecio.setOnTouchListener(new View.OnTouchListener() {
 
             private Handler mHandler;
@@ -106,18 +113,14 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
             };
         });
 
-        btnResetear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tvPrecioLimite.setText(max.substring(0,4));
-            }
+        btnResetear = findViewById(R.id.btnResetear);
+        btnResetear.setOnClickListener(view -> {
+            tvPrecioLimite.setText(max.substring(0,4));
         });
 
-        btnMostrarResultados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()));
-            }
+        btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
+        btnMostrarResultados.setOnClickListener(view -> {
+            presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()));
         });
     }
 

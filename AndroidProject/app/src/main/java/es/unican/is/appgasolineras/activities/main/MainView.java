@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.filtrar.FiltrarPrecioView;
+import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -47,8 +50,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         getSupportActionBar().setTitle("Lista gasolineras");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         prefs = new Prefs(this, "MY_APP");
-        presenter = new MainPresenter(this, prefs);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            presenter = new MainPresenter(this, prefs, true);
+        } else {
+            presenter = new MainPresenter(this, prefs, false);
+        }
+
         presenter.init();
         this.init();
     }
@@ -80,7 +92,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 presenter.onRefreshClicked();
                 return true;
             case android.R.id.home:
-                finish();
+                presenter.onHomeClicked();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -127,8 +139,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     @Override
-    public void showLoadError() {
-        String text = getResources().getString(R.string.loadError);
+    public void showLoadErrorRed() {
+        String text = getResources().getString(R.string.loadErrorRed);
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoadErrorServidor() {
+        String text = getResources().getString(R.string.loadErrorServidor);
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
@@ -151,4 +169,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         intent.putExtra("max", presenter.maximoEntreTodas());
         startActivity(intent);
     }
+
+    @Override
+    public void openMenuPrincipal() {
+        Intent intent = new Intent(this, MenuPrincipalView.class);
+        startActivity(intent);
+    }
+
+
 }
