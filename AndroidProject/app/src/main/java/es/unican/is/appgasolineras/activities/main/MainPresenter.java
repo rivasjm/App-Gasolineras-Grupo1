@@ -46,7 +46,12 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
-                data = repository.getGasolineras("06");
+                if (prefs.getString("idComunidad").equals("")){
+                    data = repository.getGasolineras("06");
+                }else {
+                    data = repository.getGasolineras(prefs.getString("idComunidad"));
+                }
+
                 data = filtra(data, prefs.getString("tipoGasolina"), prefs.getString("maxPrecio"));
                 prefs.putString("maxPrecio", maximoEntreTodas());
                 view.showGasolineras(data);
@@ -63,10 +68,13 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     private void doSyncInit() {
-        String idCCAA = getIDCCAACorrecto();
-
-        //aqui hago arriba que el getInt sea de la CCAA que debe  ser
-        List<Gasolinera> data = repository.getGasolineras(idCCAA);
+        System.out.println (prefs.getString("idComunidad"));
+        List<Gasolinera> data;
+        if (prefs.getString("idComunidad").equals("")){
+            data = repository.getGasolineras("06");
+        }else {
+            data = repository.getGasolineras(prefs.getString("idComunidad"));
+        }
 
         if (data != null) {
             data = filtra(data, prefs.getString("tipoGasolina"), prefs.getString("maxPrecio"));

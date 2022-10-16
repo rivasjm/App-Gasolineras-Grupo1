@@ -6,6 +6,7 @@ package es.unican.is.appgasolineras.model;
  * using this endpoint: https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/ComunidadesAutonomas/
  */
 public enum IDCCAAs {
+    TODAS(""),
     ANDALUCIA("01"),
     ARAGON("02"),
     ASTURIAS("03"),
@@ -32,6 +33,15 @@ public enum IDCCAAs {
 
     private IDCCAAs(String id) {
         this.id = id;
+    }
+    public String getId() {
+        return id;
+    }
+    public static IDCCAAs getEnumByString(String code){
+        for(IDCCAAs e : IDCCAAs.values()){
+            if(e.name().equals(code)) return e ;
+        }
+        return null;
     }
 
 }

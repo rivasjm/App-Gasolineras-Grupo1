@@ -67,6 +67,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
             TextView tv = convertView.findViewById(R.id.tvAddress);
             tv.setText(gasolinera.getDireccion());
         }
+        System.out.println(prefs.getString("tipoGasolina"));
         if (prefs.getString("tipoGasolina").equals("")) {
             // 95 octanes price
             {
@@ -88,7 +89,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 tv.setText(gasolinera.getDieselA());
             }
         } else {
-            if (prefs.getInt("tipoGasolina") == 0){
+            if (prefs.getString("tipoGasolina").equals("normal95")){
 
                 {
                     TextView tvLabel = convertView.findViewById(R.id.tv95Label);
@@ -108,7 +109,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                     TextView tv = convertView.findViewById(R.id.tvDieselA);
                     tv.setText("");
                 }
-            } else if (prefs.getInt("tipoGasolina") == 1) {
+            } else if (prefs.getString("tipoGasolina").equals("dieselA")) {
                 {
                     TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
