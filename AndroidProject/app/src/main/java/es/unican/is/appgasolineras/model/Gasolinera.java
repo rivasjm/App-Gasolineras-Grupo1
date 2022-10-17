@@ -29,7 +29,8 @@ public class Gasolinera implements Parcelable {
     @SerializedName("Municipio")                    private String municipio;
     @SerializedName("Horario")                      private String horario;
     @SerializedName("Precio Gasoleo A")             private String dieselA;
-    @SerializedName("Precio Gasolina 95 E5")        private String normal95;  // 95 octanes
+    @SerializedName("Precio Gasolina 95 E5")        private String normal95;// 95 octanes
+
     @SerializedName("IDCCAA")                       private String IDCCAA;
 
     public Gasolinera() {

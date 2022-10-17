@@ -167,7 +167,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openFiltroPrecio() {
         Intent intent = new Intent(this, FiltrarPrecioView.class);
-        intent.putExtra("max", presenter.maximoEntreTodas());
+        intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
     }
 

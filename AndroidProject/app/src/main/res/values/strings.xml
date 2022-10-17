@@ -17,8 +17,20 @@
 
     <string-array name="combustiblesArray">
         <item>Todos</item>
-        <item>Gasolina</item>
-        <item>Diésel</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 98 E5</item>
+        <item>Gasolina 98 E10</item>
+        <item>Gasóleo A habitual</item>
+        <item>Gasóleo Premium</item>
+        <item>Gasóleo B</item>
+        <item>Bioetanol</item>
+        <item>Biodiésel</item>
+        <item>Gases licuados del petróleo</item>
+        <item>Gas natural comprimido</item>
+        <item>Gas natural licuado</item>
+        <item>Hidrógeno</item>
     </string-array>
 
     <string-array name="comunidadesArray">

@@ -34,10 +34,19 @@ public class FiltroPermanenteMapper {
         combustibles = new ArrayList<>();
         combustibles.add("");
         combustibles.add("normal95");
+        combustibles.add("normal95E10");
+        combustibles.add("normal95E5p");
+        combustibles.add("normal98E5");
+        combustibles.add("normal98E10");
         combustibles.add("dieselA");
-
-
-
+        combustibles.add("dieselP");
+        combustibles.add("dieselB");
+        combustibles.add("bioEtanol");
+        combustibles.add("bioDiesel");
+        combustibles.add("glp");
+        combustibles.add("gasC");
+        combustibles.add("gasL");
+        combustibles.add("h2");
     }
 
     public String getCCAA (int index){
