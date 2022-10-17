@@ -21,6 +21,7 @@ import es.unican.is.appgasolineras.common.prefs.Prefs;
 public class FiltroPermanenteView extends AppCompatActivity implements IPermanenteContract.view {
     Spinner spnCombustible;
     Spinner spnCCAA;
+    IPrefs prefs;
 
     IPermanenteContract.presenter presenter;
     FiltroPermanenteMapper mapper;
@@ -30,7 +31,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros_permanentes);
 
-        IPrefs p = Prefs.from(this);
+        prefs = Prefs.from(this);
         mapper = new FiltroPermanenteMapper();
 
         //MainPresenter mainPresenter = new MainPresenter(this, p);
@@ -38,28 +39,10 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         spnCombustible = findViewById(R.id.spinner_combustible);
         spnCCAA = findViewById(R.id.spinner_CCAA);
 
-
-
-        //Configuracion del spinner de las provincias
-        ArrayAdapter<CharSequence> adapterCCAA = ArrayAdapter.createFromResource(this,
-                R.array.comunidadesArray, android.R.layout.simple_spinner_item);
-        adapterCCAA.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spnCCAA.setAdapter(adapterCCAA);
-        int comunidadGuardada = mapper.getCCAAIndex(p.getString("idComunidad"));
-        spnCCAA.setSelection(comunidadGuardada);
-
-        //Configuracion del spinner de los combustibles
-        ArrayAdapter<CharSequence> adapterCombustibles = ArrayAdapter.createFromResource(this,
-                R.array.combustiblesArray, android.R.layout.simple_spinner_item);
-        adapterCombustibles.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spnCombustible.setAdapter(adapterCombustibles);
-        int combustibleGuardado = mapper.getCombustibleIndex(p.getString("tipoGasolina"));
-        spnCombustible.setSelection(combustibleGuardado);
-
         getSupportActionBar().setTitle("Filtros permanentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        presenter = new FiltroPermanentePresenter(this, p);
+        presenter = new FiltroPermanentePresenter(this, prefs);
         presenter.init();
         this.init();
 
@@ -67,6 +50,22 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
     @Override
     public void init() {
+        //Configuracion del spinner de las provincias
+        ArrayAdapter<CharSequence> adapterCCAA = ArrayAdapter.createFromResource(this,
+                R.array.comunidadesArray, android.R.layout.simple_spinner_item);
+        adapterCCAA.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spnCCAA.setAdapter(adapterCCAA);
+        int comunidadGuardada = mapper.getCCAAIndex(prefs.getString("idComunidadName"));
+        spnCCAA.setSelection(comunidadGuardada);
+
+        //Configuracion del spinner de los combustibles
+        ArrayAdapter<CharSequence> adapterCombustibles = ArrayAdapter.createFromResource(this,
+                R.array.combustiblesArray, android.R.layout.simple_spinner_item);
+        adapterCombustibles.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spnCombustible.setAdapter(adapterCombustibles);
+        int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
+        spnCombustible.setSelection(combustibleGuardado);
+
         Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
         btnGuardarPermanentes.setOnClickListener(view -> {
             presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition());
@@ -76,6 +75,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
         btnResetPermanentes.setOnClickListener(view -> {
             presenter.reseteaFiltroPermanente();
+            this.init();
         });
     }
 

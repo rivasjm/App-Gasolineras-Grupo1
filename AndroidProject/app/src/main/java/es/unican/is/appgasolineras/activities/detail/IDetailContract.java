@@ -17,6 +17,6 @@ public interface IDetailContract {
     }
     public interface View {
         void setInfo(String municipio, String rotulo, String horario, String normal95,
-                     String dieselA, String media);
+                     String dieselA, String media, String direccion);
     }
 }

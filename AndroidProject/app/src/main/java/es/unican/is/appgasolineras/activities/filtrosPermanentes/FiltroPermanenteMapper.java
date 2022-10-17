@@ -49,8 +49,12 @@ public class FiltroPermanenteMapper {
         combustibles.add("h2");
     }
 
-    public String getCCAA (int index){
+    public String getCCAAID (int index){
         return CCAAs.get(index).getId();
+    }
+
+    public String getCCAAName (int index){
+        return CCAAs.get(index).name();
     }
 
     public String getCombustible(int index){

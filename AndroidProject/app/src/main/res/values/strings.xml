@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GasFinder</string>
-    <string name="gasolina95label">Gasolina</string>
-    <string name="dieselAlabel">Diesel</string>
+    <string name="gasolina95label">Gasolina 95 E5</string>
+    <string name="dieselAlabel">Diesel A</string>
     <string name="refresh">Recargar</string>
     <string name="info">Info</string>
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
@@ -57,4 +57,5 @@
     </string-array>
     <string name="lista_de_gasolineras">Lista de Gasolineras</string>
     <string name="filtros_permanentes">Filtros Permanentes</string>
+    <string name="no_gasolineras_con_filtros">No se han podido cargar gasolineras con los filtros seleccionados</string>
 </resources>

@@ -19,7 +19,7 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.R;
 
-import es.unican.is.appgasolineras.activities.filtrar.FiltrarPrecioView;
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
@@ -135,20 +135,25 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showLoadCorrect(int gasolinerasCount) {
-        String text = getResources().getString(R.string.loadCorrect);
-        Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
+        if (gasolinerasCount == 0) {
+            String text = getResources().getString(R.string.no_gasolineras_con_filtros);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        } else{
+            String text = getResources().getString(R.string.loadCorrect);
+            Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void showLoadErrorRed() {
         String text = getResources().getString(R.string.loadErrorRed);
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showLoadErrorServidor() {
         String text = getResources().getString(R.string.loadErrorServidor);
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -166,7 +171,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void openFiltroPrecio() {
-        Intent intent = new Intent(this, FiltrarPrecioView.class);
+        Intent intent = new Intent(this, FiltrarPorPrecioView.class);
         intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
     }

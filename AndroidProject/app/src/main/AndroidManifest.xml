@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AppGasolineras"
         tools:targetApi="32">
         <activity
-            android:name=".activities.filtrar.FiltrarPrecioView"
+            android:name=".activities.filtrar.FiltrarPorPrecioView"
             android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"

@@ -21,23 +21,15 @@ public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
 
     @Override
     public void guardaFiltroPermanente(int idComunidad, int tipoGasolina) {
-
-
-        System.out.println(idComunidad);
-        System.out.println(tipoGasolina);
-
         pref.putString("tipoGasolina", mapper.getCombustible(tipoGasolina));
-        pref.putString("idComunidad", mapper.getCCAA(idComunidad));
-
-        System.out.println(pref.getString("idComunidad"));
-        System.out.println(pref.getString("tipoGasolina"));
-
-
+        pref.putString("idComunidad", mapper.getCCAAID(idComunidad));
+        pref.putString("idComunidadName", mapper.getCCAAName(idComunidad));
     }
 
     @Override
     public void reseteaFiltroPermanente(){
-       pref.delete("tipoGasolina");
-       pref.delete("idComunidad");
+        pref.putString("tipoGasolina", "");
+        pref.putString("idComunidad", "");
+        pref.putString("idComunidadName", "");
     }
 }
