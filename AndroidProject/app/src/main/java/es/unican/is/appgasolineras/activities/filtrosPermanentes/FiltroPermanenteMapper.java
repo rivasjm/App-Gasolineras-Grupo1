@@ -33,8 +33,9 @@ public class FiltroPermanenteMapper {
 
         combustibles = new ArrayList<>();
         combustibles.add("");
-        combustibles.add("dieselA");
         combustibles.add("normal95");
+        combustibles.add("dieselA");
+
 
 
     }

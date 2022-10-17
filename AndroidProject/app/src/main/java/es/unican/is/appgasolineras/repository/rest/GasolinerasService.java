@@ -50,7 +50,31 @@ public class GasolinerasService {
      * @return the response object that contains the gasolineras located in Cantabria
      */
     public static GasolinerasResponse getGasolineras(String id) {
-        final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
+        final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
+
+
+        List<Gasolinera> gasolineras;
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
+        executor.execute(runnable);
+
+        // wait until background task finishes
+        executor.shutdown();
+        try {
+            executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {}
+
+        // if there was some problem, response is null
+        GasolinerasResponse response = runnable.response;
+        return response;
+    }
+
+    /**
+     * Download gas stations located in Cantabria from the REST API synchronously
+     * @return the response object that contains the gasolineras located in Cantabria
+     */
+    public static GasolinerasResponse todasGasolineras() {
+        final Call<GasolinerasResponse> call = getAPI().Todasgasolineras();
 
 
         List<Gasolinera> gasolineras;

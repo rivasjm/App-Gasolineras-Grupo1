@@ -52,7 +52,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         getSupportActionBar().setTitle("Lista gasolineras");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        prefs = new Prefs(this, "MY_APP");
+        prefs = Prefs.from(this);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

@@ -46,8 +46,9 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
             @Override
             public void onSuccess(List<Gasolinera> data) {
+                System.out.println (prefs.getString("idComunidad"));
                 if (prefs.getString("idComunidad").equals("")){
-                    data = repository.getGasolineras("06");
+                    data = repository.todasGasolineras();
                 }else {
                     data = repository.getGasolineras(prefs.getString("idComunidad"));
                 }
@@ -71,7 +72,7 @@ public class MainPresenter implements IMainContract.Presenter {
         System.out.println (prefs.getString("idComunidad"));
         List<Gasolinera> data;
         if (prefs.getString("idComunidad").equals("")){
-            data = repository.getGasolineras("06");
+            data = repository.todasGasolineras();
         }else {
             data = repository.getGasolineras(prefs.getString("idComunidad"));
         }
@@ -164,7 +165,7 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public String maximoEntreTodas(){
         String devolver;
-        String idCCAA = getIDCCAACorrecto();
+        String idCCAA = prefs.getString("idComunidad");
         List<Gasolinera> data = repository.getGasolineras(idCCAA);
         if (data == null) {
             devolver = "";
@@ -185,11 +186,11 @@ public class MainPresenter implements IMainContract.Presenter {
         return devolver;
     }
 
-    @NonNull
+   /* @NonNull
     private String getIDCCAACorrecto() {
         String idCCAA = "00";
 
-        int aux1 = prefs.getInt("idComunidad");
+        int aux1 = prefs.get("idComunidad");
         int aux2;
 
         //el 0 es "Todas", el 1 es Cantabria y el 7 vuelve a ser Cantabria ordenado alfabeticamente
@@ -200,5 +201,5 @@ public class MainPresenter implements IMainContract.Presenter {
             idCCAA = String.valueOf(aux2);
         }
         return idCCAA;
-    }
+    } */
 }
