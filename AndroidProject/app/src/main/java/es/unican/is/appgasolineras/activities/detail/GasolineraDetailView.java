@@ -58,7 +58,7 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
     }
 
     public void setInfo(String municipio, String rotulo, String horario, String normal95,
-                        String dieselA, String media) {
+                        String dieselA, String media, String direccion) {
         ImageView ivRotulo = findViewById(R.id.ivRotulo);
         int imageID = getResources().getIdentifier(rotulo, "drawable", getPackageName());
 
@@ -72,14 +72,16 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         TextView tvRotulo = findViewById(R.id.tvRotulo);
         TextView tvMunicipio = findViewById(R.id.tvMunicipio);
         TextView tvHorario = findViewById(R.id.tvHorario);
+        TextView tvDireccion = findViewById(R.id.tvDireccion);
         TextView tvGasolina = findViewById(R.id.tvGasolina);
         TextView tvDiesel = findViewById(R.id.tvDiesel);
         TextView tvMedia = findViewById(R.id.tvMedia);
         tvRotulo.setText(rotulo.toUpperCase(Locale.ROOT));
         tvMunicipio.setText(municipio);
+        tvDireccion.setText("Dirección: " + direccion);
         tvHorario.setText("Horario: "+ horario);
-        tvGasolina.setText("Gasolina95: " + normal95.substring(0,4) + " €");
-        tvDiesel.setText("DiéselA: " + dieselA.substring(0,4) + " €");
-        tvMedia.setText("Media: " + media.substring(0,4) + " €");
+        tvGasolina.setText("Gasolina95: " + normal95);
+        tvDiesel.setText("DiéselA: " + dieselA);
+        tvMedia.setText("Media: " + media);
     }
 }

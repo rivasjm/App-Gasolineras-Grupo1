@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 
-public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPorPrecioContract.View{
+public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrarPorPrecioContract.View{
 
     ImageButton btnBajarPrecio;
     ImageButton btnSubirPrecio;
@@ -33,12 +35,15 @@ public class FiltrarPrecioView extends AppCompatActivity implements  IFiltrarPor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrar_precio_view);
-
+        IPrefs prefs = Prefs.from(this);
         getSupportActionBar().setTitle("Filtro Precio");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         max = getIntent().getStringExtra("max");
-        presenter = new FiltrarPorPrecioPresenter(this, this, max);
+        if(max.length() == 3) {
+            max = (max + "0");
+        }
+        presenter = new FiltrarPorPrecioPresenter(this, prefs, max);
         presenter.init();
         this.init();
     }

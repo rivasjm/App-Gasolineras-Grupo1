@@ -6,10 +6,12 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
 public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
     private final IPermanenteContract.view view;
     private IPrefs pref;
+    private FiltroPermanenteMapper mapper;
 
     public FiltroPermanentePresenter(IPermanenteContract.view view, IPrefs pref){
         this.view = view;
         this.pref = pref;
+        mapper = new FiltroPermanenteMapper();
     }
 
     @Override
@@ -19,24 +21,15 @@ public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
 
     @Override
     public void guardaFiltroPermanente(int idComunidad, int tipoGasolina) {
-        System.out.println(pref.getInt("idComunidad"));
-        System.out.println(pref.getInt("tipoGasolina"));
-
-        System.out.println(idComunidad);
-        System.out.println(tipoGasolina);
-
-        pref.putInt("tipoGasolina", tipoGasolina);
-        pref.putInt("idComunidad", idComunidad);
-
-        System.out.println(pref.getInt("idComunidad"));
-        System.out.println(pref.getInt("tipoGasolina"));
-
-
+        pref.putString("tipoGasolina", mapper.getCombustible(tipoGasolina));
+        pref.putString("idComunidad", mapper.getCCAAID(idComunidad));
+        pref.putString("idComunidadName", mapper.getCCAAName(idComunidad));
     }
 
     @Override
     public void reseteaFiltroPermanente(){
-       // p.delete("tipoGasolina");
-       // p.delete("idComunidad");
+        pref.putString("tipoGasolina", "");
+        pref.putString("idComunidad", "");
+        pref.putString("idComunidadName", "");
     }
 }

@@ -13,6 +13,7 @@ public interface GasolinerasAPI {
 
     @GET("EstacionesTerrestres/FiltroCCAA/{IDCCAA}")
     Call<GasolinerasResponse> gasolineras(@Path("IDCCAA") String ccaa);
+
     @GET("EstacionesTerrestres/")
     Call<GasolinerasResponse> Todasgasolineras();
 

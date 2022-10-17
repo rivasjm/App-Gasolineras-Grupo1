@@ -55,6 +55,13 @@ public class GasolinerasRepository implements IGasolinerasRepository {
         return gasolineras;
     }
 
+    public List<Gasolinera> todasGasolineras() {
+        GasolinerasResponse response = GasolinerasService.todasGasolineras();
+        List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
+        persistToDB(gasolineras);
+        return gasolineras;
+    }
+
     /**
      * Persist Gasolineras to local DB using Room
      * It also saves into the app preferences the time instant in which

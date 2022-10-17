@@ -23,14 +23,27 @@ public class Gasolinera implements Parcelable {
 
     @SerializedName("IDEESS") @NonNull @PrimaryKey  private String id;
 
-    @SerializedName("Rótulo")                       private String rotulo;
-    @SerializedName("C.P.")                         private String cp;
-    @SerializedName("Dirección")                    private String direccion;
-    @SerializedName("Municipio")                    private String municipio;
-    @SerializedName("Horario")                      private String horario;
-    @SerializedName("Precio Gasoleo A")             private String dieselA;
-    @SerializedName("Precio Gasolina 95 E5")        private String normal95;  // 95 octanes
-    @SerializedName("IDCCAA")                       private String IDCCAA;
+    @SerializedName("Rótulo")                               private String rotulo;
+    @SerializedName("C.P.")                                 private String cp;
+    @SerializedName("Dirección")                            private String direccion;
+    @SerializedName("Municipio")                            private String municipio;
+    @SerializedName("Horario")                              private String horario;
+    @SerializedName("Precio Biodiesel")                     private String biodiesel;
+    @SerializedName("Precio Bioetanol")                     private String bioetanol;
+    @SerializedName("Precio Gas Natural Comprimido")        private String gasNatComp;
+    @SerializedName("Precio Gas Natural Licuado")           private String gasNatLic;
+    @SerializedName("Precio Gases licuados del petróleo")   private String gasLicPet;
+    @SerializedName("Precio Gasoleo A")                     private String dieselA;
+    @SerializedName("Precio Gasoleo B")                     private String dieselB;
+    @SerializedName("Precio Gasoleo Premium")               private String dieselPrem;
+    @SerializedName("Precio Gasolina 95 E10")               private String gasolina95E10;
+    @SerializedName("Precio Gasolina 95 E5")                private String normal95;
+    @SerializedName("Precio Gasolina 95 E5 Premium")        private String normal95Prem;
+    @SerializedName("Precio Gasolina 98 E10")               private String gasolina98E10;
+    @SerializedName("Precio Gasolina 98 E5")                private String gasolina98E5;
+    @SerializedName("Precio Hidrogeno")                     private String hidrogeno;
+
+    @SerializedName("IDCCAA")                               private String IDCCAA;
 
     public Gasolinera() {
 
@@ -97,10 +110,105 @@ public class Gasolinera implements Parcelable {
 
     public void setHorario(String horario) { this.horario = horario; }
 
-    public int getIDCCAAInt(){return Integer.parseInt(IDCCAA);}
     public String getIDCCAA(){return this.IDCCAA;}
 
     public void setIDCCAA(String IDCCAA) { this.IDCCAA = IDCCAA;}
+
+    public String getHidrogeno() {
+        return hidrogeno;
+    }
+
+    public void setHidrogeno(String hidrogeno) {
+        this.hidrogeno = hidrogeno;
+    }
+
+    public String getGasolina98E5() {
+        return gasolina98E5;
+    }
+
+    public void setGasolina98E5(String gasolina98E5) {
+        this.gasolina98E5 = gasolina98E5;
+    }
+
+    public String getGasolina98E10() {
+        return gasolina98E10;
+    }
+
+    public void setGasolina98E10(String gasolina98E10) {
+        this.gasolina98E10 = gasolina98E10;
+    }
+
+    public String getNormal95Prem() {
+        return normal95Prem;
+    }
+
+    public void setNormal95Prem(String normal95Prem) {
+        this.normal95Prem = normal95Prem;
+    }
+
+    public String getGasolina95E10() {
+        return gasolina95E10;
+    }
+
+    public void setGasolina95E10(String gasolina95E10) {
+        this.gasolina95E10 = gasolina95E10;
+    }
+
+    public String getDieselPrem() {
+        return dieselPrem;
+    }
+
+    public void setDieselPrem(String dieselPrem) {
+        this.dieselPrem = dieselPrem;
+    }
+
+    public String getDieselB() {
+        return dieselB;
+    }
+
+    public void setDieselB(String dieselB) {
+        this.dieselB = dieselB;
+    }
+
+    public String getGasLicPet() {
+        return gasLicPet;
+    }
+
+    public void setGasLicPet(String gasLicPet) {
+        this.gasLicPet = gasLicPet;
+    }
+
+    public String getGasNatLic() {
+        return gasNatLic;
+    }
+
+    public void setGasNatLic(String gasNatLic) {
+        this.gasNatLic = gasNatLic;
+    }
+
+    public String getGasNatComp() {
+        return gasNatComp;
+    }
+
+    public void setGasNatComp(String gasNatComp) {
+        this.gasNatComp = gasNatComp;
+    }
+
+    public String getBioetanol() {
+        return bioetanol;
+    }
+
+    public void setBioetanol(String bioetanol) {
+        this.bioetanol = bioetanol;
+    }
+
+    public String getBiodiesel() {
+        return biodiesel;
+    }
+
+    public void setBiodiesel(String biodiesel) {
+        this.biodiesel = biodiesel;
+    }
 
 
     /*
@@ -119,6 +227,18 @@ public class Gasolinera implements Parcelable {
         horario = in.readString();
         dieselA = in.readString();
         normal95 = in.readString();
+        hidrogeno = in.readString();
+        gasolina98E5 = in.readString();
+        gasolina98E10 = in.readString();
+        normal95Prem = in.readString();
+        gasolina95E10 = in.readString();
+        dieselPrem = in.readString();
+        dieselB = in.readString();
+        gasLicPet = in.readString();
+        gasNatLic = in.readString();
+        gasNatComp = in.readString();
+        bioetanol = in.readString();
+        biodiesel = in.readString();
     }
 
     public static final Creator<Gasolinera> CREATOR = new Creator<Gasolinera>() {
@@ -148,5 +268,17 @@ public class Gasolinera implements Parcelable {
         dest.writeString(horario);
         dest.writeString(dieselA);
         dest.writeString(normal95);
+        dest.writeString(hidrogeno);
+        dest.writeString(gasolina98E5);
+        dest.writeString(gasolina98E10);
+        dest.writeString(normal95Prem);
+        dest.writeString(gasolina95E10);
+        dest.writeString(dieselPrem);
+        dest.writeString(dieselB);
+        dest.writeString(gasLicPet);
+        dest.writeString(gasNatLic);
+        dest.writeString(gasNatComp);
+        dest.writeString(bioetanol);
+        dest.writeString(biodiesel);
     }
 }
