@@ -59,13 +59,19 @@ public interface IMainContract {
         void onResetFiltroPrecioClicked();
 
         /**
-         * This method is used to filter the gas stations repository
+         * This method is used to filter the gas stations repository by type of fuel
          * @param data list with all the gas stations
          * @param tipoCombustible type of fuel we want
          * @return a list with the gas stations filtered
          */
         List<Gasolinera> filtraTipo(List<Gasolinera> data, String tipoCombustible);
 
+        /**
+         * This method is used to filter the gas stations repository by price
+         * @param data list with all the gas stations
+         * @param maxPrecio max price we want
+         * @return a list with the gas stations filtered
+         */
         List<Gasolinera> filtraPrecio(List<Gasolinera> data, String maxPrecio);
 
         /**
@@ -73,6 +79,11 @@ public interface IMainContract {
          * @return a string with the maximum price
          */
         String maximoEntreTodas(List<Gasolinera> data);
+
+        /**
+         * This method return the highest fuel price
+         * @return a string with the maximum price
+         */
         String getMaximoEntreTodas();
     }
 

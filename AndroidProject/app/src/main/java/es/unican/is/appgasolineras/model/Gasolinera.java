@@ -49,12 +49,11 @@ public class Gasolinera implements Parcelable {
 
     }
 
-    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
