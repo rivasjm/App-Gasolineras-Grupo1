@@ -45,11 +45,10 @@ public class GasolinerasService {
     }
 
     /**
-     * Download gas stations located in Cantabria from the REST API synchronously
-     * @return the response object that contains the gasolineras located in Cantabria
+     * Download gas stations located in a autonomic comunity from the REST API synchronously
+     * @return the response object that contains the gasolineras located in the autonomic comunity
      */
     public static GasolinerasResponse getGasolineras(String id) {
-
         final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
 
         List<Gasolinera> gasolineras;
@@ -69,12 +68,11 @@ public class GasolinerasService {
     }
 
     /**
-     * Download gas stations located in Cantabria from the REST API synchronously
-     * @return the response object that contains the gasolineras located in Cantabria
+     * Download gas stations located in Spain from the REST API synchronously
+     * @return the response object that contains the gasolineras located in Spain
      */
     public static GasolinerasResponse todasGasolineras() {
-        final Call<GasolinerasResponse> call = getAPI().Todasgasolineras();
-
+        final Call<GasolinerasResponse> call = getAPI().todasGasolineras();
 
         List<Gasolinera> gasolineras;
         ExecutorService executor = Executors.newFixedThreadPool(1);
