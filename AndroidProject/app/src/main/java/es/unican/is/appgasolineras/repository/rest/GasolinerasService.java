@@ -11,7 +11,6 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.model.GasolinerasResponse;
 import es.unican.is.appgasolineras.model.IDCCAAs;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -46,11 +45,34 @@ public class GasolinerasService {
     }
 
     /**
-     * Download gas stations located in Cantabria from the REST API synchronously
-     * @return the response object that contains the gasolineras located in Cantabria
+     * Download gas stations located in a autonomic comunity from the REST API synchronously
+     * @return the response object that contains the gasolineras located in the autonomic comunity
      */
-    public static GasolinerasResponse getGasolineras() {
-        final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
+    public static GasolinerasResponse getGasolineras(String id) {
+        final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
+
+        List<Gasolinera> gasolineras;
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
+        executor.execute(runnable);
+
+        // wait until background task finishes
+        executor.shutdown();
+        try {
+            executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {}
+
+        // if there was some problem, response is null
+        GasolinerasResponse response = runnable.response;
+        return response;
+    }
+
+    /**
+     * Download gas stations located in Spain from the REST API synchronously
+     * @return the response object that contains the gasolineras located in Spain
+     */
+    public static GasolinerasResponse todasGasolineras() {
+        final Call<GasolinerasResponse> call = getAPI().todasGasolineras();
 
         List<Gasolinera> gasolineras;
         ExecutorService executor = Executors.newFixedThreadPool(1);

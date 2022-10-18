@@ -41,15 +41,21 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
             @Override
             public void onFailure() {
-
                 cb.onFailure();
             }
         });
     }
 
     @Override
-    public List<Gasolinera> getGasolineras() {
-        GasolinerasResponse response = GasolinerasService.getGasolineras();
+    public List<Gasolinera> getGasolineras(String idCCAA) {
+        GasolinerasResponse response = GasolinerasService.getGasolineras(idCCAA);
+        List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
+        persistToDB(gasolineras);
+        return gasolineras;
+    }
+
+    public List<Gasolinera> todasGasolineras() {
+        GasolinerasResponse response = GasolinerasService.todasGasolineras();
         List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
         persistToDB(gasolineras);
         return gasolineras;

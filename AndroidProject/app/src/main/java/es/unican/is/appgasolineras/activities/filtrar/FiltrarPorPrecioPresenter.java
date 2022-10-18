@@ -17,10 +17,10 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
     String maxPrecio;
 
 
-    public FiltrarPorPrecioPresenter(IFiltrarPorPrecioContract.View view, Context c, String maxPrecio){
-        prefs = new Prefs(c, "MY_APP");
+    public FiltrarPorPrecioPresenter(IFiltrarPorPrecioContract.View view,IPrefs prefs, String maxPrecio){
         this.view = view;
         this.maxPrecio = maxPrecio;
+        this.prefs = prefs;
     }
 
     @Override

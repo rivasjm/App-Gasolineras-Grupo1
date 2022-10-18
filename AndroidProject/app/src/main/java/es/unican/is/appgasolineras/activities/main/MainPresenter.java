@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import androidx.annotation.NonNull;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -7,7 +9,6 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
@@ -17,7 +18,9 @@ public class MainPresenter implements IMainContract.Presenter {
     private IGasolinerasRepository repository;
     private IPrefs prefs;
     double max = Double.MIN_VALUE;
+    String maxPrecio;
     Boolean red;
+    private List<Gasolinera> data;
 
     private List<Gasolinera> shownGasolineras;
 
@@ -36,18 +39,26 @@ public class MainPresenter implements IMainContract.Presenter {
             if (red) {
                 doSyncInit();
             } else {
-                doAsyncInit();
+                //Persistir
             }
         }
     }
 
     private void doAsyncInit() {
         repository.requestGasolineras(new Callback<List<Gasolinera>>() {
+
             @Override
             public void onSuccess(List<Gasolinera> data) {
-                data = filtra(data, prefs.getString("tipoGasolina"),
-                        prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
-                prefs.putString("maxPrecio", maximoEntreTodas());
+                System.out.println (prefs.getString("idComunidad"));
+                if (prefs.getString("idComunidad").equals("")){
+                    data = repository.todasGasolineras();
+                }else {
+                    data = repository.getGasolineras(prefs.getString("idComunidad"));
+                }
+                maxPrecio = maximoEntreTodas(data);
+                data = filtraTipo(data, prefs.getString("tipoGasolina"));
+                data = filtraPrecio(data, prefs.getString("maxPrecio"));
+                prefs.putString("maxPrecio", maxPrecio);
                 view.showGasolineras(data);
                 shownGasolineras = data;
                 view.showLoadCorrect(data.size());
@@ -62,11 +73,19 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     private void doSyncInit() {
-        List<Gasolinera> data = repository.getGasolineras();
+        List<Gasolinera> data;
+        if (prefs.getString("idComunidad").equals("")){
+            data = repository.todasGasolineras();
+        }else {
+            data = repository.getGasolineras(prefs.getString("idComunidad"));
+        }
+
         if (data != null) {
-            data = filtra(data, prefs.getString("tipoGasolina"),
-                    prefs.getInt("IDCCAA"), prefs.getString("maxPrecio"));
-            prefs.putString("maxPrecio", maximoEntreTodas());
+            data = filtraTipo(data, prefs.getString("tipoGasolina"));
+            maxPrecio = maximoEntreTodas(data);
+            data = filtraPrecio(data, prefs.getString("maxPrecio"));
+            this.data = data;
+            prefs.putString("maxPrecio", maxPrecio);
             view.showGasolineras(data);
             shownGasolineras = data;
             view.showLoadCorrect(data.size());
@@ -102,50 +121,73 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void onResetFiltroPrecioClicked() {
-        prefs.putString("maxPrecio", maximoEntreTodas());
+        prefs.putString("maxPrecio", maxPrecio);
         doSyncInit();
     }
 
     @Override
-    public List<Gasolinera> filtra(List<Gasolinera> data, String tipoCombustible, int CCAA, String maxPrecio){
+    public List<Gasolinera> filtraTipo(List<Gasolinera> data, String tipoCombustible) {
         List<Gasolinera> listaDevolver = new ArrayList<Gasolinera>();
-        if (maxPrecio.equals("")) {
+        if (tipoCombustible.equals("")) {
             return data;
         } else {
             for (Gasolinera g : data) {
-            /*if (g.getIDCCAAInt() != CCAA && CCAA != 0) {
-                data.remove(g);
-            } else if (tipoCombustible.equals("dieselA")) {
-                if(g.getDieselA().equals("")) {
-                    data.remove(g);
-                    continue;
-                }
-            } else if (tipoCombustible.equals("Normal95")) {
-                if(g.getNormal95().equals("")) {
-                    data.remove(g);
-                    continue;
-                }
-            }*/
-                /*else */
-                BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
-                BigDecimal min;
-                if (g.getNormal95().equals("") && g.getDieselA().equals("")) {
-                    continue;
-                } else if (g.getDieselA().equals("")) {
-                    min = new BigDecimal(g.getNormal95().replace(',', '.')).setScale(3, RoundingMode.UP);
-                } else if (g.getNormal95().equals("")){
-                    min = new BigDecimal(g.getDieselA().replace(',', '.')).setScale(3, RoundingMode.UP);
-                } else {
-                    BigDecimal gas = new BigDecimal(g.getNormal95().replace(',', '.')).setScale(3, RoundingMode.UP);
-                    BigDecimal diesel = new BigDecimal(g.getDieselA().replace(',', '.')).setScale(3, RoundingMode.UP);
-                    if (gas.compareTo(diesel) >= 0) {
-                        min = new BigDecimal(diesel.toString()).setScale(3, RoundingMode.UP);
-                    } else {
-                        min = new BigDecimal(gas.toString()).setScale(3, RoundingMode.UP);
+                if (tipoCombustible.equals("dieselA")) {
+                    if (!g.getDieselA().equals("")) {
+                        listaDevolver.add(g);
                     }
-                }
-                if (min.compareTo(actual) <= 0) {
-                    listaDevolver.add(g);
+                } else if (tipoCombustible.equals("normal95")) {
+                    if (!g.getNormal95().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("normal95E10")) {
+                    if (!g.getGasolina95E10().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("normal95E5p")) {
+                    if (!g.getNormal95Prem().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("normal98E5")) {
+                    if (!g.getGasolina98E5().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("normal98E10")) {
+                    if (!g.getGasolina98E10().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("dieselP")) {
+                    if (!g.getDieselPrem().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("dieselB")) {
+                    if (!g.getDieselB().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("bioEtanol")) {
+                    if (!g.getBioetanol().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("bioDiesel")) {
+                    if (!g.getBiodiesel().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("glp")) {
+                    if (!g.getGasLicPet().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("gasC")) {
+                    if (!g.getGasNatComp().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("gasL")) {
+                    if (!g.getGasNatLic().equals("")) {
+                        listaDevolver.add(g);
+                    }
+                } else if (tipoCombustible.equals("h2")) {
+                    if (!g.getHidrogeno().equals("")) {
+                        listaDevolver.add(g);
+                    }
                 }
             }
             return listaDevolver;
@@ -153,25 +195,278 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public String maximoEntreTodas(){
-        String devolver;
-        List<Gasolinera> data = repository.getGasolineras();
+    public List<Gasolinera> filtraPrecio(List<Gasolinera> data, String maxPrecio) {
+        String tipo = prefs.getString("tipoGasolina");
+        List<Gasolinera> listaDevolver = new ArrayList<Gasolinera>();
+        if (maxPrecio.equals("")) {
+            return data;
+        } else {
+            if (tipo.equals("")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min;
+                    if (g.getNormal95().equals("") && g.getDieselA().equals("")) {
+                        continue;
+                    } else if (g.getDieselA().equals("")) {
+                        min = new BigDecimal(g.getNormal95().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    } else if (g.getNormal95().equals("")) {
+                        min = new BigDecimal(g.getDieselA().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    } else {
+                        BigDecimal gas = new BigDecimal(g.getNormal95().replace(',', '.')).setScale(3, RoundingMode.UP);
+                        BigDecimal diesel = new BigDecimal(g.getDieselA().replace(',', '.')).setScale(3, RoundingMode.UP);
+                        if (gas.compareTo(diesel) >= 0) {
+                            min = new BigDecimal(diesel.toString()).setScale(3, RoundingMode.UP);
+                        } else {
+                            min = new BigDecimal(gas.toString()).setScale(3, RoundingMode.UP);
+                        }
+                    }
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("normal95")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getNormal95().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("normal95E10")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasolina95E10().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("normal95E5p")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getNormal95Prem().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("normal98E5")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasolina98E5().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("normal98E10")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasolina98E10().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("dieselA")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getDieselA().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("dieselP")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getDieselPrem().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("dieselB")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getDieselB().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("bioEtanol")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getBioetanol().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("bioDiesel")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getBiodiesel().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("glp")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasLicPet().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("gasC")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasNatComp().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("gasL")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getGasNatLic().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            } else if (tipo.equals("h2")) {
+                for (Gasolinera g : data) {
+                    BigDecimal actual = new BigDecimal(maxPrecio).setScale(3, RoundingMode.UP);
+                    BigDecimal min = new BigDecimal(g.getHidrogeno().replace(',', '.')).setScale(3, RoundingMode.UP);
+                    if (min.compareTo(actual) <= 0) {
+                        listaDevolver.add(g);
+                    }
+                }
+            }
+
+        }
+        return listaDevolver;
+    }
+
+
+    @Override
+    public String maximoEntreTodas(List<Gasolinera> data){
+        String devolver = "";
+        String tipo = prefs.getString("tipoGasolina");
         if (data == null) {
             devolver = "";
         } else {
-            for (Gasolinera g : data) {
-                if (g.getNormal95() == null || g.getNormal95().equals("")
-                        || g.getDieselA() == null || g.getDieselA().equals("")) {
-                    break;
+            if (tipo.equals("")) {
+                for (Gasolinera g : data) {
+                    if (g.getNormal95() == null || g.getNormal95().equals("")
+                            || g.getDieselA() == null || g.getDieselA().equals("")) {
+                        break;
+                    }
+                    Double maximo = Double.max(Double.parseDouble(g.getNormal95().replace(',','.')),
+                            Double.parseDouble(g.getDieselA().replace(',', '.')));
+                    if (max < maximo) {
+                        max = maximo;
+                    }
                 }
-                Double maximo = Double.max(Double.parseDouble(g.getNormal95().replace(',','.')),
-                        Double.parseDouble(g.getDieselA().replace(',', '.')));
-                if (max < maximo) {
-                    max = maximo;
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("normal95")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getNormal95().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getNormal95().replace(',', '.'));
+                    }
                 }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("normal95E10")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasolina95E10().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasolina95E10().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("normal95E5p")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getNormal95Prem().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getNormal95Prem().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("normal98E5")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasolina98E5().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasolina98E5().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("normal8E10")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasolina98E10().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasolina98E10().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("dieselA")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getDieselA().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getDieselA().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("dieselP")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getDieselPrem().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getDieselPrem().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("dieselB")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getDieselB().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getDieselB().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("bioEtanol")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getBioetanol().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getBioetanol().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("bioDiesel")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getBiodiesel().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getBiodiesel().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("glp")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasLicPet().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasLicPet().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("gasC")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasNatComp().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasNatComp().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("gasL")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getGasNatLic().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getGasNatLic().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
+            } else if (tipo.equals("h2")) {
+                for (Gasolinera g : data) {
+                    if(Double.parseDouble(g.getHidrogeno().replace(',', '.')) > max) {
+                        max = Double.parseDouble(g.getHidrogeno().replace(',', '.'));
+                    }
+                }
+                devolver = String.valueOf(max);
             }
-            devolver = String.valueOf(max);
         }
         return devolver;
+    }
+
+    public String getMaximoEntreTodas() {
+        return maximoEntreTodas(data);
     }
 }

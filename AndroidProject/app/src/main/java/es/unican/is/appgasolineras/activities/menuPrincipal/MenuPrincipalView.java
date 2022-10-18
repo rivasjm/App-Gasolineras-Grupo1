@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
 import es.unican.is.appgasolineras.activities.info.InfoView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 
@@ -47,6 +48,7 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
 
     @Override
     public void openFiltrosPermanentesView() {
-        // Rellenar
+        Intent intent = new Intent(this, FiltroPermanenteView.class);
+        startActivity(intent);
     }
 }
