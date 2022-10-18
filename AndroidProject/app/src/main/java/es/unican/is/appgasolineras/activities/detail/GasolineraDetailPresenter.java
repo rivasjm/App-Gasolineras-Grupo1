@@ -29,11 +29,21 @@ public class GasolineraDetailPresenter implements IDetailContract.Presenter {
         }
         String precioDiesel = "";
         if(!g.getDieselA().isEmpty()) {
-            precioDiesel = g.getDieselA().substring(0,4) + " €";
+            precioDiesel = g.getDieselA();
+            if (precioDiesel.length() > 3){
+                precioDiesel = precioDiesel.substring(0,4) + " €";
+            } else {
+                precioDiesel += " €";
+            }
         }
         String precioGasolina = "";
         if(!g.getNormal95().isEmpty()) {
-            precioGasolina = g.getNormal95().substring(0,4) + " €";
+            precioGasolina = g.getNormal95();
+            if (precioGasolina.length() > 3){
+                precioGasolina = precioGasolina.substring(0,4) + " €";
+            } else {
+                precioGasolina += " €";
+            }
         }
         String direccion = "";
         if(!g.getDireccion().isEmpty()) {

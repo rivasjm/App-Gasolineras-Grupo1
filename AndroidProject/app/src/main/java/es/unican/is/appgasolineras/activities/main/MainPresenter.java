@@ -345,6 +345,9 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public String maximoEntreTodas(List<Gasolinera> data){
+        if (data.isEmpty()){
+            return "0.00";
+        }
         String devolver = "";
         String tipo = prefs.getString("tipoGasolina");
         if (data == null) {
