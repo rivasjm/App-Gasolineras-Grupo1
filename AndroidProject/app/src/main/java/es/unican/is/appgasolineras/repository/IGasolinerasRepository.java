@@ -29,5 +29,5 @@ public interface IGasolinerasRepository {
      */
     public List<Gasolinera> getGasolineras(String idCCAA);
 
-    List<Gasolinera> todasGasolineras();
+    public List<Gasolinera> todasGasolineras();
 }

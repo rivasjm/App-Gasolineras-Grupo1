@@ -41,7 +41,6 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
             @Override
             public void onFailure() {
-
                 cb.onFailure();
             }
         });
