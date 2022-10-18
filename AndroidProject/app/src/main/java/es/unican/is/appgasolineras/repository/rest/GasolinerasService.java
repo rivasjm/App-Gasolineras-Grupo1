@@ -1,6 +1,5 @@
 package es.unican.is.appgasolineras.repository.rest;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +40,7 @@ public class GasolinerasService {
      */
     public static void requestGasolineras(Callback<GasolinerasResponse> cb) {
         final Call<GasolinerasResponse> call = getAPI().gasolineras(IDCCAAs.CANTABRIA.id);
-        call.enqueue(new CallbackAdapter(cb));
+        call.enqueue(new CallbackAdapter<>(cb));
     }
 
     /**
@@ -50,21 +49,7 @@ public class GasolinerasService {
      */
     public static GasolinerasResponse getGasolineras(String id) {
         final Call<GasolinerasResponse> call = getAPI().gasolineras(id);
-
-        List<Gasolinera> gasolineras;
-        ExecutorService executor = Executors.newFixedThreadPool(1);
-        CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
-        executor.execute(runnable);
-
-        // wait until background task finishes
-        executor.shutdown();
-        try {
-            executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {}
-
-        // if there was some problem, response is null
-        GasolinerasResponse response = runnable.response;
-        return response;
+        return devolverResponse(call);
     }
 
     /**
@@ -73,8 +58,10 @@ public class GasolinerasService {
      */
     public static GasolinerasResponse todasGasolineras() {
         final Call<GasolinerasResponse> call = getAPI().todasGasolineras();
+        return devolverResponse(call);
+    }
 
-        List<Gasolinera> gasolineras;
+    private static GasolinerasResponse devolverResponse(Call<GasolinerasResponse> call) {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
         executor.execute(runnable);
@@ -83,11 +70,12 @@ public class GasolinerasService {
         executor.shutdown();
         try {
             executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         // if there was some problem, response is null
-        GasolinerasResponse response = runnable.response;
-        return response;
+        return runnable.response;
     }
 
 }

@@ -1,7 +1,5 @@
 package es.unican.is.appgasolineras.activities.filtrar;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import java.math.BigDecimal;
@@ -9,7 +7,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 
 public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Presenter{
     IPrefs prefs;
@@ -25,7 +22,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public void init() {
-
+        //No necesita inicializarse nada
     }
 
     @Override

@@ -112,13 +112,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             presenter.onGasolineraClicked(position);
         });
         Button precio = findViewById(R.id.btnFiltroPrecio);
-        precio.setOnClickListener(view ->  {
-            presenter.onPrecioClicked();
-        });
+        precio.setOnClickListener(view ->
+            presenter.onPrecioClicked()
+        );
         ImageButton resetFiltroPrecio = findViewById(R.id.btnResetearFiltros);
-        resetFiltroPrecio.setOnClickListener(view ->  {
-            presenter.onResetFiltroPrecioClicked();
-        });
+        resetFiltroPrecio.setOnClickListener(view ->
+            presenter.onResetFiltroPrecioClicked()
+        );
     }
 
     @Override
@@ -180,6 +180,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
         startActivity(intent);
+        prefs.putString("maxPrecio","");
     }
 
 

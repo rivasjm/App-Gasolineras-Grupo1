@@ -9,9 +9,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
 import java.util.Locale;
 
 import es.unican.is.appgasolineras.R;
