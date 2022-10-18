@@ -20,7 +20,7 @@ public class MostrarGasolinerasUITest {
 
     @BeforeClass
     public static void setUp() {
-        GasolinerasServiceConstants.setStaticURL();
+        GasolinerasServiceConstants.setStaticURL2();
     }
 
     @AfterClass
