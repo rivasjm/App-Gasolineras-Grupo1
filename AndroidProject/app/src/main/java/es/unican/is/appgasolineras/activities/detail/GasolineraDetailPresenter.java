@@ -1,8 +1,5 @@
 package es.unican.is.appgasolineras.activities.detail;
 
-import java.util.Locale;
-
-import es.unican.is.appgasolineras.activities.main.IMainContract;
 import es.unican.is.appgasolineras.model.Gasolinera;
 
 public class GasolineraDetailPresenter implements IDetailContract.Presenter {

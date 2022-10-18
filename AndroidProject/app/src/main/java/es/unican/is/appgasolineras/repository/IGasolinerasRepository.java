@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.common.Callback;
 import es.unican.is.appgasolineras.model.Gasolinera;
-import es.unican.is.appgasolineras.model.GasolinerasResponse;
 
 /**
  * A Repository to access gas stations/

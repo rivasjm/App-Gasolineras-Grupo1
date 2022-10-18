@@ -3,7 +3,6 @@ package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -12,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.main.MainPresenter;
-import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
