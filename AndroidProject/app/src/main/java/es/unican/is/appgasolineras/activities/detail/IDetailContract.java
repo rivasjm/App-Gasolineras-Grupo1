@@ -1,6 +1,5 @@
 package es.unican.is.appgasolineras.activities.detail;
 
-import es.unican.is.appgasolineras.model.Gasolinera;
 
 public interface IDetailContract {
     public interface Presenter {

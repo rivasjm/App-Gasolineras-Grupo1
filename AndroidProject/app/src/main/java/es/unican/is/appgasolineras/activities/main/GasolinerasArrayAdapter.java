@@ -20,7 +20,7 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 
 public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
     private IPrefs prefs;
-    private static final String tipoGasolina = "tipoGasolina";
+    private static final String TIPOGASOLINA = "tipoGasolina";
     public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, IPrefs prefs) {
         super(context, 0, objects);
         this.prefs = prefs;
@@ -68,7 +68,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
             TextView tv = convertView.findViewById(R.id.tvAddress);
             tv.setText(gasolinera.getDireccion());
         }
-        if (prefs.getString(tipoGasolina).equals("")) {
+        if (prefs.getString(TIPOGASOLINA).equals("")) {
             // 95 octanes price
             {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
@@ -89,7 +89,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 tv.setText(gasolinera.getDieselA());
             }
         } else {
-            if (prefs.getString(tipoGasolina).equals("normal95")){
+            if (prefs.getString(TIPOGASOLINA).equals("normal95")){
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = getContext().getResources().getString(R.string.gasolina95label);
@@ -98,7 +98,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getNormal95());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("dieselA")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("dieselA")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = getContext().getResources().getString(R.string.dieselAlabel);
@@ -107,7 +107,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getDieselA());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("normal95E10")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("normal95E10")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gasolina 95 E10";
@@ -116,7 +116,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasolina95E10());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("normal95E5p")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("normal95E5p")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gasolina 95 E5 Premium";
@@ -125,7 +125,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getNormal95Prem());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("normal98E5")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("normal98E5")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gasolina 98 E5";
@@ -134,7 +134,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasolina98E5());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("normal98E10")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("normal98E10")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gasolina 98 E10";
@@ -143,7 +143,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasolina98E10());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("dieselP")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("dieselP")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Diesel Premium";
@@ -152,7 +152,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getDieselPrem());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("dieselB")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("dieselB")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Diesel B";
@@ -161,7 +161,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getDieselB());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("bioEtanol")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("bioEtanol")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Bioetanol";
@@ -170,7 +170,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getBioetanol());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("bioDiesel")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("bioDiesel")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Biodiesel";
@@ -179,7 +179,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getBiodiesel());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("glp")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("glp")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gases licuados del petróleo";
@@ -188,7 +188,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasLicPet());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("gasC")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("gasC")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gas Natural Comprimido";
@@ -197,7 +197,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasNatComp());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("gasL")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("gasL")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Gas Natural Licuado";
@@ -206,7 +206,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 TextView tv = convertView.findViewById(R.id.tv95);
                 tv.setText(gasolinera.getGasNatLic());
                 setTextDieselVacio(convertView);
-            } else if (prefs.getString(tipoGasolina).equals("h2")) {
+            } else if (prefs.getString(TIPOGASOLINA).equals("h2")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = "Hidrógeno";

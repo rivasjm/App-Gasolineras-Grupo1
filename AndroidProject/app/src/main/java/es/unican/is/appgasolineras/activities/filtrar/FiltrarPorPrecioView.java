@@ -61,17 +61,14 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (mHandler != null) return true;
-                        mHandler = new Handler();
-                        mHandler.postDelayed(mAction, 50);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mHandler == null) return true;
-                        mHandler.removeCallbacks(mAction);
-                        mHandler = null;
-                        break;
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mHandler != null) return true;
+                    mHandler = new Handler();
+                    mHandler.postDelayed(mAction, 50);
+                } else {
+                    if (mHandler == null) return true;
+                    mHandler.removeCallbacks(mAction);
+                    mHandler = null;
                 }
                 return false;
             }
@@ -93,17 +90,14 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (mHandler != null) return true;
-                        mHandler = new Handler();
-                        mHandler.postDelayed(mAction, 50);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mHandler == null) return true;
-                        mHandler.removeCallbacks(mAction);
-                        mHandler = null;
-                        break;
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mHandler != null) return true;
+                    mHandler = new Handler();
+                    mHandler.postDelayed(mAction, 50);
+                } else {
+                    if (mHandler == null) return true;
+                    mHandler.removeCallbacks(mAction);
+                    mHandler = null;
                 }
                 return false;
             }
@@ -119,14 +113,14 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         });
 
         btnResetear = findViewById(R.id.btnResetear);
-        btnResetear.setOnClickListener(view -> {
-            tvPrecioLimite.setText(max.substring(0,4));
-        });
+        btnResetear.setOnClickListener(view ->
+            tvPrecioLimite.setText(max.substring(0,4))
+        );
 
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
-        btnMostrarResultados.setOnClickListener(view -> {
-            presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()));
-        });
+        btnMostrarResultados.setOnClickListener(view ->
+            presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()))
+        );
     }
 
     @Override
