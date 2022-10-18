@@ -42,7 +42,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         getSupportActionBar().setTitle("Filtros permanentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        presenter = new FiltroPermanentePresenter(this, prefs);
+        presenter = new FiltroPermanentePresenter(prefs);
         presenter.init();
         this.init();
 

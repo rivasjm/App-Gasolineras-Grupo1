@@ -180,6 +180,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
         startActivity(intent);
+        prefs.putString("maxPrecio","");
     }
 
 

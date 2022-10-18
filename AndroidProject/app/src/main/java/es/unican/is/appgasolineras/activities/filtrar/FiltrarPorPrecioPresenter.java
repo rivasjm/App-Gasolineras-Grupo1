@@ -25,7 +25,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public void init() {
-
+        //No necesita inicializarse nada
     }
 
     @Override

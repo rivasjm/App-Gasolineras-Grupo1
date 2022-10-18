@@ -61,7 +61,9 @@ public class GasolinerasService {
         executor.shutdown();
         try {
             executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         // if there was some problem, response is null
         GasolinerasResponse response = runnable.response;
@@ -84,7 +86,9 @@ public class GasolinerasService {
         executor.shutdown();
         try {
             executor.awaitTermination(TIMEOUT_SECONDS, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         // if there was some problem, response is null
         GasolinerasResponse response = runnable.response;

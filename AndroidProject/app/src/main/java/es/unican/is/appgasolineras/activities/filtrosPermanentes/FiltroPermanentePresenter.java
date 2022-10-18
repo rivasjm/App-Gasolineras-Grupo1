@@ -4,19 +4,17 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
 
 
 public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
-    private final IPermanenteContract.view view;
     private IPrefs pref;
     private FiltroPermanenteMapper mapper;
 
-    public FiltroPermanentePresenter(IPermanenteContract.view view, IPrefs pref){
-        this.view = view;
+    public FiltroPermanentePresenter(IPrefs pref){
         this.pref = pref;
         mapper = new FiltroPermanenteMapper();
     }
 
     @Override
     public void init() {
-
+        //No necesita inicializarse nada
     }
 
     @Override
