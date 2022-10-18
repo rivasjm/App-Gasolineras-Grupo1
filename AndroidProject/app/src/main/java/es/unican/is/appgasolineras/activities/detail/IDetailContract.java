@@ -16,7 +16,18 @@ public interface IDetailContract {
 
     }
     public interface View {
+        /**
+         * This method set the info of the gas station
+         * @param municipio city of the gas station
+         * @param rotulo name of the gas station
+         * @param horario schedule of the gas station
+         * @param normal95 price of the gasolina
+         * @param dieselA price of the diesel
+         * @param media price 2/3 gasolina + 1/3 diesel
+         * @param direccion direction of the gas station
+         */
         void setInfo(String municipio, String rotulo, String horario, String normal95,
                      String dieselA, String media, String direccion);
     }
 }
+
