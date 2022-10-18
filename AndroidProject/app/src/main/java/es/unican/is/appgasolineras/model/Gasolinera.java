@@ -46,14 +46,16 @@ public class Gasolinera implements Parcelable {
     @SerializedName("IDCCAA")                               private String IDCCAA;
 
     public Gasolinera() {
-
+        this.id = "";
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
