@@ -15,12 +15,12 @@ import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 
-public class FiltroPermanenteView extends AppCompatActivity implements IPermanenteContract.view {
+public class FiltroPermanenteView extends AppCompatActivity implements IPermanenteContract.View {
     Spinner spnCombustible;
     Spinner spnCCAA;
     IPrefs prefs;
 
-    IPermanenteContract.presenter presenter;
+    IPermanenteContract.Presenter presenter;
     FiltroPermanenteMapper mapper;
 
     @Override
@@ -76,6 +76,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         });
     }
 
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();

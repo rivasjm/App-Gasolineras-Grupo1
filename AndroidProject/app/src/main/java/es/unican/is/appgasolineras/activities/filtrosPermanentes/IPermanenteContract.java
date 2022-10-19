@@ -2,7 +2,7 @@ package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 
 public interface IPermanenteContract {
 
-    public interface presenter {
+    public interface Presenter {
         /**
          * Initialization method
          */
@@ -23,7 +23,7 @@ public interface IPermanenteContract {
     }
 
 
-    public interface view{
+    public interface View {
         /**
          * Initialization method
          */
