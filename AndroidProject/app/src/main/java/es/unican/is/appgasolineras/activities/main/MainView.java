@@ -108,9 +108,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void init() {
         // init UI listeners
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
-        lvGasolineras.setOnItemClickListener((parent, view, position, id) -> {
-            presenter.onGasolineraClicked(position);
-        });
+        lvGasolineras.setOnItemClickListener((parent, view, position, id) ->
+            presenter.onGasolineraClicked(position)
+        );
         Button precio = findViewById(R.id.btnFiltroPrecio);
         precio.setOnClickListener(view ->
             presenter.onPrecioClicked()
@@ -140,7 +140,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         } else{
             String text = getResources().getString(R.string.loadCorrect);
-            Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
         }
     }
 
