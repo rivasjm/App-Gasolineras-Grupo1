@@ -21,6 +21,8 @@ public class GasolinerasService {
 
     private static GasolinerasAPI api;
 
+    private GasolinerasService() {}
+
     private static GasolinerasAPI getAPI() {
         if (api == null) {
             Retrofit retrofit = new Retrofit.Builder()
