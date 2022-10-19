@@ -3,7 +3,7 @@ package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 
 
-public class FiltroPermanentePresenter implements IPermanenteContract.presenter{
+public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
     private IPrefs pref;
     private FiltroPermanenteMapper mapper;
 
