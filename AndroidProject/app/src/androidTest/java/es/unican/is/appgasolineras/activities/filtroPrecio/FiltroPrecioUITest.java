@@ -1,15 +1,14 @@
 package es.unican.is.appgasolineras.activities.filtroPrecio;
 
-import static androidx.test.espresso.Espresso.onData;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.anything;
 
-import android.widget.Button;
+import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
+
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
@@ -43,27 +42,66 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
         for (int i = 0; i < 10; i++) {
+
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
         onView(withId(R.id.btnResetear)).perform(click());
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.02")));
 
     }
 
 
     @Test
-    public void mostrarFiltradoPrecioTest() {
+    public void modificaFiltroPrecioTest() {
+        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnFiltroPrecio)).perform(click());
+
+        //primero intento subir el precio para comprobar que no sobrepasa el limite superior
+        for (int i = 0; i < 3; i++) {
+
+            onView(withId(R.id.btnSubirPrecio)).perform(click());
+        }
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.02")));
+
+
+        //resto 10 decimales al precio
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            onView(withId(R.id.btnBajarPrecio)).perform(click());
+
+            //await().atMost(2, 100.0).until(onView(withId(R.id.btnBajarPrecio)).perform(click()));
+        }
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.92")));
+
+        //le sumo 3 decimales al precio
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            onView(withId(R.id.btnSubirPrecio)).perform(click());
+        }
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.95")));
+
+        for (int i = 0; i < 210; i++) {
+
+            onView(withId(R.id.btnBajarPrecio)).perform(click());
+        }
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("0.00")));
+    }
+
+    @Test
+    public void muestraResultadosFiltroTest() {
 
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
-        float precioFiltro = Float.parseFloat("tvPrecioLimite".toString());
-        for (int i = 0; i < 10; i++) {
-            onView(withId(R.id.btnBajarPrecio)).perform(click());
-        }
-
-        //onView(withId(R.id.spinner_combustible)).check(matches(withText()));
 
         onView(withId(R.id.btnMostrarResultados)).perform(click());
-        onView(withId(R.id.lvGasolineras)).perform(click());
-        onView(withId(R.id.tvGasolina)).check(matches(withText("tvPrecioLimite")));
+        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
 }
