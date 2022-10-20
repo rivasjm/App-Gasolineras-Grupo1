@@ -51,7 +51,7 @@ public class MainPresenter implements IMainContract.Presenter {
             repository = view.getGasolineraRepository();
         }
         if (repository != null) {
-            if (red) {
+            if (Boolean.TRUE.equals(red)) {
                 doSyncInit();
             } else {
                 //Persistir
@@ -293,115 +293,75 @@ public class MainPresenter implements IMainContract.Presenter {
             return "0.00";
         }
         String tipo = prefs.getString(TIPOGASOLINA);
+        Double maximum;
         switch (tipo) {
             case DIESELA:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getDieselA().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getDieselA().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselA().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case NORMAL95:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getNormal95().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getNormal95().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getNormal95().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case NORMAL95E10:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasolina95E10().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasolina95E10().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina95E10().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case NORMAL95E5P:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getNormal95Prem().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getNormal95Prem().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getNormal95Prem().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case NORMAL98E5:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasolina98E5().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasolina98E5().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina98E5().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case NORMAL98E10:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasolina98E10().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasolina98E10().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina98E10().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case DIESELB:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getDieselB().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getDieselB().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselB().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case DIESELP:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getDieselPrem().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getDieselPrem().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselPrem().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case BIOETANOL:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getBioetanol().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getBioetanol().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getBioetanol().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case BIODIESEL:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getBiodiesel().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getBiodiesel().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getBiodiesel().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case GLP:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasLicPet().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasLicPet().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasLicPet().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case GASC:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasNatComp().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasNatComp().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasNatComp().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case GASL:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getGasNatLic().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getGasNatLic().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasNatLic().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             case H2:
-                for (Gasolinera g : data) {
-                    if(Double.parseDouble(g.getHidrogeno().replace(',', '.')) > max) {
-                        max = Double.parseDouble(g.getHidrogeno().replace(',', '.'));
-                    }
-                }
+                maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getHidrogeno().replace(',', '.'))).max().getAsDouble();
+                max = maximum;
                 break;
             default:
                 for (Gasolinera g : data) {
                     if (g.getNormal95() == null || g.getNormal95().equals("")
                             || g.getDieselA() == null || g.getDieselA().equals("")) {
-                        break;
-                    }
-                    Double maximo = Double.max(Double.parseDouble(g.getNormal95().replace(',','.')),
-                            Double.parseDouble(g.getDieselA().replace(',', '.')));
-                    if (max < maximo) {
-                        max = maximo;
+                    } else {
+                        Double gas = Double.parseDouble(g.getNormal95().replace(',','.'));
+                        Double die = Double.parseDouble(g.getDieselA().replace(',', '.'));
+                        maximum = Double.max(gas, die);
+                        if (maximum > max) {
+                            max = maximum;
+                        }
                     }
                 }
         }
