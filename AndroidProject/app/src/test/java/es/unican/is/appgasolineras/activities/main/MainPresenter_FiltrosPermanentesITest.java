@@ -20,7 +20,6 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioPresenter;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -39,7 +38,6 @@ public class MainPresenter_FiltrosPermanentesITest {
     private static IPrefs prefs;
     private static Context con;
     private List<Gasolinera> listGasolineras;
-    private Gasolinera gas;
 
     @Before
     public void inicializa() {
@@ -61,11 +59,11 @@ public class MainPresenter_FiltrosPermanentesITest {
     }
 
     @Test
-    public void filtraTipoTest() {
+    public void filtraTipoTestInterfaz() {
 
         // Caso de prueba UGIC 1.a
         //Creamos la lista de gasolineras
-        listGasolineras = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
         listGasolineras = gasolineras.todasGasolineras();
 
         // Caso de prueba UGIC 1.a
@@ -74,7 +72,7 @@ public class MainPresenter_FiltrosPermanentesITest {
 
         // Caso de prueba UGIC 1.a
         //Creamos la lista de gasolineras
-        listGasolineras = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
         listGasolineras = gasolineras.todasGasolineras();
 
 
@@ -84,66 +82,11 @@ public class MainPresenter_FiltrosPermanentesITest {
 
         // Caso de prueba UGIC 1.a
         //Creamos la lista de gasolineras
-        listGasolineras = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
         listGasolineras = gasolineras.todasGasolineras();
 
         // Caso de prueba UGIC 1.a
         assertEquals(main.filtraTipo(listGasolineras,
                 "").size(), listGasolineras.size());
-        /**
-        // Caso de prueba UGIC 1.c
-        listGasolineras = new ArrayList<Gasolinera>();
-        listDevueltas = new ArrayList<Gasolinera>();
-        gas = new Gasolinera();
-        gas.setDieselA("1,97");
-        gas.setDieselB("");
-        listGasolineras.add(gas);
-        gas = new Gasolinera();
-        gas.setNormal95("1,81");
-        gas.setDieselB("");
-        listGasolineras.add(gas);
-        gas = new Gasolinera();
-        gas.setDieselA("2,01");
-        gas.setDieselB("");
-        listGasolineras.add(gas);
-        gas = new Gasolinera();
-        gas.setNormal95Prem("1,91");
-        gas.setDieselB("");
-        listGasolineras.add(gas);
-
-        when(mockGasolineras.todasGasolineras())
-                .thenReturn(listGasolineras);
-
-        assertEquals(main.filtraTipo(mockGasolineras.todasGasolineras(),
-                "dieselB"), listDevueltas);
-        assertEquals(listDevueltas.size(), main.filtraTipo(mockGasolineras.todasGasolineras(),
-                "dieselB").size());
-
-        // Caso de prueba UGIC 1.d
-        listGasolineras = new ArrayList<Gasolinera>();
-        listDevueltas = new ArrayList<Gasolinera>();
-        gas = new Gasolinera();
-        gas.setDieselA("1,97");
-        listGasolineras.add(gas);
-        listDevueltas.add(gas);
-        gas = new Gasolinera();
-        gas.setNormal95("1,81");
-        listGasolineras.add(gas);
-        listDevueltas.add(gas);
-        gas = new Gasolinera();
-        gas.setDieselA("2,01");
-        listGasolineras.add(gas);
-        listDevueltas.add(gas);
-        gas = new Gasolinera();
-        gas.setNormal95Prem("1,91");
-        listGasolineras.add(gas);
-        listDevueltas.add(gas);
-
-        when(mockGasolineras.todasGasolineras())
-                .thenReturn(listGasolineras);
-
-        assertEquals(main.filtraTipo(mockGasolineras.todasGasolineras(),
-                ""), listDevueltas);
-        */
     }
 }

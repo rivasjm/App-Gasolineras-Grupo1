@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import junit.framework.TestCase;
-
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -33,12 +31,12 @@ public class MainPresenter_FiltrosPermanentesTest {
     }
 
     @Test
-    public void filtraTipoTest() {
+    public void filtraTipoTestUnitarias() {
 
         // Caso de prueba UGIC 1.a
         //Creamos la lista de gasolineras
-        listGasolineras = new ArrayList<Gasolinera>();
-        List<Gasolinera>listDevueltas = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
+        List<Gasolinera>listDevueltas = new ArrayList<>();
         gas = new Gasolinera();
         gas.setDieselA("1,97");
         listGasolineras.add(gas);
@@ -64,8 +62,8 @@ public class MainPresenter_FiltrosPermanentesTest {
                 "dieselA"),listDevueltas);
 
         // Caso de prueba UGIC 1.c
-        listGasolineras = new ArrayList<Gasolinera>();
-        listDevueltas = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
+        listDevueltas = new ArrayList<>();
         gas = new Gasolinera();
         gas.setDieselA("1,97");
         gas.setDieselB("");
@@ -92,8 +90,8 @@ public class MainPresenter_FiltrosPermanentesTest {
                 "dieselB").size());
 
         // Caso de prueba UGIC 1.d
-        listGasolineras = new ArrayList<Gasolinera>();
-        listDevueltas = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
+        listDevueltas = new ArrayList<>();
         gas = new Gasolinera();
         gas.setDieselA("1,97");
         listGasolineras.add(gas);
@@ -116,9 +114,5 @@ public class MainPresenter_FiltrosPermanentesTest {
 
         assertEquals(main.filtraTipo(mockGasolineras.todasGasolineras(),
                 ""),listDevueltas);
-
-
-
-
     }
 }
