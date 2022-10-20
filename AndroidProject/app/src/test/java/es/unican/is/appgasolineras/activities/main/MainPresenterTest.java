@@ -1,28 +1,18 @@
-package es.unican.is.appgasolineras.activities.filtrar;
+package es.unican.is.appgasolineras.activities.main;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import android.content.Context;
-import android.view.View;
-
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import es.unican.is.appgasolineras.activities.main.IMainContract;
-import es.unican.is.appgasolineras.activities.main.MainPresenter;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
-import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
-public class MainPresenter_filtroPorPrecioTest {
+public class MainPresenterTest {
     private static IMainContract.View mockviewMainPresenter;
     private static IPrefs mockPrefs;
     private static MainPresenter main;
