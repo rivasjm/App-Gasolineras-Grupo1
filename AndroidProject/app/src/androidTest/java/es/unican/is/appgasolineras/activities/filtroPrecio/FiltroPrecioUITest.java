@@ -46,8 +46,7 @@ public class FiltroPrecioUITest {
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
         onView(withId(R.id.btnResetear)).perform(click());
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.02")));
-
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
     }
 
 
@@ -61,8 +60,7 @@ public class FiltroPrecioUITest {
 
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.02")));
-
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
 
         //resto 10 decimales al precio
         for (int i = 0; i < 10; i++) {
@@ -75,7 +73,7 @@ public class FiltroPrecioUITest {
 
             //await().atMost(2, 100.0).until(onView(withId(R.id.btnBajarPrecio)).perform(click()));
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.92")));
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.93")));
 
         //le sumo 3 decimales al precio
         for (int i = 0; i < 3; i++) {
@@ -86,7 +84,7 @@ public class FiltroPrecioUITest {
             }
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.95")));
+        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.96")));
 
         for (int i = 0; i < 210; i++) {
 
@@ -97,7 +95,6 @@ public class FiltroPrecioUITest {
 
     @Test
     public void muestraResultadosFiltroTest() {
-
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
 
