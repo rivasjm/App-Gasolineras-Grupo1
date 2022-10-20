@@ -31,8 +31,8 @@ public class MainPresenterTest {
 
         when(mockPrefs.getString(TIPOGASOLINA)).thenReturn("dieselA");
 
-        listGasolineras = new ArrayList<Gasolinera>();
-        listGasolinerasVacia = new ArrayList<Gasolinera>();
+        listGasolineras = new ArrayList<>();
+        listGasolinerasVacia = new ArrayList<>();
 
         Gasolinera g = new Gasolinera();
         Gasolinera g2 = new Gasolinera();

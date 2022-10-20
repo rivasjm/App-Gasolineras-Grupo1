@@ -42,11 +42,7 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
         for (int i = 0; i < 10; i++) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            dormir();
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
         onView(withId(R.id.btnResetear)).perform(click());
@@ -61,22 +57,14 @@ public class FiltroPrecioUITest {
 
         //primero intento subir el precio para comprobar que no sobrepasa el limite superior
         for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            dormir();
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
         onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
 
         //resto 10 decimales al precio
         for (int i = 0; i < 10; i++) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            dormir();
             onView(withId(R.id.btnBajarPrecio)).perform(click());
 
             //await().atMost(2, 100.0).until(onView(withId(R.id.btnBajarPrecio)).perform(click()));
@@ -85,11 +73,7 @@ public class FiltroPrecioUITest {
 
         //le sumo 3 decimales al precio
         for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            dormir();
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
         onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.96")));
@@ -108,5 +92,13 @@ public class FiltroPrecioUITest {
 
         onView(withId(R.id.btnMostrarResultados)).perform(click());
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
+    }
+
+    private void dormir() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

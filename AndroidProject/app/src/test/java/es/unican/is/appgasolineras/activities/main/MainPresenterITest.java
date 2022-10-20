@@ -40,7 +40,6 @@ public class MainPresenterITest {
 
     @Mock
     private IMainContract.View mockMainContract; // Definición del objeto Mock
-    private MainView sut;
 
     MainPresenter presenter = null;
     GasolinerasRepository gasolineras;
