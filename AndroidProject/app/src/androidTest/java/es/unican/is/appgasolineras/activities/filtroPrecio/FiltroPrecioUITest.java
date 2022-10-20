@@ -42,7 +42,11 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
         for (int i = 0; i < 10; i++) {
-
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
         onView(withId(R.id.btnResetear)).perform(click());
@@ -57,7 +61,11 @@ public class FiltroPrecioUITest {
 
         //primero intento subir el precio para comprobar que no sobrepasa el limite superior
         for (int i = 0; i < 3; i++) {
-
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
         onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
