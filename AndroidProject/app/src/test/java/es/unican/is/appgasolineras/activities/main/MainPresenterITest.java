@@ -22,7 +22,6 @@ import org.robolectric.annotation.Config;
 import java.util.LinkedList;
 
 import es.unican.is.appgasolineras.common.prefs.Prefs;
-import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
@@ -60,21 +59,21 @@ public class MainPresenterITest {
     }
 
     @Test
-    public void filtraPrecio() {
+    public void filtraPrecioTest() {
         //caso1
         assertEquals(156, presenter.filtraPrecio(gasolineras.todasGasolineras(), "2.04").size());
         //caso 2
         assertEquals(0, presenter.filtraPrecio(gasolineras.todasGasolineras(), "-2.04").size());
         //caso2
-        assertEquals(0, presenter.filtraPrecio(new LinkedList<Gasolinera>(), "2.04").size());
+        assertEquals(0, presenter.filtraPrecio(new LinkedList<>(), "2.04").size());
 
     }
 
     @Test
-    public void maximoEntreTodas() {
+    public void maximoEntreTodasTest() {
         //caso1 ver maxima
         assertEquals("2.039", presenter.maximoEntreTodas(gasolineras.todasGasolineras()));
         //caso2 lista vacia
-        assertEquals("0.00", presenter.maximoEntreTodas(new LinkedList<Gasolinera>()));
+        assertEquals("0.00", presenter.maximoEntreTodas(new LinkedList<>()));
     }
 }
