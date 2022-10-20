@@ -29,7 +29,7 @@ import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {Build.VERSION_CODES.O_MR1})
-public class MainPresenter_FiltrosPermanentesITest {
+public class MainPresenterITest {
 
 
     private static MainPresenter main;

@@ -13,7 +13,7 @@ import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
-public class MainPresenter_FiltrosPermanentesTest {
+public class MainPresenterTest {
 
     private static MainPresenter main;
     private static IMainContract.View view;
