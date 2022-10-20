@@ -355,6 +355,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 for (Gasolinera g : data) {
                     if (g.getNormal95() == null || g.getNormal95().equals("")
                             || g.getDieselA() == null || g.getDieselA().equals("")) {
+                        //Pasamos al siguiente
                     } else {
                         Double gas = Double.parseDouble(g.getNormal95().replace(',','.'));
                         Double die = Double.parseDouble(g.getDieselA().replace(',', '.'));
