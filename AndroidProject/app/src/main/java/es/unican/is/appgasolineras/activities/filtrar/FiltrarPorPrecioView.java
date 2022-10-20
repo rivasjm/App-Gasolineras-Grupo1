@@ -64,16 +64,16 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (mHandler != null) return true;
                     mHandler = new Handler();
-                    mHandler.postDelayed(mAction, 50);
+                    mHandler.postDelayed(mActionBajar, 50);
                 } else {
                     if (mHandler == null) return true;
-                    mHandler.removeCallbacks(mAction);
+                    mHandler.removeCallbacks(mActionBajar);
                     mHandler = null;
                 }
                 return false;
             }
 
-            Runnable mAction = new Runnable() {
+            Runnable mActionBajar = new Runnable() {
                 @Override
                 public void run() {
                     String actual = String.valueOf(tvPrecioLimite.getText());
@@ -93,16 +93,16 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (mHandler != null) return true;
                     mHandler = new Handler();
-                    mHandler.postDelayed(mAction, 50);
+                    mHandler.postDelayed(mActionSubir, 50);
                 } else {
                     if (mHandler == null) return true;
-                    mHandler.removeCallbacks(mAction);
+                    mHandler.removeCallbacks(mActionSubir);
                     mHandler = null;
                 }
                 return false;
             }
 
-            Runnable mAction = new Runnable() {
+            Runnable mActionSubir = new Runnable() {
                 @Override
                 public void run() {
                     String actual = String.valueOf(tvPrecioLimite.getText());

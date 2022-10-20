@@ -53,7 +53,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
             BigDecimal res = BigDecimal.valueOf(0.01000000);
             actual = actual.subtract(res, MathContext.DECIMAL32);
         } else {
-            actual = new BigDecimal(0).setScale(2, RoundingMode.UP);;
+            actual = new BigDecimal(0).setScale(2, RoundingMode.UP);
         }
         devolver = getStringCorrecto(actual);
         return devolver;

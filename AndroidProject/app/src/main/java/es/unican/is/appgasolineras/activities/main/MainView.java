@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -54,7 +55,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         prefs = Prefs.from(this);
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             presenter = new MainPresenter(this, prefs, true);
