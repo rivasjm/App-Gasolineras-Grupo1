@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class GasolinerasService {
 
-    private static final long TIMEOUT_SECONDS = 80L;
+    private static final long TIMEOUT_SECONDS = 100L;
 
     private static GasolinerasAPI api;
 
