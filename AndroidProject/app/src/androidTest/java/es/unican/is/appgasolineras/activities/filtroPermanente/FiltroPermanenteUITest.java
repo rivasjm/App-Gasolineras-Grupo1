@@ -6,11 +6,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.containsString;
 
-import android.widget.Spinner;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
@@ -42,16 +39,22 @@ public class FiltroPermanenteUITest {
     public void guardarYResetearFiltrosTest() {
         onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
         onView(withId(R.id.spinner_combustible)).perform(click());
+        // Selecciono en el spinner del combustible: Gasolina 95 E5
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
         onView(withId(R.id.spinner_CCAA)).perform(click());
+        // Selecciono en el spinner de la comunidad: Cantabria
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Cantabria")));
+        // Guardo filtros
         onView(withId(R.id.btnGuardarPermanentes)).perform(click());
         onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
+        // Compruebo que los filtros han sido guardados
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Cantabria")));
+        // Reseteo los filtros
         onView(withId(R.id.btnResetearPermanentes)).perform(click());
+        // Compruebo que los filtros se han reseteado
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Todos")));
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
     }
