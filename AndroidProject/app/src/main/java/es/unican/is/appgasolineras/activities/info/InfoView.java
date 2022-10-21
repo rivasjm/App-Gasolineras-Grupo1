@@ -18,7 +18,7 @@ public class InfoView extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView tv = findViewById(R.id.tvInfoMessage);
-        tv.setText("Aplicación creada para el Proyecto Integrado 2022");
+        tv.setText("Aplicación creada para el Proyecto Integrado 2022 Grupo 1");
     }
 
     @Override
