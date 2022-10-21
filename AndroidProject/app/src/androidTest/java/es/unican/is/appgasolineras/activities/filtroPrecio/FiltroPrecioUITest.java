@@ -38,15 +38,13 @@ public class FiltroPrecioUITest {
 
     @Test
     public void reseteaFiltroPrecioTest() {
-
         onView(withId(R.id.btnAccederLista)).perform(click());
         onView(withId(R.id.btnFiltroPrecio)).perform(click());
         for (int i = 0; i < 10; i++) {
-            dormir();
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
         onView(withId(R.id.btnResetear)).perform(click());
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
     }
 
 
@@ -57,32 +55,29 @@ public class FiltroPrecioUITest {
 
         //primero intento subir el precio para comprobar que no sobrepasa el limite superior
         for (int i = 0; i < 3; i++) {
-            dormir();
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("2.03")));
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
 
         //resto 10 decimales al precio
         for (int i = 0; i < 10; i++) {
-            dormir();
             onView(withId(R.id.btnBajarPrecio)).perform(click());
 
             //await().atMost(2, 100.0).until(onView(withId(R.id.btnBajarPrecio)).perform(click()));
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.93")));
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.93")));
 
         //le sumo 3 decimales al precio
         for (int i = 0; i < 3; i++) {
-            dormir();
             onView(withId(R.id.btnSubirPrecio)).perform(click());
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("1.96")));
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.96")));
 
         for (int i = 0; i < 210; i++) {
 
             onView(withId(R.id.btnBajarPrecio)).perform(click());
         }
-        onView(withId(R.id.tvPrecioLimite)).check(matches(withText("0.00")));
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("0.00")));
     }
 
     @Test
@@ -94,11 +89,4 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
 
-    private void dormir() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
@@ -25,7 +24,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     ImageButton btnSubirPrecio;
     Button btnResetear;
     Button btnMostrarResultados;
-    TextView tvPrecioLimite;
+    EditText etPrecioLimite;
 
     IFiltrarPorPrecioContract.Presenter presenter;
 
@@ -51,76 +50,49 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void init() {
-        tvPrecioLimite = findViewById(R.id.tvPrecioLimite);
-        tvPrecioLimite.setText(max.substring(0,4));
+        etPrecioLimite = findViewById(R.id.etPrecioLimite);
+        etPrecioLimite.setText(max.substring(0,4));
 
         btnBajarPrecio = findViewById(R.id.btnBajarPrecio);
-        btnBajarPrecio.setOnTouchListener(new View.OnTouchListener() {
-
-            private Handler mHandler;
-
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (mHandler != null) return true;
-                    mHandler = new Handler();
-                    mHandler.postDelayed(mActionBajar, 50);
-                } else {
-                    if (mHandler == null) return true;
-                    mHandler.removeCallbacks(mActionBajar);
-                    mHandler = null;
-                }
-                return false;
-            }
-
-            Runnable mActionBajar = new Runnable() {
-                @Override
-                public void run() {
-                    String actual = String.valueOf(tvPrecioLimite.getText());
-                    tvPrecioLimite.setText(presenter.bajaPrecio(actual));
-                    mHandler.postDelayed(this, 50);
-                }
-            };
-        });
+        btnBajarPrecio.setOnClickListener(view ->
+            etPrecioLimite.setText(presenter.bajaPrecio(etPrecioLimite.getText().toString()))
+        );
 
         btnSubirPrecio = findViewById(R.id.btnSubirPrecio);
-        btnSubirPrecio.setOnTouchListener(new View.OnTouchListener() {
-
-            private Handler mHandler;
-
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (mHandler != null) return true;
-                    mHandler = new Handler();
-                    mHandler.postDelayed(mActionSubir, 50);
-                } else {
-                    if (mHandler == null) return true;
-                    mHandler.removeCallbacks(mActionSubir);
-                    mHandler = null;
-                }
-                return false;
-            }
-
-            Runnable mActionSubir = new Runnable() {
-                @Override
-                public void run() {
-                    String actual = String.valueOf(tvPrecioLimite.getText());
-                    tvPrecioLimite.setText(presenter.subePrecio(actual));
-                    mHandler.postDelayed(this, 50);
-                }
-            };
-        });
+        btnSubirPrecio.setOnClickListener(view ->
+                etPrecioLimite.setText(presenter.subePrecio(etPrecioLimite.getText().toString()))
+        );
 
         btnResetear = findViewById(R.id.btnResetear);
         btnResetear.setOnClickListener(view ->
-            tvPrecioLimite.setText(max.substring(0,4))
+            etPrecioLimite.setText(max.substring(0,4))
         );
 
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
         btnMostrarResultados.setOnClickListener(view ->
-            presenter.estableceRango(String.valueOf(tvPrecioLimite.getText()))
+            presenter.estableceRango(String.valueOf(etPrecioLimite.getText()))
         );
+        etPrecioLimite.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 0) {
+                    String value = s.toString();
+                    Double numericValue = Double.parseDouble(value);
+                    if (numericValue > Double.parseDouble(max)) {
+                        etPrecioLimite.setText(max.substring(0,4));
+                    }
+                }
+            }
+        });
     }
 
     @Override
