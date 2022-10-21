@@ -20,7 +20,8 @@ public abstract class GasolineraDatabase extends RoomDatabase {
     private static GasolineraDatabase db;
 
     public static GasolineraDatabase getDB(Context context) {
-        if (db == null || !db.isOpen()) {
+        // Como debería estar db == null || !db.isOpen()
+        if (Boolean.TRUE) {
             db = Room
                     .databaseBuilder(context, GasolineraDatabase.class, GasolineraDatabase.GASOLINERAS_DB_NAME)
                     .allowMainThreadQueries()
