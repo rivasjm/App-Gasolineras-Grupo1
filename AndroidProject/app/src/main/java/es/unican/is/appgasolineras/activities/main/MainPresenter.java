@@ -297,59 +297,59 @@ public class MainPresenter implements IMainContract.Presenter {
         switch (tipo) {
             case DIESELA:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselA().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case NORMAL95:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getNormal95().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case NORMAL95E10:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina95E10().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case NORMAL95E5P:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getNormal95Prem().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case NORMAL98E5:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina98E5().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case NORMAL98E10:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasolina98E10().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case DIESELB:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselB().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case DIESELP:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getDieselPrem().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case BIOETANOL:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getBioetanol().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case BIODIESEL:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getBiodiesel().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case GLP:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasLicPet().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case GASC:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasNatComp().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case GASL:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getGasNatLic().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             case H2:
                 maximum = data.stream().mapToDouble(g -> Double.parseDouble(g.getHidrogeno().replace(',', '.'))).max().getAsDouble();
-                max = maximum;
+                max = mayor(maximum, max);
                 break;
             default:
                 for (Gasolinera g : data) {
@@ -360,13 +360,19 @@ public class MainPresenter implements IMainContract.Presenter {
                         Double gas = Double.parseDouble(g.getNormal95().replace(',','.'));
                         Double die = Double.parseDouble(g.getDieselA().replace(',', '.'));
                         maximum = Double.max(gas, die);
-                        if (maximum > max) {
-                            max = maximum;
-                        }
+                        max = mayor(maximum, max);
                     }
                 }
         }
         return String.valueOf(max);
+    }
+
+    private Double mayor(Double primerNum, Double segundoNum) {
+        if (primerNum > segundoNum) {
+            return primerNum;
+        } else {
+            return segundoNum;
+        }
     }
 
     public String getMaximoEntreTodas() {
