@@ -39,6 +39,52 @@ public interface IMainContract {
          * Refresh button has been clicked
          */
         void onRefreshClicked();
+
+        /**
+         * This method should be used by the View to notify the Presenter that the
+         * Back button has been clicked
+         */
+        void onHomeClicked();
+
+        /**
+         * This method should be used by the View to notify the Presenter that the filter Precio
+         * has been clicked
+         */
+        void onPrecioClicked();
+
+        /**
+         * This method should be used by the View to notify the Presenter that the reset button
+         * has been clicked
+         */
+        void onResetFiltroPrecioClicked();
+
+        /**
+         * This method is used to filter the gas stations repository by type of fuel
+         * @param data list with all the gas stations
+         * @param tipoCombustible type of fuel we want
+         * @return a list with the gas stations filtered
+         */
+        List<Gasolinera> filtraTipo(List<Gasolinera> data, String tipoCombustible);
+
+        /**
+         * This method is used to filter the gas stations repository by price
+         * @param data list with all the gas stations
+         * @param maxPrecio max price we want
+         * @return a list with the gas stations filtered
+         */
+        List<Gasolinera> filtraPrecio(List<Gasolinera> data, String maxPrecio);
+
+        /**
+         * This method takes the highest fuel price
+         * @return a string with the maximum price
+         */
+        String maximoEntreTodas(List<Gasolinera> data);
+
+        /**
+         * This method return the highest fuel price
+         * @return a string with the maximum price
+         */
+        String getMaximoEntreTodas();
     }
 
     /**
@@ -76,10 +122,16 @@ public interface IMainContract {
         void showLoadCorrect(int gasolinerasCount);
 
         /**
+         * The View is requested to show an alert informing that there was an error with the
+         * network
+         */
+        void showLoadErrorRed();
+
+        /**
          * The View is requested to show an alert informing that there was an error while
          * loading the gas stations
          */
-        void showLoadError();
+        void showLoadErrorServidor();
 
         /**
          * The View is requested to open a Details view on the given gas station
@@ -91,6 +143,16 @@ public interface IMainContract {
          * The View is requested to open the Info view
          */
         void openInfoView();
+
+        /**
+         * The View is requested to open the Filtro Precio View
+         */
+        void openFiltroPrecio();
+
+        /**
+         * The View is requested to open the Menu Principal View
+         */
+        void openMenuPrincipal();
     }
 
 }

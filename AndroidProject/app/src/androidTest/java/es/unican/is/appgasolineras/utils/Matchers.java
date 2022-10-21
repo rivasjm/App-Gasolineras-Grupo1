@@ -2,6 +2,7 @@ package es.unican.is.appgasolineras.utils;
 
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -26,5 +27,4 @@ public class Matchers {
             }
         };
     }
-
 }

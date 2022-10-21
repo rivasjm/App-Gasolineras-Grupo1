@@ -1,15 +1,14 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
 import java.util.Locale;
 
 import es.unican.is.appgasolineras.R;
@@ -38,15 +37,25 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         IDetailContract.Presenter presenter = new GasolineraDetailPresenter(g,this);
         presenter.init();
 
-
+        getSupportActionBar().setTitle("Vista detallada");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         // Set Texts
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void setInfo(String municipio, String rotulo, String horario, String normal95,
-                        String dieselA, String media) {
+                        String dieselA, String media, String direccion) {
         ImageView ivRotulo = findViewById(R.id.ivRotulo);
         int imageID = getResources().getIdentifier(rotulo, "drawable", getPackageName());
 
@@ -60,14 +69,16 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         TextView tvRotulo = findViewById(R.id.tvRotulo);
         TextView tvMunicipio = findViewById(R.id.tvMunicipio);
         TextView tvHorario = findViewById(R.id.tvHorario);
+        TextView tvDireccion = findViewById(R.id.tvDireccion);
         TextView tvGasolina = findViewById(R.id.tvGasolina);
         TextView tvDiesel = findViewById(R.id.tvDiesel);
         TextView tvMedia = findViewById(R.id.tvMedia);
         tvRotulo.setText(rotulo.toUpperCase(Locale.ROOT));
         tvMunicipio.setText(municipio);
+        tvDireccion.setText("Dirección: " + direccion);
         tvHorario.setText("Horario: "+ horario);
-        tvGasolina.setText("Gasolina95: " + normal95.substring(0,4) + " €");
-        tvDiesel.setText("DiéselA: " + dieselA.substring(0,4) + " €");
-        tvMedia.setText("Media: " + media.substring(0,4) + " €");
+        tvGasolina.setText("Gasolina95: " + normal95);
+        tvDiesel.setText("DiéselA: " + dieselA);
+        tvMedia.setText("Media: " + media);
     }
 }

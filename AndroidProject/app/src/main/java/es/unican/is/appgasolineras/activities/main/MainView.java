@@ -3,17 +3,27 @@ package es.unican.is.appgasolineras.activities.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
+import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -21,8 +31,10 @@ import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.info.InfoView;
 
 public class MainView extends AppCompatActivity implements IMainContract.View {
-
+    IPrefs prefs;
     private IMainContract.Presenter presenter;
+
+
 
     /*
     Activity lifecycle methods
@@ -38,7 +50,19 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new MainPresenter(this);
+        getSupportActionBar().setTitle("Lista gasolineras");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        prefs = Prefs.from(this);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            presenter = new MainPresenter(this, prefs, true);
+        } else {
+            presenter = new MainPresenter(this, prefs, false);
+        }
+
         presenter.init();
         this.init();
     }
@@ -69,6 +93,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             case R.id.menuRefresh:
                 presenter.onRefreshClicked();
                 return true;
+            case android.R.id.home:
+                presenter.onHomeClicked();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -82,9 +109,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void init() {
         // init UI listeners
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
-        lvGasolineras.setOnItemClickListener((parent, view, position, id) -> {
-            presenter.onGasolineraClicked(position);
-        });
+        lvGasolineras.setOnItemClickListener((parent, view, position, id) ->
+            presenter.onGasolineraClicked(position)
+        );
+        Button precio = findViewById(R.id.btnFiltroPrecio);
+        precio.setOnClickListener(view ->
+            presenter.onPrecioClicked()
+        );
+        ImageButton resetFiltroPrecio = findViewById(R.id.btnResetearFiltros);
+        resetFiltroPrecio.setOnClickListener(view ->
+            presenter.onResetFiltroPrecioClicked()
+        );
     }
 
     @Override
@@ -94,21 +129,32 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showGasolineras(List<Gasolinera> gasolineras) {
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, gasolineras, prefs);
         ListView list = findViewById(R.id.lvGasolineras);
         list.setAdapter(adapter);
     }
 
     @Override
     public void showLoadCorrect(int gasolinerasCount) {
-        String text = getResources().getString(R.string.loadCorrect);
-        Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
+        if (gasolinerasCount == 0) {
+            String text = getResources().getString(R.string.no_gasolineras_con_filtros);
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        } else{
+            String text = getResources().getString(R.string.loadCorrect);
+            Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
-    public void showLoadError() {
-        String text = getResources().getString(R.string.loadError);
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    public void showLoadErrorRed() {
+        String text = getResources().getString(R.string.loadErrorRed);
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoadErrorServidor() {
+        String text = getResources().getString(R.string.loadErrorServidor);
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -123,4 +169,20 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
     }
+
+    @Override
+    public void openFiltroPrecio() {
+        Intent intent = new Intent(this, FiltrarPorPrecioView.class);
+        intent.putExtra("max", presenter.getMaximoEntreTodas());
+        startActivity(intent);
+    }
+
+    @Override
+    public void openMenuPrincipal() {
+        Intent intent = new Intent(this, MenuPrincipalView.class);
+        startActivity(intent);
+        prefs.putString("maxPrecio","");
+    }
+
+
 }

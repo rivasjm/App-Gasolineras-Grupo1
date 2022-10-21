@@ -23,8 +23,8 @@ class CallRunnable<T> implements Runnable {
     @Override
     public void run() {
         try {
-            Response<T> response = call.execute();
-            this.response = response.body();
+            Response<T> res = call.execute();
+            this.response = res.body();
         } catch (IOException e) {
             e.printStackTrace();
         }

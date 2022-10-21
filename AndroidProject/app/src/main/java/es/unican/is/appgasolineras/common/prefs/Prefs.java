@@ -69,4 +69,9 @@ public class Prefs implements IPrefs {
         editor.putInt(key, value);
         editor.commit();
     }
+
+    @Override
+    public void delete (String key) {
+        editor.remove(key);
+    }
 }
