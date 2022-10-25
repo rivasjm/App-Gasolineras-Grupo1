@@ -15,25 +15,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppGasolineras"
-        tools:targetApi="32">
+        tools:targetApi="32"
+        tools:ignore="LockedOrientationActivity">
         <activity
             android:name=".activities.filtrar.FiltrarPorPrecioView"
             android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.filtrosPermanentes.FiltroPermanenteView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.detail.GasolineraDetailView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.main.MainView"
+            android:screenOrientation="portrait"
             android:exported="false"/>
         <activity
             android:name=".activities.menuPrincipal.MenuPrincipalView"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
