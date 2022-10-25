@@ -25,7 +25,6 @@
             android:fontFamily="sans-serif"
             android:gravity="center|start"
             android:lineSpacingExtra="0sp"
-            android:text="@string/filtros"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -44,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.8"
-            android:text="@string/precio"
+            android:text="@string/filtrar"
             android:textSize="20sp"
             android:textStyle="bold" />
 
