@@ -28,6 +28,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     Button btnMostrarResultados;
     EditText etPrecioLimite;
     Spinner spnMarca;
+    FiltroMarcaMapper mapperMarca;
 
     IPrefs prefs;
 
@@ -42,6 +43,8 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         prefs = Prefs.from(this);
         getSupportActionBar().setTitle(R.string.filtros);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mapperMarca = new FiltroMarcaMapper();
 
         max = getIntent().getStringExtra("max");
         if(max.length() == 3) {
@@ -62,6 +65,12 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         adapterMarcas.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spnMarca.setAdapter(adapterMarcas);
 
+
+        //Configuracion spinner de las marcas
+        int indice = mapperMarca.getMarcaIndex(prefs.getString("marca"));
+        spnMarca.setSelection(indice);
+
+
         etPrecioLimite = findViewById(R.id.etPrecioLimite);
         etPrecioLimite.setText(max.substring(0,4));
 
@@ -81,8 +90,10 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         );
 
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
-        btnMostrarResultados.setOnClickListener(view ->
-            presenter.estableceRango(String.valueOf(etPrecioLimite.getText()))
+        btnMostrarResultados.setOnClickListener(view -> {
+            presenter.estableceMarca(mapperMarca.getMarca(spnMarca.getSelectedItemPosition()));
+            presenter.estableceRango(String.valueOf(etPrecioLimite.getText()));
+        }
         );
         etPrecioLimite.addTextChangedListener(new TextWatcher() {
             @Override
