@@ -3,8 +3,10 @@ package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,9 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     IPermanenteContract.Presenter presenter;
     FiltroPermanenteMapper mapper;
 
+    CheckBox check1;
+    CheckBox check2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,6 +43,10 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
         getSupportActionBar().setTitle("Filtros permanentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        check1 = findViewById(R.id.checkBoxNo);
+        check2 = findViewById(R.id.checkBoxSi);
 
         presenter = new FiltroPermanentePresenter(prefs);
         presenter.init();
@@ -90,5 +99,24 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         startActivity(myIntent);
         finish();
     }
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.checkBoxSi:
+                if (checked) {
+                    check1.setChecked(false);
+                }
+                break;
+            case R.id.checkBoxNo:
+                if (checked){
+                    check2.setChecked(false);
+                }
+                break;
+
+        }
+    }
+
 }
 
