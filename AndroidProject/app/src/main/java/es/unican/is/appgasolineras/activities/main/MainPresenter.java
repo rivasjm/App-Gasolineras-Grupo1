@@ -115,6 +115,7 @@ public class MainPresenter implements IMainContract.Presenter {
             dataSync = filtraMarca(dataSync, prefs.getString(MARCA));
             this.data = dataSync;
             prefs.putString(MAXPRECIOSTRING, maxPrecio);
+            prefs.putString(MARCA, "");
             view.showGasolineras(dataSync);
             shownGasolineras = dataSync;
             view.showLoadCorrect(dataSync.size());
