@@ -3,7 +3,6 @@ package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
@@ -28,6 +26,7 @@ import es.unican.is.appgasolineras.common.prefs.Prefs;
 public class FiltroPermanenteView extends AppCompatActivity implements IPermanenteContract.View {
     Spinner spnCombustible;
     Spinner spnCCAA;
+
     IPrefs prefs;
 
     IPermanenteContract.Presenter presenter;
@@ -78,32 +77,42 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
         spnCombustible.setSelection(combustibleGuardado);
 
+        Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
+        btnGuardarPermanentes.setOnClickListener(view -> {
+            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition());
+            openMainView();
+        });
+
+        Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
+        btnResetPermanentes.setOnClickListener(view -> {
+            presenter.reseteaFiltroPermanente();
+            this.init();
+        });
+
         checkSi = findViewById(R.id.checkBoxSi);
         checkSi.setOnClickListener(view -> {
             if (checkNo.isChecked()) {
                 checkNo.setChecked(false);
             }
             checkSi.setChecked(true);
+            /**
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // alerta
             } else {
                 fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-
-                                // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
-                                    String lat = String.valueOf(location.getLatitude());
-                                    String lon = String.valueOf(location.getLongitude());
-                                    prefs.putString("latitud", lat);
-                                    prefs.putString("longitud", lon);
-                                }
+                        .addOnSuccessListener(this, location -> {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                String lat = String.valueOf(location.getLatitude());
+                                String lon = String.valueOf(location.getLongitude());
+                                prefs.putString("latitud", lat);
+                                prefs.putString("longitud", lon);
                             }
                         });
             }
+             */
         });
 
         checkNo = findViewById(R.id.checkBoxNo);
@@ -119,7 +128,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            openMainView();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -138,17 +147,13 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             // alerta
         } else {
             fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                String lat = String.valueOf(location.getLatitude());
-                                String lon = String.valueOf(location.getLongitude());
-                                prefs.putString("latitud", lat);
-                                prefs.putString("longitud", lon);
-                            }
+                    .addOnSuccessListener(this, location -> {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            String lat = String.valueOf(location.getLatitude());
+                            String lon = String.valueOf(location.getLongitude());
+                            prefs.putString("latitud", lat);
+                            prefs.putString("longitud", lon);
                         }
                     });
         }
