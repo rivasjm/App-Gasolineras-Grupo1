@@ -32,7 +32,6 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
     IPrefs prefs;
 
-
     IFiltrarPorPrecioContract.Presenter presenter;
 
     String max;
@@ -86,16 +85,16 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         );
 
         btnResetear = findViewById(R.id.btnResetear);
-        btnResetear.setOnClickListener(view ->
-            etPrecioLimite.setText(max.substring(0,4))
-        );
+        btnResetear.setOnClickListener(view -> {
+            etPrecioLimite.setText(max.substring(0, 4));
+            spnMarca.setSelection(0);
+        });
 
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
         btnMostrarResultados.setOnClickListener(view -> {
             presenter.estableceMarca(mapperMarca.getMarca(spnMarca.getSelectedItemPosition()));
             presenter.estableceRango(String.valueOf(etPrecioLimite.getText()));
-        }
-        );
+        });
         etPrecioLimite.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

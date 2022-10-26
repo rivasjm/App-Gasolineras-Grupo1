@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import es.unican.is.appgasolineras.activities.filtrar.FiltroMarcaMapper;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -115,7 +114,7 @@ public class MainPresenter implements IMainContract.Presenter {
             dataSync = filtraMarca(dataSync, prefs.getString(MARCA));
             this.data = dataSync;
             prefs.putString(MAXPRECIOSTRING, maxPrecio);
-            prefs.putString(MARCA, "");
+            prefs.putString(MAXPRECIOSTRING, "");
             view.showGasolineras(dataSync);
             shownGasolineras = dataSync;
             view.showLoadCorrect(dataSync.size());
@@ -152,6 +151,7 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onResetFiltroPrecioClicked() {
         prefs.putString(MAXPRECIOSTRING, maxPrecio);
+        prefs.putString(MARCA, "");
         doSyncInit();
     }
 
@@ -239,7 +239,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 return data;
         }
         return listaDevolver;
-
     }
 
 

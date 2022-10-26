@@ -61,7 +61,7 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
 
     @Override
     public void estableceMarca(String act) {
-     prefs.putString("marca", act);
+        prefs.putString("marca", act);
     }
 
     @NonNull

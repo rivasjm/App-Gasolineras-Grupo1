@@ -180,8 +180,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
-        startActivity(intent);
         prefs.putString("maxPrecio","");
+        prefs.putString("marca", "");
+        startActivity(intent);
     }
 
 

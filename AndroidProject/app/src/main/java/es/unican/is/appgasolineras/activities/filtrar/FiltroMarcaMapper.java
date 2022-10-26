@@ -3,12 +3,10 @@ package es.unican.is.appgasolineras.activities.filtrar;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.unican.is.appgasolineras.model.IDCCAAs;
-
 public class FiltroMarcaMapper {
     private List<String> marcas;
     public FiltroMarcaMapper() {
-        marcas = new ArrayList<String>();
+        marcas = new ArrayList<>();
         marcas.add("");
         marcas.add("AVIA");
         marcas.add("CAMPSA");
@@ -20,10 +18,11 @@ public class FiltroMarcaMapper {
         marcas.add("SHELL");
 
     }
-    public String getMarca(int i){
-        return marcas.get(i);
+    public String getMarca(int index){
+        return marcas.get(index);
     }
-    public int getMarcaIndex(String s){
-        return marcas.indexOf(s);
+
+    public int getMarcaIndex(String marca){
+        return marcas.indexOf(marca);
     }
 }

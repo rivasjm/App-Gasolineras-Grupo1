@@ -9,8 +9,12 @@ import android.widget.Button;
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
 import es.unican.is.appgasolineras.activities.main.MainView;
+import es.unican.is.appgasolineras.common.prefs.IPrefs;
+import es.unican.is.appgasolineras.common.prefs.Prefs;
 
 public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincipalContract.View {
+
+    IPrefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +22,14 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
         setContentView(R.layout.activity_menu_principal);
 
         getSupportActionBar().setTitle("Menú Principal");
-
+        prefs = Prefs.from(this);
         this.init();
     }
 
 
     @Override
     public void init() {
+        prefs.putString("marca", "");
         Button botonIrALista = findViewById(R.id.btnAccederLista);
         botonIrALista.setOnClickListener(view ->
             this.openMainView()
