@@ -1,7 +1,11 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import android.location.Location;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +40,7 @@ public class MainPresenter implements IMainContract.Presenter {
     String maxPrecio;
     Boolean red;
     private List<Gasolinera> data;
+    Location loc;
 
     private List<Gasolinera> shownGasolineras;
 
@@ -101,6 +106,33 @@ public class MainPresenter implements IMainContract.Presenter {
             dataSync = filtraTipo(dataSync, prefs.getString(TIPOGASOLINA));
             maxPrecio = maximoEntreTodas(dataSync);
             dataSync = filtraPrecio(dataSync, prefs.getString(MAXPRECIOSTRING));
+            if (!prefs.getString("latitud").equals("") && !prefs.getString("longitud").equals("")) {
+                loc = new Location("");
+                loc.setLongitude(Double.parseDouble(prefs.getString("longitud")));
+                loc.setLatitude(Double.parseDouble(prefs.getString("latitud")));
+
+                /*
+                for (Gasolinera g : dataSync) {
+                    Location aux = new Location("");
+                    double distancia;
+                    aux.setLatitude(Double.parseDouble(g.getLatitud()));
+                    aux.setLongitude(Double.parseDouble(g.getLongitud()));
+                    distancia = aux.distanceTo(loc):
+                }
+                */
+                Collections.sort(dataSync, (g1, g2) -> {
+                    Location locG1 = new Location ("");
+                    locG1.setLatitude(Double.parseDouble(g1.getLatitud()));
+                    locG1.setLongitude(Double.parseDouble(g1.getLongitud()));
+                    Location locG2 = new Location ("");
+                    locG2.setLatitude(Double.parseDouble(g2.getLatitud()));
+                    locG2.setLongitude(Double.parseDouble(g2.getLongitud()));
+                    double distG1, distG2;
+                    distG1 = loc.distanceTo(locG1);
+                    distG2 = loc.distanceTo(locG2);
+                    return (int)distG2 - (int)distG1;
+                });
+            }
             this.data = dataSync;
             prefs.putString(MAXPRECIOSTRING, maxPrecio);
             view.showGasolineras(dataSync);

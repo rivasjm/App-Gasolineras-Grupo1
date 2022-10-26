@@ -87,7 +87,6 @@
                     android:layout_weight="1"
                     android:checked="false"
                     android:duplicateParentState="true"
-                    android:onClick="onCheckboxClicked"
                     android:text="Si"
                     android:textSize="20sp" />
 
@@ -100,7 +99,6 @@
                     android:layout_weight="1"
                     android:checked="true"
                     android:duplicateParentState="false"
-                    android:onClick="onCheckboxClicked"
                     android:text="No"
                     android:textSize="20sp" />
             </LinearLayout>

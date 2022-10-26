@@ -44,6 +44,8 @@ public class Gasolinera implements Parcelable {
     @SerializedName("Precio Hidrogeno")                     private String hidrogeno;
 
     @SerializedName("IDCCAA")                               private String IDCCAA;
+    @SerializedName("Latitud")                              private String latitud;
+    @SerializedName("Longitud (WGS84)")                     private String longitud;
 
     public Gasolinera() {
         this.id = "";
@@ -211,6 +213,14 @@ public class Gasolinera implements Parcelable {
         this.biodiesel = biodiesel;
     }
 
+    public String getLatitud() { return latitud; }
+
+    public void setLatitud(String latitud) {this.latitud = latitud; }
+
+    public String getLongitud() { return longitud; }
+
+    public void setLongitud(String longitud) { this.longitud = longitud; }
+
 
     /*
      * Methods for Parcelable interface. Needed to send this object in an Intent.
@@ -240,6 +250,8 @@ public class Gasolinera implements Parcelable {
         gasNatComp = in.readString();
         bioetanol = in.readString();
         biodiesel = in.readString();
+        latitud = in.readString();
+        longitud = in.readString();
     }
 
     public static final Creator<Gasolinera> CREATOR = new Creator<Gasolinera>() {
@@ -281,5 +293,7 @@ public class Gasolinera implements Parcelable {
         dest.writeString(gasNatComp);
         dest.writeString(bioetanol);
         dest.writeString(biodiesel);
+        dest.writeString(latitud);
+        dest.writeString(longitud);
     }
 }
