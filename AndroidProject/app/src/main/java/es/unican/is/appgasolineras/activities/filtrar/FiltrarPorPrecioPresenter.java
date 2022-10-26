@@ -59,6 +59,11 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
         return devolver;
     }
 
+    @Override
+    public void estableceMarca(String act) {
+        prefs.putString("marca", act);
+    }
+
     @NonNull
     private String getStringCorrecto(@NonNull BigDecimal actual) {
         String devolver;

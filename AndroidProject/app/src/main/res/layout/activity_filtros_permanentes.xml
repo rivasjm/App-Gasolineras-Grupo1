@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:text="Tipo de gasolina"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor = "?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
                 android:layout_weight="1"
                 android:text="Comunidad Autónoma"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor = "?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 

@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.main.MainView;
@@ -25,6 +27,10 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     Button btnResetear;
     Button btnMostrarResultados;
     EditText etPrecioLimite;
+    Spinner spnMarca;
+    FiltroMarcaMapper mapperMarca;
+
+    IPrefs prefs;
 
     IFiltrarPorPrecioContract.Presenter presenter;
 
@@ -34,9 +40,11 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrar_precio_view);
-        IPrefs prefs = Prefs.from(this);
-        getSupportActionBar().setTitle("Filtro Precio");
+        prefs = Prefs.from(this);
+        getSupportActionBar().setTitle(R.string.filtros);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mapperMarca = new FiltroMarcaMapper();
 
         max = getIntent().getStringExtra("max");
         if(max.length() == 3) {
@@ -50,6 +58,19 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void init() {
+        //Configuracion del spinner de los combustibles
+        spnMarca = findViewById(R.id.spinner_marca);
+        ArrayAdapter<CharSequence> adapterMarcas = ArrayAdapter.createFromResource(this,
+                R.array.marcasArray, android.R.layout.simple_spinner_item);
+        adapterMarcas.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spnMarca.setAdapter(adapterMarcas);
+
+
+        //Configuracion spinner de las marcas
+        int indice = mapperMarca.getMarcaIndex(prefs.getString("marca"));
+        spnMarca.setSelection(indice);
+
+
         etPrecioLimite = findViewById(R.id.etPrecioLimite);
         etPrecioLimite.setText(max.substring(0,4));
 
@@ -64,14 +85,16 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         );
 
         btnResetear = findViewById(R.id.btnResetear);
-        btnResetear.setOnClickListener(view ->
-            etPrecioLimite.setText(max.substring(0,4))
-        );
+        btnResetear.setOnClickListener(view -> {
+            etPrecioLimite.setText(max.substring(0, 4));
+            spnMarca.setSelection(0);
+        });
 
         btnMostrarResultados = findViewById(R.id.btnMostrarResultados);
-        btnMostrarResultados.setOnClickListener(view ->
-            presenter.estableceRango(String.valueOf(etPrecioLimite.getText()))
-        );
+        btnMostrarResultados.setOnClickListener(view -> {
+            presenter.estableceMarca(mapperMarca.getMarca(spnMarca.getSelectedItemPosition()));
+            presenter.estableceRango(String.valueOf(etPrecioLimite.getText()));
+        });
         etPrecioLimite.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -80,6 +103,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // -
             }
                 // -
             @Override

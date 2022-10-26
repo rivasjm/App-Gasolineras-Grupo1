@@ -8,7 +8,7 @@
     <string name="loadErrorRed">Ha habido un error cargando las gasolineras, por favor compruebe su conexión</string>
     <string name="loadErrorServidor">Ha habido un error cargando las gasolineras, el servicio remoto se ha caído</string>
     <string name="precio">Precio</string>
-    <string name="filtros">Filtros:</string>
+    <string name="filtrar">Filtrar</string>
     <string name="boton_para_resetear_los_filtros">boton para resetear los filtros</string>
     <string name="mostrar_resultados">Mostrar Resultados</string>
     <string name="resetear">Resetear</string>
@@ -58,4 +58,19 @@
     <string name="lista_de_gasolineras">Gasolineras</string>
     <string name="filtros_permanentes">Configuración</string>
     <string name="no_gasolineras_con_filtros">No se han podido cargar gasolineras con los filtros seleccionados</string>
+    <string name="filtrar_por_marca">Filtrar Por Marca</string>
+    <string name="filtrar_por_precio">Filtrar Por Precio</string>
+    <string name="filtros">Filtros</string>
+
+    <string-array name="marcasArray">
+        <item>Todas</item>
+        <item>AVIA</item>
+        <item>CAMPSA</item>
+        <item>CARREFOUR</item>
+        <item>CEPSA</item>
+        <item>GALP</item>
+        <item>PETRONOR</item>
+        <item>REPSOL</item>
+        <item>SHELL</item>
+    </string-array>
 </resources>
