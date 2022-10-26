@@ -32,6 +32,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
     IPrefs prefs;
 
+
     IFiltrarPorPrecioContract.Presenter presenter;
 
     String max;

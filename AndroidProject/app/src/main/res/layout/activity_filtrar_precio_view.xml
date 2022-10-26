@@ -27,7 +27,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:text="@string/filtrar_por_precio"
-                android:textColor="#000000"
+                android:textColor = "?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
@@ -62,7 +62,7 @@
                     android:inputType="numberDecimal"
                     android:text="0.00"
                     android:textAlignment="center"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/filtrar_por_marca"
-                android:textColor="#000000"
+                android:textColor = "?android:textColorPrimary"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
