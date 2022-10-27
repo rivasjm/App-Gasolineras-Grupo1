@@ -53,7 +53,6 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         presenter = new FiltroPermanentePresenter(prefs);
         presenter.init();
         this.init();
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
@@ -77,25 +76,13 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
         spnCombustible.setSelection(combustibleGuardado);
 
-        Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
-        btnGuardarPermanentes.setOnClickListener(view -> {
-            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition());
-            openMainView();
-        });
-
-        Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
-        btnResetPermanentes.setOnClickListener(view -> {
-            presenter.reseteaFiltroPermanente();
-            this.init();
-        });
-
         checkSi = findViewById(R.id.checkBoxSi);
         checkSi.setOnClickListener(view -> {
             if (checkNo.isChecked()) {
                 checkNo.setChecked(false);
             }
             checkSi.setChecked(true);
-            /**
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -112,17 +99,44 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
                             }
                         });
             }
-             */
+
         });
 
         checkNo = findViewById(R.id.checkBoxNo);
-        checkNo.setChecked(true);
         checkNo.setOnClickListener(view -> {
             if (checkSi.isChecked()) {
                 checkSi.setChecked(false);
             }
             checkNo.setChecked(true);
         });
+
+
+        if (prefs.getString("ubicacion").equals("si")) {
+            checkSi.setChecked(true);
+            checkNo.setChecked(false);
+        } else {
+            checkNo.setChecked(true);
+            checkSi.setChecked(false);
+        }
+
+        Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
+        btnGuardarPermanentes.setOnClickListener(view -> {
+            if (checkSi.isChecked()) {
+                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), true);
+                openMainView();
+            } else {
+                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), false);
+                openMainView();
+            }
+        });
+
+        Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
+        btnResetPermanentes.setOnClickListener(view -> {
+            presenter.reseteaFiltroPermanente();
+            this.init();
+        });
+
+
     }
 
     @Override
