@@ -24,6 +24,7 @@ public interface IMainContract {
         /**
          * This method should be used by the View to notify the Presenter that a Gas Station
          * has been clicked
+         *
          * @param index the index of the gas station (position in the list)
          */
         void onGasolineraClicked(int index);
@@ -59,12 +60,6 @@ public interface IMainContract {
         void onResetFiltroPrecioClicked();
 
         /**
-         * This method is used to filter the gas stations repository by type of fuel
-         * @param data list with all the gas stations
-         * @param tipoCombustible type of fuel we want
-         * @return a list with the gas stations filtered
-         */
-        List<Gasolinera> filtraTipo(List<Gasolinera> data, String tipoCombustible);
 
         /**
          * This method is used to filter the gas stations repository by type of brand
@@ -75,21 +70,8 @@ public interface IMainContract {
         List<Gasolinera> filtraMarca(List<Gasolinera> data, String marca);
 
         /**
-         * This method is used to filter the gas stations repository by price
-         * @param data list with all the gas stations
-         * @param maxPrecio max price we want
-         * @return a list with the gas stations filtered
-         */
-        List<Gasolinera> filtraPrecio(List<Gasolinera> data, String maxPrecio);
-
-        /**
-         * This method takes the highest fuel price
-         * @return a string with the maximum price
-         */
-        String maximoEntreTodas(List<Gasolinera> data);
-
-        /**
          * This method return the highest fuel price
+         *
          * @return a string with the maximum price
          */
         String getMaximoEntreTodas();
@@ -112,12 +94,14 @@ public interface IMainContract {
          * different sources (REST API, persisted DB, etc.)
          * This method is in the View because it generally requires access to the
          * Android Context, and this is available in the View
+         *
          * @return the Repository object to access gas stations
          */
         IGasolinerasRepository getGasolineraRepository();
 
         /**
          * The View is requested to show a list of gas stations
+         *
          * @param gasolineras the list of gas stations
          */
         void showGasolineras(List<Gasolinera> gasolineras);
@@ -125,6 +109,7 @@ public interface IMainContract {
         /**
          * The View is requested to show an alert informing that the gas stations were loaded
          * correctly
+         *
          * @param gasolinerasCount the number of gas stations that were loaded
          */
         void showLoadCorrect(int gasolinerasCount);
@@ -143,6 +128,7 @@ public interface IMainContract {
 
         /**
          * The View is requested to open a Details view on the given gas station
+         *
          * @param gasolinera the gas station
          */
         void openGasolineraDetails(Gasolinera gasolinera);

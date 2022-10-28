@@ -15,9 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -35,8 +32,6 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     CheckBox checkSi;
     CheckBox checkNo;
 
-    private FusedLocationProviderClient fusedLocationClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +40,12 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         prefs = Prefs.from(this);
         mapper = new FiltroPermanenteMapper();
 
-        //MainPresenter mainPresenter = new MainPresenter(this, p);
-
         getSupportActionBar().setTitle("Filtros permanentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         presenter = new FiltroPermanentePresenter(prefs);
         presenter.init();
         this.init();
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -77,10 +68,40 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
         spnCombustible.setSelection(combustibleGuardado);
 
+        checkSi = findViewById(R.id.checkBoxSi);
+        checkSi.setOnClickListener(view -> {
+            if (checkNo.isChecked()) {
+                checkNo.setChecked(false);
+            }
+            checkSi.setChecked(true);
+        });
+
+        checkNo = findViewById(R.id.checkBoxNo);
+        checkNo.setOnClickListener(view -> {
+            if (checkSi.isChecked()) {
+                checkSi.setChecked(false);
+            }
+            checkNo.setChecked(true);
+        });
+
+
+        if (prefs.getString("ubicacion").equals("si")) {
+            checkSi.setChecked(true);
+            checkNo.setChecked(false);
+        } else {
+            checkNo.setChecked(true);
+            checkSi.setChecked(false);
+        }
+
         Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
         btnGuardarPermanentes.setOnClickListener(view -> {
-            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition());
-            openMainView();
+            if (checkSi.isChecked()) {
+                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), true);
+                openMainView();
+            } else {
+                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), false);
+                openMainView();
+            }
         });
 
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
@@ -89,40 +110,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             this.init();
         });
 
-        checkSi = findViewById(R.id.checkBoxSi);
-        checkSi.setOnClickListener(view -> {
-            if (checkNo.isChecked()) {
-                checkNo.setChecked(false);
-            }
-            checkSi.setChecked(true);
-            /**
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // alerta
-            } else {
-                fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(this, location -> {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                String lat = String.valueOf(location.getLatitude());
-                                String lon = String.valueOf(location.getLongitude());
-                                prefs.putString("latitud", lat);
-                                prefs.putString("longitud", lon);
-                            }
-                        });
-            }
-             */
-        });
 
-        checkNo = findViewById(R.id.checkBoxNo);
-        checkNo.setChecked(true);
-        checkNo.setOnClickListener(view -> {
-            if (checkSi.isChecked()) {
-                checkSi.setChecked(false);
-            }
-            checkNo.setChecked(true);
-        });
     }
 
     @Override
@@ -138,27 +126,6 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         Intent myIntent = new Intent(this, MenuPrincipalView.class);
         startActivity(myIntent);
         finish();
-    }
-
-    public void onCheckboxClicked(View view) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // alerta
-        } else {
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            String lat = String.valueOf(location.getLatitude());
-                            String lon = String.valueOf(location.getLongitude());
-                            prefs.putString("latitud", lat);
-                            prefs.putString("longitud", lon);
-                        }
-                    });
-        }
-
-
     }
 
 }
