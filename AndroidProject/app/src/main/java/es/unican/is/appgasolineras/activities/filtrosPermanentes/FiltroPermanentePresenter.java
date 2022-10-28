@@ -26,6 +26,8 @@ public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
             pref.putString("ubicacion", "si");
         } else {
             pref.putString("ubicacion", "no");
+            pref.putString("latitud","");
+            pref.putString("longitud","");
         }
     }
 
