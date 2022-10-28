@@ -57,5 +57,6 @@ public class FiltroPermanenteUITest {
         // Compruebo que los filtros se han reseteado
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Todos")));
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
+        onView(withId(R.id.checkBoxNo)).perform(click());
     }
 }

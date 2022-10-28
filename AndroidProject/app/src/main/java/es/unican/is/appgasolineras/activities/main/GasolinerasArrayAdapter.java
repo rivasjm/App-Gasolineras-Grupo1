@@ -21,6 +21,7 @@ import es.unican.is.appgasolineras.model.Gasolinera;
 public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
     private IPrefs prefs;
     private static final String TIPOGASOLINA = "tipoGasolina";
+
     public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, IPrefs prefs) {
         super(context, 0, objects);
         this.prefs = prefs;
@@ -89,7 +90,7 @@ public class GasolinerasArrayAdapter extends ArrayAdapter<Gasolinera> {
                 tv.setText(gasolinera.getDieselA());
             }
         } else {
-            if (prefs.getString(TIPOGASOLINA).equals("normal95")){
+            if (prefs.getString(TIPOGASOLINA).equals("normal95")) {
                 TextView tvLabel = convertView.findViewById(R.id.tv95Label);
 
                 String label = getContext().getResources().getString(R.string.gasolina95label);

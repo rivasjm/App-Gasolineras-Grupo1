@@ -10,14 +10,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unican.is.appgasolineras.common.Filters;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 
-public class MainPresenterTest {
-    private static IMainContract.View mockviewMainPresenter;
+public class FiltersTest {
     private static IPrefs mockPrefs;
-    private static MainPresenter main;
     private ArrayList<Gasolinera> listGasolineras;
     private ArrayList<Gasolinera> listGasolinerasVacia;
     private Gasolinera gas;
@@ -30,8 +29,6 @@ public class MainPresenterTest {
     public void inicializa() {
         mockGasolineras = mock(IGasolinerasRepository.class);
         mockPrefs = mock(IPrefs.class);
-        mockviewMainPresenter = mock(IMainContract.View.class);
-        main = new MainPresenter(mockviewMainPresenter, mockPrefs, true);
 
         when(mockPrefs.getString(TIPOGASOLINA)).thenReturn("dieselA");
 
@@ -52,19 +49,19 @@ public class MainPresenterTest {
     @Test
     public void filtraPrecioTest() {
         assertEquals(listGasolineras,
-                main.filtraPrecio(listGasolineras, "2.04"));
+                Filters.filtraPrecio(listGasolineras, "2.04", ""));
         assertEquals(1,
-                main.filtraPrecio(listGasolineras, "2.00").size());
+                Filters.filtraPrecio(listGasolineras, "2.00", "").size());
         assertEquals(listGasolinerasVacia.size(),
-                main.filtraPrecio(listGasolineras, "-2.04").size());
+                Filters.filtraPrecio(listGasolineras, "-2.04", "").size());
         assertEquals(listGasolinerasVacia.size(),
-                main.filtraPrecio(listGasolinerasVacia, "2.04").size());
+                Filters.filtraPrecio(listGasolinerasVacia, "2.04", "").size());
     }
 
     @Test
     public void maximoEntreTodasTest() {
-        assertEquals("2.02", main.maximoEntreTodas(listGasolineras));
-        assertEquals("0.00", main.maximoEntreTodas(listGasolinerasVacia));
+        assertEquals("2.02", Filters.maximoEntreTodas(listGasolineras, ""));
+        assertEquals("0.00", Filters.maximoEntreTodas(listGasolinerasVacia, ""));
     }
 
     @Test
@@ -95,7 +92,7 @@ public class MainPresenterTest {
                 .thenReturn(listGasolineras);
 
         // Caso de prueba UGIC 1.a
-        assertEquals(listDevueltas, main.filtraTipo(mockGasolineras.todasGasolineras(),
+        assertEquals(listDevueltas, Filters.filtraTipo(mockGasolineras.todasGasolineras(),
                 "dieselA"));
 
         // Caso de prueba UGIC 1.c
@@ -121,9 +118,9 @@ public class MainPresenterTest {
         when(mockGasolineras.todasGasolineras())
                 .thenReturn(listGasolineras);
 
-        assertEquals(listDevueltas, main.filtraTipo(mockGasolineras.todasGasolineras(),
+        assertEquals(listDevueltas, Filters.filtraTipo(mockGasolineras.todasGasolineras(),
                 "dieselB"));
-        assertEquals(listDevueltas.size(),main.filtraTipo(mockGasolineras.todasGasolineras(),
+        assertEquals(listDevueltas.size(), Filters.filtraTipo(mockGasolineras.todasGasolineras(),
                 "dieselB").size());
 
         // Caso de prueba UGIC 1.d
@@ -149,7 +146,7 @@ public class MainPresenterTest {
         when(mockGasolineras.todasGasolineras())
                 .thenReturn(listGasolineras);
 
-        assertEquals(listDevueltas, main.filtraTipo(mockGasolineras.todasGasolineras(),
+        assertEquals(listDevueltas, Filters.filtraTipo(mockGasolineras.todasGasolineras(),
                 ""));
     }
 }
