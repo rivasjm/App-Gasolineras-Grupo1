@@ -60,16 +60,6 @@ public interface IMainContract {
         void onResetFiltroPrecioClicked();
 
         /**
-
-        /**
-         * This method is used to filter the gas stations repository by type of brand
-         * @param data list with all the gas stations
-         * @param marca type of brand we want
-         * @return a list with the gas stations filtered
-         */
-        List<Gasolinera> filtraMarca(List<Gasolinera> data, String marca);
-
-        /**
          * This method return the highest fuel price
          *
          * @return a string with the maximum price

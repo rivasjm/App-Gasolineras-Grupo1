@@ -1,11 +1,8 @@
 package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,7 +10,6 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
@@ -97,11 +93,10 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         btnGuardarPermanentes.setOnClickListener(view -> {
             if (checkSi.isChecked()) {
                 presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), true);
-                openMainView();
             } else {
                 presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), false);
-                openMainView();
             }
+            openMainView();
         });
 
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);

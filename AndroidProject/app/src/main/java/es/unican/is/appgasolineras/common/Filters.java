@@ -24,8 +24,20 @@ public class Filters {
     private static final String GASL = "gasL";
     private static final String H2 = "h2";
 
+    private static final String AVIA = "AVIA";
+    private static final String CAMPSA = "CAMPSA";
+    private static final String CARREFOUR = "CARREFOUR";
+    private static final String CEPSA = "CEPSA";
+    private static final String GALP = "GALP";
+    private static final String PETRONOR = "PETRONOR";
+    private static final String REPSOL = "REPSOL";
+    private static final String SHELL = "SHELL";
+
     private static double max = Double.MIN_VALUE;
 
+    private Filters() {
+        // No hace nada
+    }
 
     public static List<Gasolinera> filtraTipo(List<Gasolinera> data, String tipoCombustible) {
         List<Gasolinera> listaDevolver;
@@ -165,6 +177,39 @@ public class Filters {
                     }
                     return result;
                 }).collect(Collectors.toList());
+        }
+        return listaDevolver;
+    }
+
+    public static List<Gasolinera> filtraMarca(List<Gasolinera> data, String marca) {
+        List<Gasolinera> listaDevolver;
+        switch (marca) {
+            case AVIA:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(AVIA)).collect(Collectors.toList());
+                break;
+            case CAMPSA:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CAMPSA)).collect(Collectors.toList());
+                break;
+            case CARREFOUR:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CARREFOUR)).collect(Collectors.toList());
+                break;
+            case CEPSA:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CEPSA)).collect(Collectors.toList());
+                break;
+            case GALP:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(GALP)).collect(Collectors.toList());
+                break;
+            case PETRONOR:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(PETRONOR)).collect(Collectors.toList());
+                break;
+            case REPSOL:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(REPSOL)).collect(Collectors.toList());
+                break;
+            case SHELL:
+                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(SHELL)).collect(Collectors.toList());
+                break;
+            default:
+                return data;
         }
         return listaDevolver;
     }

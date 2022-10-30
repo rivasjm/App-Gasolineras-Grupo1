@@ -7,6 +7,7 @@ import android.os.Build;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -23,6 +24,7 @@ import java.util.List;
 import es.unican.is.appgasolineras.common.Filters;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 
@@ -46,6 +48,11 @@ public class FiltersITest {
         con = ApplicationProvider.getApplicationContext();
         gasolineras = new GasolinerasRepository(con);
         prefs = new Prefs(con,"KEY_DEFAULT_PREFS");
+    }
+
+    @After
+    public void cierra() {
+        GasolineraDatabase.closeDB();
     }
 
     @BeforeClass

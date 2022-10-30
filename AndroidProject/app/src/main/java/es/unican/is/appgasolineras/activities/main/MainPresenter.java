@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static es.unican.is.appgasolineras.common.Filters.filtraMarca;
 import static es.unican.is.appgasolineras.common.Filters.filtraPrecio;
 import static es.unican.is.appgasolineras.common.Filters.filtraTipo;
 import static es.unican.is.appgasolineras.common.Filters.maximoEntreTodas;
@@ -7,7 +8,6 @@ import static es.unican.is.appgasolineras.common.Sortings.ordenaPorUbicacion;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -18,17 +18,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private static final String IDCOMUNIDAD = "idComunidad";
     private static final String TIPOGASOLINA = "tipoGasolina";
     private static final String MAXPRECIOSTRING = "maxPrecio";
-
-    private static final String AVIA = "AVIA";
-    private static final String CAMPSA = "CAMPSA";
-    private static final String CARREFOUR = "CARREFOUR";
-    private static final String CEPSA = "CEPSA";
-    private static final String GALP = "GALP";
-    private static final String PETRONOR = "PETRONOR";
-    private static final String REPSOL = "REPSOL";
-    private static final String SHELL = "SHELL";
     private static final String MARCA = "marca";
-
     private static final String UBICACION = "ubicacion";
     private static final String LATITUD = "latitud";
     private static final String LONGITUD = "longitud";
@@ -157,40 +147,6 @@ public class MainPresenter implements IMainContract.Presenter {
         prefs.putString(MAXPRECIOSTRING, maxPrecio);
         prefs.putString(MARCA, "");
         doSyncInit();
-    }
-
-    @Override
-    public List<Gasolinera> filtraMarca(List<Gasolinera> data, String marca) {
-        List<Gasolinera> listaDevolver;
-        switch (marca) {
-            case AVIA:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(AVIA)).collect(Collectors.toList());
-                break;
-            case CAMPSA:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CAMPSA)).collect(Collectors.toList());
-                break;
-            case CARREFOUR:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CARREFOUR)).collect(Collectors.toList());
-                break;
-            case CEPSA:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(CEPSA)).collect(Collectors.toList());
-                break;
-            case GALP:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(GALP)).collect(Collectors.toList());
-                break;
-            case PETRONOR:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(PETRONOR)).collect(Collectors.toList());
-                break;
-            case REPSOL:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(REPSOL)).collect(Collectors.toList());
-                break;
-            case SHELL:
-                listaDevolver = data.stream().filter(g -> g.getRotulo().equals(SHELL)).collect(Collectors.toList());
-                break;
-            default:
-                return data;
-        }
-        return listaDevolver;
     }
 
     public String getMaximoEntreTodas() {
