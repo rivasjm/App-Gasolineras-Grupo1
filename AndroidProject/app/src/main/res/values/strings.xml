@@ -55,8 +55,8 @@
         <item>Ceuta</item>
         <item>Melilla</item>
     </string-array>
-    <string name="lista_de_gasolineras">Lista de Gasolineras</string>
-    <string name="filtros_permanentes">Filtros Permanentes</string>
+    <string name="lista_de_gasolineras">Gasolineras</string>
+    <string name="filtros_permanentes">Configuración</string>
     <string name="no_gasolineras_con_filtros">No se han podido cargar gasolineras con los filtros seleccionados</string>
     <string name="filtrar_por_marca">Filtrar Por Marca</string>
     <string name="filtrar_por_precio">Filtrar Por Precio</string>

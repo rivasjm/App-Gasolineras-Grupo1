@@ -105,7 +105,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // -
             }
-
+                // -
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() > 0) {

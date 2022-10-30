@@ -18,10 +18,15 @@ public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
     }
 
     @Override
-    public void guardaFiltroPermanente(int idComunidad, int tipoGasolina) {
+    public void guardaFiltroPermanente(int idComunidad, int tipoGasolina, boolean ubicacion) {
         pref.putString("tipoGasolina", mapper.getCombustible(tipoGasolina));
         pref.putString("idComunidad", mapper.getCCAAID(idComunidad));
         pref.putString("idComunidadName", mapper.getCCAAName(idComunidad));
+        if (ubicacion) {
+            pref.putString("ubicacion", "si");
+        } else {
+            pref.putString("ubicacion", "no");
+        }
     }
 
     @Override

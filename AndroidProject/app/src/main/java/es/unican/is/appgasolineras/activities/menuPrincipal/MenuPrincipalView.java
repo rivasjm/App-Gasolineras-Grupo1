@@ -1,9 +1,11 @@
 package es.unican.is.appgasolineras.activities.menuPrincipal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import es.unican.is.appgasolineras.R;
@@ -41,6 +43,15 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
@@ -50,5 +61,6 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openFiltrosPermanentesView() {
         Intent intent = new Intent(this, FiltroPermanenteView.class);
         startActivity(intent);
+        finish();
     }
 }
