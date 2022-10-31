@@ -27,4 +27,16 @@ public class Matchers {
             }
         };
     }
+
+    public static Matcher<View> sizeElements(int num) {
+        return new TypeSafeMatcher<View>() {
+            @Override public boolean matchesSafely (final View view) {
+                return ((ListView) view).getCount() == num;
+            }
+
+            @Override public void describeTo (final Description description) {
+                description.appendText ("ListView elements doesnt match with the number");
+            }
+        };
+    }
 }

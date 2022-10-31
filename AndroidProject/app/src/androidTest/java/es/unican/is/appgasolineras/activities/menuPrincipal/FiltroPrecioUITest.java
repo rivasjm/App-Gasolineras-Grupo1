@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.filtroPrecio;
+package es.unican.is.appgasolineras.activities.menuPrincipal;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -18,7 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class FiltroPrecioUITest {
@@ -88,5 +87,7 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.btnMostrarResultados)).perform(click());
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
+
+
 
 }
