@@ -15,6 +15,16 @@ public class GasolineraComparator implements Comparator<Gasolinera> {
 
     @Override
     public int compare(Gasolinera g1, Gasolinera g2) {
+        if (g1.getLatitud().equals("") && g2.getLatitud().equals("")){
+            return 0;
+        }
+        if (!g1.getLatitud().equals("") && g2.getLatitud().equals("")){
+            return 1;
+        }
+        if (g1.getLatitud().equals("") && !g2.getLatitud().equals("")){
+            return -1;
+        }
+
         Location locG1 = new Location("");
         locG1.setLatitude(Double.parseDouble(g1.getLatitud().replace(",", ".")));
         locG1.setLongitude(Double.parseDouble(g1.getLongitud().replace(",", ".")));

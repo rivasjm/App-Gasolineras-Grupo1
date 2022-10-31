@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.repository.rest;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -26,7 +28,7 @@ class CallRunnable<T> implements Runnable {
             Response<T> res = call.execute();
             this.response = res.body();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("DEBUG", e.toString());
         }
     }
 }

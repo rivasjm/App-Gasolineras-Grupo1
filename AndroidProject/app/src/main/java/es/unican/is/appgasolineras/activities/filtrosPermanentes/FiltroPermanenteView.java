@@ -1,6 +1,8 @@
 package es.unican.is.appgasolineras.activities.filtrosPermanentes;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -10,6 +12,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
@@ -66,10 +69,14 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
         checkSi = findViewById(R.id.checkBoxSi);
         checkSi.setOnClickListener(view -> {
-            if (checkNo.isChecked()) {
-                checkNo.setChecked(false);
-            }
+            checkNo.setChecked(false);
             checkSi.setChecked(true);
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
+                ActivityCompat.requestPermissions(this, permisos, 0);
+            }
         });
 
         checkNo = findViewById(R.id.checkBoxNo);
@@ -106,6 +113,18 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         });
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == -1) {
+            checkSi.setChecked(false);
+            checkNo.setChecked(true);
+        } else {
+            checkSi.setChecked(true);
+            checkNo.setChecked(false);
+        }
     }
 
     @Override

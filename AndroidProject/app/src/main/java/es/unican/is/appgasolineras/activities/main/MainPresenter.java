@@ -42,7 +42,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void init() {
-
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
