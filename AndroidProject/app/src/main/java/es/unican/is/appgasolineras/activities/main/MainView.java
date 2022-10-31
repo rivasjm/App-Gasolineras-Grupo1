@@ -217,6 +217,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                                 String lon = String.valueOf(location.getLongitude());
                                 prefs.putString("latitud", lat);
                                 prefs.putString("longitud", lon);
+                            } else {
+                                prefs.putString("latitud", "");
+                                prefs.putString("longitud", "");
                             }
                             presenter.init();
                         }
