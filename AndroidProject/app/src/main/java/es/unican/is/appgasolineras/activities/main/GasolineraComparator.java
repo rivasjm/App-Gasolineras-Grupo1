@@ -15,13 +15,13 @@ public class GasolineraComparator implements Comparator<Gasolinera> {
 
     @Override
     public int compare(Gasolinera g1, Gasolinera g2) {
-        if (g1.getLatitud().equals("") && g2.getLatitud().equals("")){
+        if ((g1.getLatitud().equals("") && g2.getLatitud().equals("") || (g1.getLongitud().equals("") && g2.getLongitud().equals("")))){
             return 0;
         }
-        if (!g1.getLatitud().equals("") && g2.getLatitud().equals("")){
+        if ((!g1.getLatitud().equals("") && g2.getLatitud().equals(""))|| (!g1.getLongitud().equals("") && g2.getLongitud().equals(""))){
             return 1;
         }
-        if (g1.getLatitud().equals("") && !g2.getLatitud().equals("")){
+        if ((g1.getLatitud().equals("") && !g2.getLatitud().equals(""))|| (g1.getLongitud().equals("") && !g2.getLongitud().equals(""))){
             return -1;
         }
 
