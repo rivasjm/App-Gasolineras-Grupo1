@@ -39,7 +39,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void init() {
-
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
@@ -140,7 +139,7 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onResetFiltroPrecioClicked() {
         prefs.putString(MAXPRECIOSTRING, maxPrecio);
-        doSyncInit();
+        init();
     }
 
     public String getMaximoEntreTodas() {

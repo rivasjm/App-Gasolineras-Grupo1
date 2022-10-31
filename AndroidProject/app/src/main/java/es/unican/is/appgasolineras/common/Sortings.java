@@ -11,6 +11,9 @@ public class Sortings {
 
     public static List<Gasolinera> ordenaPorUbicacion(List<Gasolinera> data, String latitud, String longitud) {
         Location loc = new Location("");
+        if (latitud.isEmpty() || longitud.isEmpty()) {
+            return data;
+        }
         loc.setLongitude(Double.parseDouble(longitud.replace(",", ".")));
         loc.setLatitude(Double.parseDouble(latitud.replace(",", ".")));
 

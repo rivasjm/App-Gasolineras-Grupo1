@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -67,16 +69,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (prefs.getString("ubicacion").equals("si")) {
-            this.conseguirUbicacion();
-        }
         if (networkInfo != null && networkInfo.isConnected()) {
             presenter = new MainPresenter(this, prefs, true);
         } else {
             presenter = new MainPresenter(this, prefs, false);
         }
-
-        presenter.init();
+        if (prefs.getString("ubicacion").equals("si")) {
+            this.conseguirUbicacion();
+        } else {
+            presenter.init();
+        }
         this.init();
     }
 
@@ -203,16 +205,20 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            presenter.init();
             // alerta
         } else {
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            String lat = String.valueOf(location.getLatitude());
-                            String lon = String.valueOf(location.getLongitude());
-                            prefs.putString("latitud", lat);
-                            prefs.putString("longitud", lon);
+            fusedLocationClient.getCurrentLocation(100, null)
+                    .addOnSuccessListener(this, new OnSuccessListener<>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                String lat = String.valueOf(location.getLatitude());
+                                String lon = String.valueOf(location.getLongitude());
+                                prefs.putString("latitud", lat);
+                                prefs.putString("longitud", lon);
+                            }
+                            presenter.init();
                         }
                     });
         }
