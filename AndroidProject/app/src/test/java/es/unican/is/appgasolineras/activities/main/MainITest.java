@@ -90,7 +90,7 @@ public class MainITest {
             assertEquals("CAMPSA", g.getRotulo());
         }
 
-        // Caso 2: Filtrar por la marca CAMPSA y 1.80€, del listado solo 3 cumplen con esta propiedad
+        // Caso 2: Filtrar por la marca CAMPSA y 1.80€, del listado solo 2 cumplen con esta propiedad
         // Comprobamos que el tamaño de la lista sea 2 y de esas gasolineras que su rotulo sea CAMPSA
         prefs.putString("idComunidad","");
         prefs.putString("tipoGasolina","");
@@ -115,7 +115,7 @@ public class MainITest {
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 152 elementos
+        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
         prefs.putString("idComunidad","");
         prefs.putString("tipoGasolina","");
         prefs.putString("ubicacion","no");
@@ -176,7 +176,7 @@ public class MainITest {
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 152 elementos
+        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
         prefs.putString("idComunidad","");
         prefs.putString("tipoGasolina","");
         prefs.putString("ubicacion","no");
