@@ -152,5 +152,4 @@ public class MainPresenter implements IMainContract.Presenter {
         return maximoEntreTodas(data, prefs.getString(TIPOGASOLINA));
     }
 
-
 }

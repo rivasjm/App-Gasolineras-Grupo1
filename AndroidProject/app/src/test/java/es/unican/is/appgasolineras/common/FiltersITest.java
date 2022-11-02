@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.main;
+package es.unican.is.appgasolineras.common;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,18 +17,13 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import es.unican.is.appgasolineras.common.Filters;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
-
-
-
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -71,7 +66,6 @@ public class FiltersITest {
         assertEquals(0, Filters.filtraPrecio(gasolineras.todasGasolineras(), "-2.04", prefs.getString("tipoGasolina")).size());
         //caso2
         assertEquals(0, Filters.filtraPrecio(new ArrayList<>(), "2.04", prefs.getString("tipoGasolina")).size());
-
     }
 
     @Test

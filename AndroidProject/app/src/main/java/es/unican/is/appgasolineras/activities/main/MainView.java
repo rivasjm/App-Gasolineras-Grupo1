@@ -27,7 +27,7 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.R;
 
-import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
@@ -188,7 +188,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void openFiltroPrecio() {
-        Intent intent = new Intent(this, FiltrarPorPrecioView.class);
+        Intent intent = new Intent(this, FiltrarView.class);
         intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
     }
