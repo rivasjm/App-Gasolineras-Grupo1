@@ -16,7 +16,7 @@ public class Matchers {
      * @return Matcher<View>
      */
     public static Matcher<View> hasElements() {
-        return new TypeSafeMatcher<View>() {
+        return new TypeSafeMatcher<>() {
             @Override public boolean matchesSafely (final View view) {
                 return ((ListView) view).getCount () > 0;
             }
@@ -26,8 +26,9 @@ public class Matchers {
             }
         };
     }
+
     public static Matcher<View> sizeElements(int num) {
-        return new TypeSafeMatcher<View>() {
+        return new TypeSafeMatcher<>() {
             @Override public boolean matchesSafely (final View view) {
                 return ((ListView) view).getCount() == num;
             }
@@ -37,5 +38,4 @@ public class Matchers {
             }
         };
     }
-
 }

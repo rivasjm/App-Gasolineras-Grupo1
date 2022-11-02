@@ -1,9 +1,11 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static es.unican.is.appgasolineras.common.Filters.filtraMarca;
 import static es.unican.is.appgasolineras.common.Filters.filtraPrecio;
 import static es.unican.is.appgasolineras.common.Filters.filtraTipo;
 import static es.unican.is.appgasolineras.common.Filters.maximoEntreTodas;
 import static es.unican.is.appgasolineras.common.Sortings.ordenaPorUbicacion;
+
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private static final String IDCOMUNIDAD = "idComunidad";
     private static final String TIPOGASOLINA = "tipoGasolina";
     private static final String MAXPRECIOSTRING = "maxPrecio";
+    private static final String MARCA = "marca";
     private static final String UBICACION = "ubicacion";
     private static final String LATITUD = "latitud";
     private static final String LONGITUD = "longitud";
@@ -94,11 +97,13 @@ public class MainPresenter implements IMainContract.Presenter {
             dataSync = filtraTipo(dataSync, tipoCombustible);
             maxPrecio = maximoEntreTodas(dataSync, tipoCombustible);
             dataSync = filtraPrecio(dataSync, prefs.getString(MAXPRECIOSTRING), tipoCombustible);
+            dataSync = filtraMarca(dataSync, prefs.getString(MARCA));
             if (prefs.getString(UBICACION).equals("si")) {
                 dataSync = ordenaPorUbicacion(dataSync, prefs.getString(LATITUD), prefs.getString(LONGITUD));
             }
             this.data = dataSync;
             prefs.putString(MAXPRECIOSTRING, maxPrecio);
+            prefs.putString(MAXPRECIOSTRING, "");
             view.showGasolineras(dataSync);
             shownGasolineras = dataSync;
             view.showLoadCorrect(dataSync.size());
@@ -139,12 +144,12 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onResetFiltroPrecioClicked() {
         prefs.putString(MAXPRECIOSTRING, maxPrecio);
-        init();
+        prefs.putString(MARCA, "");
+        doSyncInit();
     }
 
     public String getMaximoEntreTodas() {
         return maximoEntreTodas(data, prefs.getString(TIPOGASOLINA));
     }
-
 
 }

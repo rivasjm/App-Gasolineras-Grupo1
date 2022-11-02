@@ -104,11 +104,10 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         btnGuardarPermanentes.setOnClickListener(view -> {
             if (checkSi.isChecked()) {
                 presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), true);
-                openMainView();
             } else {
                 presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), false);
-                openMainView();
             }
+            openMainView();
         });
 
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);

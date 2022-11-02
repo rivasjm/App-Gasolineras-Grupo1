@@ -1,5 +1,8 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationToken;
@@ -29,8 +28,9 @@ import com.google.android.gms.tasks.OnTokenCanceledListener;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarView;
 import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
-import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
 import es.unican.is.appgasolineras.activities.info.InfoView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -191,7 +191,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void openFiltroPrecio() {
-        Intent intent = new Intent(this, FiltrarPorPrecioView.class);
+        Intent intent = new Intent(this, FiltrarView.class);
         intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
     }
@@ -199,19 +199,19 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
+        prefs.putString("maxPrecio","");
+        prefs.putString("marca", "");
         startActivity(intent);
-        prefs.putString("maxPrecio", "");
     }
 
     private void conseguirUbicacion() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             presenter.init();
             // alerta
         } else {
             CancellationToken c = new CancellationToken() {
-                @NonNull
                 @Override
                 public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
                     return null;

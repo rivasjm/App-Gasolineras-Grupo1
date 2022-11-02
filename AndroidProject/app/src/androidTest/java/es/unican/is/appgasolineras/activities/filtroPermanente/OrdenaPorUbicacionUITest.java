@@ -102,12 +102,12 @@ public class OrdenaPorUbicacionUITest {
 
         //Dos primeras gasolineras de la lista
         DataInteraction g3;
-        g = onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0);
-        g.onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA 6316 KM. 10,5")));
+        g3 = onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(0);
+        g3.onChildView(withId(R.id.tvAddress)).check(matches(withText("CARRETERA 6316 KM. 10,5")));
 
         DataInteraction g4;
-        g2 = onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1);
-        g2.onChildView(withId(R.id.tvAddress)).check(matches(withText("CR N-629 79,7")));
+        g4 = onData(anything()).inAdapterView(withId(R.id.lvGasolineras)).atPosition(1);
+        g4.onChildView(withId(R.id.tvAddress)).check(matches(withText("CR N-629 79,7")));
 
         //PRUEBA. Filtros demasiado restrictivos
         Espresso.pressBack();

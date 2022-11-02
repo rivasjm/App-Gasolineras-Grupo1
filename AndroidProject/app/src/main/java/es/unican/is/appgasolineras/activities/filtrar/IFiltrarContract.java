@@ -1,7 +1,7 @@
 package es.unican.is.appgasolineras.activities.filtrar;
 
 
-public interface IFiltrarPorPrecioContract {
+public interface IFiltrarContract {
 
     public interface Presenter {
         /**
@@ -31,6 +31,12 @@ public interface IFiltrarPorPrecioContract {
          */
         String bajaPrecio(String actual);
 
+        /**
+         * This method establish the brand of the petrol,
+         * it is called when establecerMarca is clicked
+         * @param actual actual brand in the spinner
+         */
+        void estableceMarca(String actual);
     }
 
     public interface View {

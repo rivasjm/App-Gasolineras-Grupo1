@@ -8,13 +8,13 @@ import java.math.RoundingMode;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 
-public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Presenter{
+public class FiltrarPresenter implements IFiltrarContract.Presenter{
     IPrefs prefs;
-    IFiltrarPorPrecioContract.View view;
+    IFiltrarContract.View view;
     String maxPrecio;
 
 
-    public FiltrarPorPrecioPresenter(IFiltrarPorPrecioContract.View view,IPrefs prefs, String maxPrecio){
+    public FiltrarPresenter(IFiltrarContract.View view, IPrefs prefs, String maxPrecio){
         this.view = view;
         this.maxPrecio = maxPrecio;
         this.prefs = prefs;
@@ -57,6 +57,11 @@ public class FiltrarPorPrecioPresenter implements IFiltrarPorPrecioContract.Pres
         }
         devolver = getStringCorrecto(actual);
         return devolver;
+    }
+
+    @Override
+    public void estableceMarca(String act) {
+        prefs.putString("marca", act);
     }
 
     @NonNull
