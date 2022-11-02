@@ -73,13 +73,11 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         checkSi.setOnClickListener(view -> {
             checkNo.setChecked(false);
             checkSi.setChecked(true);
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                if(!pruebas) {
-                    String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
-                    ActivityCompat.requestPermissions(this, permisos, 0);
-                }
+            if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && !pruebas) {
+                String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
+                ActivityCompat.requestPermissions(this, permisos, 0);
             }
         });
 
