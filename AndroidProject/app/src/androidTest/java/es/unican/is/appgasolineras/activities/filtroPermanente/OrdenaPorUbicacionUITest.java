@@ -29,6 +29,7 @@ import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class OrdenaPorUbicacionUITest {
+
     @BeforeClass
     public static void setUp() {
         GasolinerasServiceConstants.setStaticURL2();
@@ -59,7 +60,7 @@ public class OrdenaPorUbicacionUITest {
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
         onView(withId(R.id.spinner_CCAA)).perform(click());
-        // Selecciono en el spinner de la comunidad: Cantabria
+        // Selecciono en el spinner de la comunidad: Todas
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         //Selecciono Si en el checkbox
@@ -88,10 +89,10 @@ public class OrdenaPorUbicacionUITest {
         onData(anything()).atPosition(1).perform(click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
         onView(withId(R.id.spinner_CCAA)).perform(click());
-        // Selecciono en el spinner de la comunidad: Cantabria
+        // Selecciono en el spinner de la comunidad: Todas
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
-        //Selecciono Si en el checkbox
+        //Selecciono No en el checkbox
         onView(withId(R.id.checkBoxNo)).perform(click());
         onView(withId(R.id.checkBoxNo)).check(matches(isChecked()));
         // Guardo filtros
@@ -113,11 +114,11 @@ public class OrdenaPorUbicacionUITest {
         Espresso.pressBack();
         onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
         onView(withId(R.id.spinner_combustible)).perform(click());
-        // Selecciono en el spinner del combustible: Gasolina 95 E5
+        // Selecciono en el spinner del combustible: Hidrogeno
         onData(anything()).atPosition(14).perform(click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Hidrógeno")));
         onView(withId(R.id.spinner_CCAA)).perform(click());
-        // Selecciono en el spinner de la comunidad: Cantabria
+        // Selecciono en el spinner de la comunidad: Todas
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         //Selecciono Si en el checkbox

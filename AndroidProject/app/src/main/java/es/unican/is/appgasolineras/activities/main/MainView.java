@@ -45,6 +45,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private FusedLocationProviderClient fusedLocationClient;
     private static boolean pruebas = false;
 
+    private static final String LATITUD = "latitud";
+    private static final String LONGITUD = "longitud";
+
 
 
     /*
@@ -230,15 +233,20 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                                 if (!pruebas) {
                                     String lat = String.valueOf(location.getLatitude());
                                     String lon = String.valueOf(location.getLongitude());
-                                    prefs.putString("latitud", lat);
-                                    prefs.putString("longitud", lon);
+                                    prefs.putString(LATITUD, lat);
+                                    prefs.putString(LONGITUD, lon);
                                 } else {
-                                    prefs.putString("latitud", "43.3578");
-                                    prefs.putString("longitud", "-3.9260");
+                                    prefs.putString(LATITUD, "43.3578");
+                                    prefs.putString(LONGITUD, "-3.9260");
                                 }
                             } else {
-                                prefs.putString("latitud", "");
-                                prefs.putString("longitud", "");
+                                if(!pruebas) {
+                                    prefs.putString(LATITUD, "");
+                                    prefs.putString(LONGITUD, "");
+                                } else {
+                                    prefs.putString(LATITUD, "43.3578");
+                                    prefs.putString(LONGITUD, "-3.9260");
+                                }
                             }
                             presenter.init();
                         }

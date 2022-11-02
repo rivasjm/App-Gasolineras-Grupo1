@@ -7,6 +7,11 @@ public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
     private IPrefs pref;
     private FiltroPermanenteMapper mapper;
 
+    private static final String IDCOMUNIDAD = "idComunidad";
+    private static final String IDCOMUNIDADNAME = "idComunidadName";
+    private static final String TIPOGASOLINA = "tipoGasolina";
+    private static final String UBICACION = "ubicacion";
+
     public FiltroPermanentePresenter(IPrefs pref){
         this.pref = pref;
         mapper = new FiltroPermanenteMapper();
@@ -19,21 +24,21 @@ public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
 
     @Override
     public void guardaFiltroPermanente(int idComunidad, int tipoGasolina, boolean ubicacion) {
-        pref.putString("tipoGasolina", mapper.getCombustible(tipoGasolina));
-        pref.putString("idComunidad", mapper.getCCAAID(idComunidad));
-        pref.putString("idComunidadName", mapper.getCCAAName(idComunidad));
+        pref.putString(TIPOGASOLINA, mapper.getCombustible(tipoGasolina));
+        pref.putString(IDCOMUNIDAD, mapper.getCCAAID(idComunidad));
+        pref.putString(IDCOMUNIDADNAME, mapper.getCCAAName(idComunidad));
         if (ubicacion) {
-            pref.putString("ubicacion", "si");
+            pref.putString(UBICACION, "si");
         } else {
-            pref.putString("ubicacion", "no");
+            pref.putString(UBICACION, "no");
         }
     }
 
     @Override
     public void reseteaFiltroPermanente(){
-        pref.putString("tipoGasolina", "");
-        pref.putString("idComunidad", "");
-        pref.putString("idComunidadName", "");
-        pref.putString("ubicacion","No");
+        pref.putString(TIPOGASOLINA, "");
+        pref.putString(IDCOMUNIDAD, "");
+        pref.putString(IDCOMUNIDADNAME, "");
+        pref.putString(UBICACION,"No");
     }
 }
