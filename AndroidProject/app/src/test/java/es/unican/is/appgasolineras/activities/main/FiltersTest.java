@@ -49,18 +49,18 @@ public class FiltersTest {
     @Test
     public void filtraPrecioTest() {
         assertEquals(listGasolineras,
-                Filters.filtraPrecio(listGasolineras, "2.04", ""));
+                Filters.filtraPrecio(listGasolineras, "2.04", "dieselA"));
         assertEquals(1,
-                Filters.filtraPrecio(listGasolineras, "2.00", "").size());
+                Filters.filtraPrecio(listGasolineras, "2.00", "dieselA").size());
         assertEquals(listGasolinerasVacia.size(),
-                Filters.filtraPrecio(listGasolineras, "-2.04", "").size());
+                Filters.filtraPrecio(listGasolineras, "-2.04", "dieselA").size());
         assertEquals(listGasolinerasVacia.size(),
-                Filters.filtraPrecio(listGasolinerasVacia, "2.04", "").size());
+                Filters.filtraPrecio(listGasolinerasVacia, "2.04", "dieselA").size());
     }
 
     @Test
     public void maximoEntreTodasTest() {
-        assertEquals("2.02", Filters.maximoEntreTodas(listGasolineras, ""));
+        assertEquals("2.02", Filters.maximoEntreTodas(listGasolineras, "dieselA"));
         assertEquals("0.00", Filters.maximoEntreTodas(listGasolinerasVacia, ""));
     }
 

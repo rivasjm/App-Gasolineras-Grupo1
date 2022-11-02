@@ -31,6 +31,8 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     CheckBox checkSi;
     CheckBox checkNo;
 
+    private static boolean pruebas = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +76,10 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
-                ActivityCompat.requestPermissions(this, permisos, 0);
+                if(!pruebas) {
+                    String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
+                    ActivityCompat.requestPermissions(this, permisos, 0);
+                }
             }
         });
 
@@ -143,5 +147,8 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         finish();
     }
 
+    public static void setPruebas(boolean p) {
+        pruebas = p;
+    }
 }
 

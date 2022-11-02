@@ -34,5 +34,6 @@ public class FiltroPermanentePresenter implements IPermanenteContract.Presenter{
         pref.putString("tipoGasolina", "");
         pref.putString("idComunidad", "");
         pref.putString("idComunidadName", "");
+        pref.putString("ubicacion","No");
     }
 }

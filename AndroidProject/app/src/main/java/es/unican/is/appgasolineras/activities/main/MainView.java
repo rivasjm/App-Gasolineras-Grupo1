@@ -1,9 +1,5 @@
 package es.unican.is.appgasolineras.activities.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -20,28 +16,34 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
-
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
+import es.unican.is.appgasolineras.activities.info.InfoView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
-import es.unican.is.appgasolineras.activities.info.InfoView;
 
 public class MainView extends AppCompatActivity implements IMainContract.View {
     IPrefs prefs;
     private IMainContract.Presenter presenter;
     private FusedLocationProviderClient fusedLocationClient;
+    private static boolean pruebas = false;
 
 
 
@@ -208,15 +210,32 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             presenter.init();
             // alerta
         } else {
-            fusedLocationClient.getCurrentLocation(100, null)
+            CancellationToken c = new CancellationToken() {
+                @NonNull
+                @Override
+                public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                    return null;
+                }
+
+                @Override
+                public boolean isCancellationRequested() {
+                    return false;
+                }
+            };
+            fusedLocationClient.getCurrentLocation(100, c)
                     .addOnSuccessListener(this, new OnSuccessListener<>() {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                String lat = String.valueOf(location.getLatitude());
-                                String lon = String.valueOf(location.getLongitude());
-                                prefs.putString("latitud", lat);
-                                prefs.putString("longitud", lon);
+                                if (!pruebas) {
+                                    String lat = String.valueOf(location.getLatitude());
+                                    String lon = String.valueOf(location.getLongitude());
+                                    prefs.putString("latitud", lat);
+                                    prefs.putString("longitud", lon);
+                                } else {
+                                    prefs.putString("latitud", "43.3578");
+                                    prefs.putString("longitud", "-3.9260");
+                                }
                             } else {
                                 prefs.putString("latitud", "");
                                 prefs.putString("longitud", "");
@@ -225,6 +244,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                         }
                     });
         }
+    }
+
+    public static void setPruebas(boolean p){
+        pruebas = p;
     }
 
 }
