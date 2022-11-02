@@ -20,7 +20,7 @@ import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 
-public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrarPorPrecioContract.View{
+public class FiltrarView extends AppCompatActivity implements  IFiltrarContract.View{
 
     ImageButton btnBajarPrecio;
     ImageButton btnSubirPrecio;
@@ -32,7 +32,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
 
     IPrefs prefs;
 
-    IFiltrarPorPrecioContract.Presenter presenter;
+    IFiltrarContract.Presenter presenter;
 
     String max;
 
@@ -50,7 +50,7 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         if(max.length() == 3) {
             max = (max + "0");
         }
-        presenter = new FiltrarPorPrecioPresenter(this, prefs, max);
+        presenter = new FiltrarPresenter(this, prefs, max);
         presenter.init();
         this.init();
     }

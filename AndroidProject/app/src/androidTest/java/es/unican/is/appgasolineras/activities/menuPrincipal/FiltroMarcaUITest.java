@@ -6,9 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
-import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 import static es.unican.is.appgasolineras.utils.Matchers.sizeElements;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;

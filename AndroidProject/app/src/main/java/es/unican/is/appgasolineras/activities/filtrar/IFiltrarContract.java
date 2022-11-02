@@ -1,7 +1,7 @@
 package es.unican.is.appgasolineras.activities.filtrar;
 
 
-public interface IFiltrarPorPrecioContract {
+public interface IFiltrarContract {
 
     public interface Presenter {
         /**
