@@ -65,6 +65,7 @@ public interface IMainContract {
          * @return a string with the maximum price
          */
         String getMaximoEntreTodas();
+
     }
 
     /**

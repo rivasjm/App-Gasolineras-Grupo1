@@ -19,7 +19,7 @@
         tools:targetApi="32"
         tools:ignore="LockedOrientationActivity">
         <activity
-            android:name=".activities.filtrar.FiltrarPorPrecioView"
+            android:name=".activities.filtrar.FiltrarView"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             android:exported="false" />
