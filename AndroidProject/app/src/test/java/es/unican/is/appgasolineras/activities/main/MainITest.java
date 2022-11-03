@@ -1,15 +1,18 @@
 package es.unican.is.appgasolineras.activities.main;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Build;
 
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,6 +35,7 @@ import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
+
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {Build.VERSION_CODES.O_MR1})
@@ -162,7 +166,7 @@ public class MainITest {
         assertEquals(37, listaDevuelta.getValue().size());
         for (Gasolinera g :listaDevuelta.getValue()) {
             assertEquals("REPSOL", g.getRotulo());
-            assertNotEquals(null, g.getNormal95());
+            assertNotEquals("", g.getNormal95());
         }
 
         // Caso 3: Filtrar por la marca REPSOL y un combustible que no haya, Hidrógeno (h2),
@@ -185,5 +189,70 @@ public class MainITest {
         presenter.init();
         verify(view, times(4)).showGasolineras(listaDevuelta.capture());
         assertEquals(156, listaDevuelta.getValue().size());
+    }
+
+    @Test
+    public void filtradoPorUbicacionTest () {
+        ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(1)).showGasolineras(listaDevuelta.capture());
+        Location locAct = new Location("");
+        locAct.setLatitude(43.468732);
+        locAct.setLongitude(-3.805011);
+        for (int i = 0; i < listaDevuelta.getValue().size(); i++) {
+            if (i < listaDevuelta.getValue().size() - 1) {
+                Gasolinera g1 = listaDevuelta.getValue().get(i);
+                Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+                if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                    Location locg1 = new Location("");
+                    Location locg2 = new Location("");
+                    locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                    locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                    locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                    locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                    assertTrue(locAct.distanceTo(locg1) < locAct.distanceTo(locg2));
+                }
+
+            }
+
+            prefs.putString("idComunidad", ""); // en los datos estaticos todas son de cantabria
+            prefs.putString("tipoGasolina", "normal95");
+            prefs.putString("ubicacion", "si");
+            prefs.putString("maxPrecio", "");
+            prefs.putString("marca", "");
+            prefs.putString("latitud", "43.468732");
+            prefs.putString("longitud", "-3.805011");
+            verify(view, times(2)).showGasolineras(listaDevuelta.capture());
+            locAct = new Location("");
+            locAct.setLatitude(43.468732);
+            locAct.setLongitude(-3.805011);
+            for (Gasolinera g : listaDevuelta.getValue()) {
+                assertNotEquals("", g.getNormal95());
+            }
+            for (i = 0; i < listaDevuelta.getValue().size(); i++) {
+                if (i < listaDevuelta.getValue().size() - 1) {
+                    Gasolinera g1 = listaDevuelta.getValue().get(i);
+                    Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+                    if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                        Location locg1 = new Location("");
+                        Location locg2 = new Location("");
+                        locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                        locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                        locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                        locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                        assertTrue(locAct.distanceTo(locg1) < locAct.distanceTo(locg2));
+                    }
+
+                }
+            }
+
+        }
     }
 }
