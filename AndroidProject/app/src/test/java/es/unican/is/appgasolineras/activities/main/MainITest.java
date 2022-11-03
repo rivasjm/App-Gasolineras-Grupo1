@@ -208,55 +208,230 @@ public class MainITest {
         Location locAct = new Location("");
         locAct.setLatitude(43.468732);
         locAct.setLongitude(-3.805011);
-        for (int i = 0; i < listaDevuelta.getValue().size(); i++) {
-            if (i < listaDevuelta.getValue().size() - 1) {
-                Gasolinera g1 = listaDevuelta.getValue().get(i);
-                Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
-                if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
-                    Location locg1 = new Location("");
-                    Location locg2 = new Location("");
-                    locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
-                    locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
-                    locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
-                    locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
-                    assertTrue(locAct.distanceTo(locg1) <= locAct.distanceTo(locg2));
-                }
-
-            }
-
-            prefs.putString("idComunidad", ""); // en los datos estaticos todas son de cantabria
-            prefs.putString("tipoGasolina", "normal95");
-            prefs.putString("ubicacion", "si");
-            prefs.putString("maxPrecio", "");
-            prefs.putString("marca", "");
-            prefs.putString("latitud", "43.468732");
-            prefs.putString("longitud", "-3.805011");
-            presenter.init();
-            verify(view, times(2)).showGasolineras(listaDevuelta.capture());
-            locAct = new Location("");
-            locAct.setLatitude(43.468732);
-            locAct.setLongitude(-3.805011);
-            for (Gasolinera g : listaDevuelta.getValue()) {
-                assertNotEquals("", g.getNormal95());
-            }
-            for (i = 0; i < listaDevuelta.getValue().size(); i++) {
-                if (i < listaDevuelta.getValue().size() - 1) {
-                    Gasolinera g1 = listaDevuelta.getValue().get(i);
-                    Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
-                    if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
-                        Location locg1 = new Location("");
-                        Location locg2 = new Location("");
-                        locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
-                        locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
-                        locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
-                        locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
-                        double dist1 = locAct.distanceTo(locg1);
-                        double dist2 = locAct.distanceTo(locg2);
-                        assertTrue(dist1 <= dist2);
-                    }
-
-                }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                assertTrue(locAct.distanceTo(locg1) <= locAct.distanceTo(locg2));
             }
         }
+
+        prefs.putString("idComunidad", ""); // en los datos estaticos todas son de cantabria
+        prefs.putString("tipoGasolina", "normal95");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(2)).showGasolineras(listaDevuelta.capture());
+        locAct = new Location("");
+        locAct.setLatitude(43.468732);
+        locAct.setLongitude(-3.805011);
+        for (Gasolinera g : listaDevuelta.getValue()) {
+            assertNotEquals("", g.getNormal95());
+        }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                double dist1 = locAct.distanceTo(locg1);
+                double dist2 = locAct.distanceTo(locg2);
+                assertTrue(dist1 <= dist2);
+            }
+        }
+    }
+
+    /**
+     * Test de integración realizado por Mario Ingelmo y Álvaro Alcántara para probar del main
+     * que los dos filtros desarrollados funcionan en conjunto y también con otros filtros
+     */
+    @Test
+    public void mainFiltradoPorMarcaUbicacionYOtrosFiltrosTest() {
+        ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
+        Location locAct = new Location("");
+        locAct.setLatitude(43.468732);
+        locAct.setLongitude(-3.805011);
+
+        // Caso 1: Filtrar por la marca REPSOL con ordenación por ubicación, se comprueba que
+        // la lista sea de 38 gasolineras, todas ellas de REPSOL y que estén ordenadas.
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(1)).showGasolineras(listaDevuelta.capture());
+        assertEquals(38, listaDevuelta.getValue().size());
+        for (Gasolinera g : listaDevuelta.getValue()) {
+            assertEquals("REPSOL", g.getRotulo());
+        }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                double dist1 = locAct.distanceTo(locg1);
+                double dist2 = locAct.distanceTo(locg2);
+                assertTrue(dist1 <= dist2);
+            }
+        }
+
+        // Caso 2: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de combustible,
+        // se selecciona Gasolina 95 E5 (normal95), se comprueba que la lista sea de 37 gasolineras,
+        // todas ellas de REPSOL, con valor en el campo de la Gasolina 95 E5 y que estén ordenadas.
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "normal95");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(2)).showGasolineras(listaDevuelta.capture());
+        assertEquals(37, listaDevuelta.getValue().size());
+        for (Gasolinera g : listaDevuelta.getValue()) {
+            assertEquals("REPSOL", g.getRotulo());
+            assertNotEquals("", g.getNormal95());
+        }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                double dist1 = locAct.distanceTo(locg1);
+                double dist2 = locAct.distanceTo(locg2);
+                assertTrue(dist1 <= dist2);
+            }
+        }
+
+        // Caso 3: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de precio 1,80€,
+        // se comprueba que la lista sea de 17 gasolineras todas ellas de REPSOL y que estén ordenadas.
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "1.80");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(3)).showGasolineras(listaDevuelta.capture());
+        assertEquals(17, listaDevuelta.getValue().size());
+        for (Gasolinera g : listaDevuelta.getValue()) {
+            assertEquals("REPSOL", g.getRotulo());
+        }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                double dist1 = locAct.distanceTo(locg1);
+                double dist2 = locAct.distanceTo(locg2);
+                assertTrue(dist1 <= dist2);
+            }
+        }
+
+        // Caso 4: Filtrar por la marca REPSOL con ordenación por ubicación, filtro de precio 1,80€
+        // y filtro de combustible se selecciona Gasolina 95 E5 (normal95),
+        // se comprueba que la lista sea de 17 gasolineras todas ellas de REPSOL,
+        // con valor en el campo de la Gasolina 95 E5 y que estén ordenadas.
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "normal95");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "1.80");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(4)).showGasolineras(listaDevuelta.capture());
+        assertEquals(17, listaDevuelta.getValue().size());
+        for (Gasolinera g : listaDevuelta.getValue()) {
+            assertEquals("REPSOL", g.getRotulo());
+            assertNotEquals("", g.getNormal95());
+        }
+        for (int i = 0; i < listaDevuelta.getValue().size() - 1; i++) {
+            Gasolinera g1 = listaDevuelta.getValue().get(i);
+            Gasolinera g2 = listaDevuelta.getValue().get(i + 1);
+            if ((!g1.getLatitud().equals("") && !g2.getLatitud().equals("") && (!g1.getLongitud().equals("") && !g2.getLongitud().equals("")))) {
+                Location locg1 = new Location("");
+                Location locg2 = new Location("");
+                locg1.setLatitude(Double.parseDouble(g1.getLatitud().replace(',', '.')));
+                locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
+                locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
+                locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
+                double dist1 = locAct.distanceTo(locg1);
+                double dist2 = locAct.distanceTo(locg2);
+                assertTrue(dist1 <= dist2);
+            }
+        }
+
+        // Caso 5: Filtrar por la marca REPSOL, ordenación por ubicación y un precio
+        // muy restrictivo, ninguna gasolinera cumple con la propiedad, lista vacía
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "1.0");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(5)).showGasolineras(listaDevuelta.capture());
+        assertEquals(0, listaDevuelta.getValue().size());
+
+        // Caso 6: Filtrar por la marca REPSOL, ordenación por ubicación y un combustible que
+        // no haya, Hidrógeno (h2), ninguna gasolinera cumple con la propiedad, lista vacía
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "h2");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(6)).showGasolineras(listaDevuelta.capture());
+        assertEquals(0, listaDevuelta.getValue().size());
+
+        // Caso 7: Filtrar por la marca REPSOL, ordenación por ubicación, un precio
+        // muy restrictivo y un combustible que no haya, Hidrógeno (h2),
+        // ninguna gasolinera cumple con la propiedad, lista vacía
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "h2");
+        prefs.putString("ubicacion", "si");
+        prefs.putString("maxPrecio", "1.0");
+        prefs.putString("marca", "REPSOL");
+        prefs.putString("latitud", "43.468732");
+        prefs.putString("longitud", "-3.805011");
+        presenter.init();
+        verify(view, times(7)).showGasolineras(listaDevuelta.capture());
+        assertEquals(0, listaDevuelta.getValue().size());
     }
 }
