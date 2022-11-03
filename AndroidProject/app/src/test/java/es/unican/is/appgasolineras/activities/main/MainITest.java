@@ -190,7 +190,7 @@ public class MainITest {
         verify(view, times(4)).showGasolineras(listaDevuelta.capture());
         assertEquals(156, listaDevuelta.getValue().size());
     }
-
+    //Test realizado por Álvaro Alcántara para probar el funcionamiento de la ordenación por ubicación en el MainPreseneter
     @Test
     public void filtradoPorUbicacionTest () {
         ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
@@ -217,7 +217,7 @@ public class MainITest {
                     locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
                     locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
                     locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
-                    assertTrue(locAct.distanceTo(locg1) < locAct.distanceTo(locg2));
+                    assertTrue(locAct.distanceTo(locg1) <= locAct.distanceTo(locg2));
                 }
 
             }
@@ -229,6 +229,7 @@ public class MainITest {
             prefs.putString("marca", "");
             prefs.putString("latitud", "43.468732");
             prefs.putString("longitud", "-3.805011");
+            presenter.init();
             verify(view, times(2)).showGasolineras(listaDevuelta.capture());
             locAct = new Location("");
             locAct.setLatitude(43.468732);
@@ -247,7 +248,9 @@ public class MainITest {
                         locg1.setLongitude(Double.parseDouble(g1.getLongitud().replace(',', '.')));
                         locg2.setLatitude(Double.parseDouble(g2.getLatitud().replace(',', '.')));
                         locg2.setLongitude(Double.parseDouble(g2.getLongitud().replace(',', '.')));
-                        assertTrue(locAct.distanceTo(locg1) < locAct.distanceTo(locg2));
+                        double dist1 = locAct.distanceTo(locg1);
+                        double dist2 = locAct.distanceTo(locg2);
+                        assertTrue(dist1 <= dist2);
                     }
 
                 }
