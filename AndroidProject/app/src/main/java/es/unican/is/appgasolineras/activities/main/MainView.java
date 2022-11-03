@@ -223,9 +223,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             // alerta
         } else {
             CancellationToken c = new CancellationToken() {
+                CancellationToken devolver;
+                @NonNull
                 @Override
                 public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
-                    return null;
+                    return devolver;
                 }
 
                 @Override

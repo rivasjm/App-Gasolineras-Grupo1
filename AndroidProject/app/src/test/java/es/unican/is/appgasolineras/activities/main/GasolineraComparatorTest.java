@@ -1,5 +1,6 @@
 package es.unican.is.appgasolineras.activities.main;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.location.Location;
@@ -61,7 +62,7 @@ public class GasolineraComparatorTest {
         g1.setLongitud("");
         g2.setLatitud("");
         g2.setLongitud("");
-        assertTrue(sut.compare(g1,g2) == 0);
+        assertEquals( 0, sut.compare(g1,g2));
 
         //UGIC.5a
         g1.setLatitud("");
@@ -89,21 +90,21 @@ public class GasolineraComparatorTest {
         g1.setLongitud("-4,155194");
         g2.setLatitud("43,395944");
         g2.setLongitud("-4,155194");
-        assertTrue(sut.compare(g1,g2) == 0);
+        assertEquals( 0, sut.compare(g1,g2));
 
         //UGIC.9a
         g1.setLatitud("");
         g1.setLongitud("-4,155194");
         g2.setLatitud("");
         g2.setLongitud("3,858806");
-        assertTrue(sut.compare(g1,g2) == 0);
+        assertEquals( 0, sut.compare(g1,g2));
 
         //UGIC.10a
         g1.setLatitud("43,395944");
         g1.setLongitud("");
         g2.setLatitud("43,419778");
         g2.setLongitud("");
-        assertTrue(sut.compare(g1,g2) == 0);
+        assertEquals( 0, sut.compare(g1,g2));
 
 
 
