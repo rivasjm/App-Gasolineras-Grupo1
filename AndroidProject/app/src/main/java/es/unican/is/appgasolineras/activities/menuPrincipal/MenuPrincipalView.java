@@ -55,6 +55,7 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

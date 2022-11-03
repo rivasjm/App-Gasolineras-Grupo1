@@ -3,6 +3,9 @@ package es.unican.is.appgasolineras.activities.info;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.main.MainView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -23,11 +26,21 @@ public class InfoView extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            openMainView();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openMainView();
+    }
+
+    public void openMainView(){
+        Intent myIntent = new Intent(this, MainView.class);
+        startActivity(myIntent);
+        finish();
     }
 }
