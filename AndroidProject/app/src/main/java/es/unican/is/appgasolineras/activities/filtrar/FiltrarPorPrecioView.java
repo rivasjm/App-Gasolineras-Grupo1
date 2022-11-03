@@ -133,5 +133,4 @@ public class FiltrarPorPrecioView extends AppCompatActivity implements  IFiltrar
         startActivity(myIntent);
         finish();
     }
-
 }
