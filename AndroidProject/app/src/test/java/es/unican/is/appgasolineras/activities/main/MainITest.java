@@ -12,7 +12,6 @@ import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -51,7 +50,7 @@ public class MainITest {
     public void inicializa() {
         con = ApplicationProvider.getApplicationContext();
         repository = new GasolinerasRepository(con);
-        prefs = new Prefs(con,"KEY_DEFAULT_PREFS");
+        prefs = new Prefs(con, "KEY_DEFAULT_PREFS");
 
         view = mock(IMainContract.View.class);
         when(view.getGasolineraRepository()).thenReturn(repository);
@@ -69,7 +68,9 @@ public class MainITest {
     }
 
     @AfterClass
-    public static void clean() { GasolinerasServiceConstants.setMinecoURL(); }
+    public static void clean() {
+        GasolinerasServiceConstants.setMinecoURL();
+    }
 
     /**
      * Test de integración realizado por Mario Ingelmo para probar del main el filtro de marca
@@ -82,49 +83,49 @@ public class MainITest {
         // Caso 1: Filtrar por la marca CAMPSA sin filtro de precio, del listado solo 3 cumplen
         // con esta propiedad. Comprobamos que el tamaño de la lista sea 3 y
         // de esas gasolineras que su rotulo sea CAMPSA
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","CAMPSA");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "CAMPSA");
         presenter.init();
         verify(view, times(1)).showGasolineras(listaDevuelta.capture());
         assertEquals(3, listaDevuelta.getValue().size());
-        for (Gasolinera g :listaDevuelta.getValue()) {
+        for (Gasolinera g : listaDevuelta.getValue()) {
             assertEquals("CAMPSA", g.getRotulo());
         }
 
         // Caso 2: Filtrar por la marca CAMPSA y 1.80€, del listado solo 2 cumplen con esta propiedad
         // Comprobamos que el tamaño de la lista sea 2 y de esas gasolineras que su rotulo sea CAMPSA
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","1.80");
-        prefs.putString("marca","CAMPSA");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "1.80");
+        prefs.putString("marca", "CAMPSA");
         presenter.init();
         verify(view, times(2)).showGasolineras(listaDevuelta.capture());
         assertEquals(2, listaDevuelta.getValue().size());
-        for (Gasolinera g :listaDevuelta.getValue()) {
+        for (Gasolinera g : listaDevuelta.getValue()) {
             assertEquals("CAMPSA", g.getRotulo());
         }
 
         // Caso 3: Filtrar por la marca CAMPSA y un precio muy restrictivo, ninguna gasolinera cumple
         // con la propiedad, lista vacía
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","1.0");
-        prefs.putString("marca","CAMPSA");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "1.0");
+        prefs.putString("marca", "CAMPSA");
         presenter.init();
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
         // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "");
         presenter.init();
         verify(view, times(4)).showGasolineras(listaDevuelta.capture());
         assertEquals(156, listaDevuelta.getValue().size());
@@ -141,58 +142,59 @@ public class MainITest {
         // Caso 1: Filtrar por la marca REPSOL sin filtro de combustible, del listado solo 38 cumplen
         // con esta propiedad. Comprobamos que el tamaño de la lista sea 38 y
         // de esas gasolineras que su rotulo sea REPSOL
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","REPSOL");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
         presenter.init();
         verify(view, times(1)).showGasolineras(listaDevuelta.capture());
         assertEquals(38, listaDevuelta.getValue().size());
-        for (Gasolinera g :listaDevuelta.getValue()) {
+        for (Gasolinera g : listaDevuelta.getValue()) {
             assertEquals("REPSOL", g.getRotulo());
         }
 
         // Caso 2: Filtrar por la marca REPSOL y filtro de combustible a Gasolina 95 E5 (normal95),
         // del listado solo 37 cumplen con esta propiedad. Comprobamos que el tamaño de la lista sea
         // 37 y de esas gasolineras que su rotulo sea REPSOL y no esté vacía la Gasolina 95 E5
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","normal95");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","REPSOL");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "normal95");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
         presenter.init();
         verify(view, times(2)).showGasolineras(listaDevuelta.capture());
         assertEquals(37, listaDevuelta.getValue().size());
-        for (Gasolinera g :listaDevuelta.getValue()) {
+        for (Gasolinera g : listaDevuelta.getValue()) {
             assertEquals("REPSOL", g.getRotulo());
             assertNotEquals("", g.getNormal95());
         }
 
         // Caso 3: Filtrar por la marca REPSOL y un combustible que no haya, Hidrógeno (h2),
         // ninguna gasolinera cumple con la propiedad, lista vacía
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","h2");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","REPSOL");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "h2");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "REPSOL");
         presenter.init();
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
         // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
-        prefs.putString("idComunidad","");
-        prefs.putString("tipoGasolina","");
-        prefs.putString("ubicacion","no");
-        prefs.putString("maxPrecio","");
-        prefs.putString("marca","");
+        prefs.putString("idComunidad", "");
+        prefs.putString("tipoGasolina", "");
+        prefs.putString("ubicacion", "no");
+        prefs.putString("maxPrecio", "");
+        prefs.putString("marca", "");
         presenter.init();
         verify(view, times(4)).showGasolineras(listaDevuelta.capture());
         assertEquals(156, listaDevuelta.getValue().size());
     }
+
     //Test realizado por Álvaro Alcántara para probar el funcionamiento de la ordenación por ubicación en el MainPreseneter
     @Test
-    public void filtradoPorUbicacionTest () {
+    public void filtradoPorUbicacionTest() {
         ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -255,7 +257,6 @@ public class MainITest {
 
                 }
             }
-
         }
     }
 }

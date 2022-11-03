@@ -30,8 +30,6 @@ public class GasolineraComparatorTest {
         g1 = new Gasolinera();
         g2 = new Gasolinera();
         sut = new GasolineraComparator(location);
-
-
     }
 
     @Test
