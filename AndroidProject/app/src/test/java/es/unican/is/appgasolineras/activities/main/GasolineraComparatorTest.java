@@ -43,71 +43,68 @@ public class GasolineraComparatorTest {
         int dist = sut.compare(g1,g2);
         assertTrue(dist < 0);
 
-        //UGIC.2a
+        //UGIC.1b
         g1.setLatitud("43,395944");
         g1.setLongitud("-4,155194");
         g2.setLatitud("43,419778");
         g2.setLongitud("");
         assertTrue(sut.compare(g1,g2) > 0);
 
-        //UGIC.3a
+        //UGIC.1c
         g1.setLatitud("43,395944");
         g1.setLongitud("");
         g2.setLatitud("43,419778");
         g2.setLongitud("3,858806");
         assertTrue(sut.compare(g1,g2) < 0);
 
-        //UGIC.4a
+        //UGIC.1d
         g1.setLatitud("");
         g1.setLongitud("");
         g2.setLatitud("");
         g2.setLongitud("");
         assertEquals( 0, sut.compare(g1,g2));
 
-        //UGIC.5a
+        //UGIC.1e
         g1.setLatitud("");
         g1.setLongitud("-4,155194");
         g2.setLatitud("43,419778");
         g2.setLongitud("3,858806");
         assertTrue(sut.compare(g1,g2) < 0);
 
-        //UGIC.6a
+        //UGIC.1f
         g1.setLatitud("43,395944");
         g1.setLongitud("-4,155194");
         g2.setLatitud("");
         g2.setLongitud("3,858806");
         assertTrue(sut.compare(g1,g2) > 0);
 
-        //UGIC.7a
+        //UGIC.1g
         g2.setLatitud("43,395944");
         g2.setLongitud("-4,155194");
         g1.setLatitud("43,419778");
         g1.setLongitud("3,858806");
         assertTrue(sut.compare(g1,g2) > 0);
 
-        //UGIC.8a
+        //UGIC.1h
         g1.setLatitud("43,395944");
         g1.setLongitud("-4,155194");
         g2.setLatitud("43,395944");
         g2.setLongitud("-4,155194");
         assertEquals( 0, sut.compare(g1,g2));
 
-        //UGIC.9a
+        //UGIC.1i
         g1.setLatitud("");
         g1.setLongitud("-4,155194");
         g2.setLatitud("");
         g2.setLongitud("3,858806");
         assertEquals( 0, sut.compare(g1,g2));
 
-        //UGIC.10a
+        //UGIC.1j
         g1.setLatitud("43,395944");
         g1.setLongitud("");
         g2.setLatitud("43,419778");
         g2.setLongitud("");
         assertEquals( 0, sut.compare(g1,g2));
-
-
-
     }
 
 }

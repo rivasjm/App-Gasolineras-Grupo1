@@ -75,12 +75,13 @@ public class MainITest {
     /**
      * Test de integración realizado por Mario Ingelmo para probar del main el filtro de marca
      * con el de precio
+     * Prueba determinada en el documento US465234-BuscarGasolinerasPorMarca-TestPlan
      */
     @Test
     public void mainFiltradoPorMarcaYPrecioTest() {
         ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
 
-        // Caso 1: Filtrar por la marca CAMPSA sin filtro de precio, del listado solo 3 cumplen
+        // UGIC.1a: Filtrar por la marca CAMPSA sin filtro de precio, del listado solo 3 cumplen
         // con esta propiedad. Comprobamos que el tamaño de la lista sea 3 y
         // de esas gasolineras que su rotulo sea CAMPSA
         prefs.putString("idComunidad", "");
@@ -95,7 +96,7 @@ public class MainITest {
             assertEquals("CAMPSA", g.getRotulo());
         }
 
-        // Caso 2: Filtrar por la marca CAMPSA y 1.80€, del listado solo 2 cumplen con esta propiedad
+        // UGIC.1b: Filtrar por la marca CAMPSA y 1.80€, del listado solo 2 cumplen con esta propiedad
         // Comprobamos que el tamaño de la lista sea 2 y de esas gasolineras que su rotulo sea CAMPSA
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -109,7 +110,7 @@ public class MainITest {
             assertEquals("CAMPSA", g.getRotulo());
         }
 
-        // Caso 3: Filtrar por la marca CAMPSA y un precio muy restrictivo, ninguna gasolinera cumple
+        // UGIC.1c: Filtrar por la marca CAMPSA y un precio muy restrictivo, ninguna gasolinera cumple
         // con la propiedad, lista vacía
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -120,7 +121,7 @@ public class MainITest {
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
+        // UGIC.1d: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
         prefs.putString("ubicacion", "no");
@@ -134,12 +135,13 @@ public class MainITest {
     /**
      * Test de integración realizado por Mario Ingelmo para probar del main el filtro de marca
      * con el de tipo de combustible
+     * Prueba determinada en el documento US465234-BuscarGasolinerasPorMarca-TestPlan
      */
     @Test
     public void mainFiltradoPorMarcaYCombustibleTest() {
         ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
 
-        // Caso 1: Filtrar por la marca REPSOL sin filtro de combustible, del listado solo 38 cumplen
+        // UGIC.2a: Filtrar por la marca REPSOL sin filtro de combustible, del listado solo 38 cumplen
         // con esta propiedad. Comprobamos que el tamaño de la lista sea 38 y
         // de esas gasolineras que su rotulo sea REPSOL
         prefs.putString("idComunidad", "");
@@ -154,7 +156,7 @@ public class MainITest {
             assertEquals("REPSOL", g.getRotulo());
         }
 
-        // Caso 2: Filtrar por la marca REPSOL y filtro de combustible a Gasolina 95 E5 (normal95),
+        // UGIC.2b: Filtrar por la marca REPSOL y filtro de combustible a Gasolina 95 E5 (normal95),
         // del listado solo 37 cumplen con esta propiedad. Comprobamos que el tamaño de la lista sea
         // 37 y de esas gasolineras que su rotulo sea REPSOL y no esté vacía la Gasolina 95 E5
         prefs.putString("idComunidad", "");
@@ -170,7 +172,7 @@ public class MainITest {
             assertNotEquals("", g.getNormal95());
         }
 
-        // Caso 3: Filtrar por la marca REPSOL y un combustible que no haya, Hidrógeno (h2),
+        // UGIC.2c: Filtrar por la marca REPSOL y un combustible que no haya, Hidrógeno (h2),
         // ninguna gasolinera cumple con la propiedad, lista vacía
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "h2");
@@ -181,7 +183,7 @@ public class MainITest {
         verify(view, times(3)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 4: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
+        // UGIC.2d: Filtrar con ambos filtros vacíos, se devolverá la lista completa con 156 elementos
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
         prefs.putString("ubicacion", "no");
@@ -192,9 +194,13 @@ public class MainITest {
         assertEquals(156, listaDevuelta.getValue().size());
     }
 
-    //Test realizado por Álvaro Alcántara para probar el funcionamiento de la ordenación por ubicación en el MainPreseneter
+    /**
+     * Test realizado por Álvaro Alcántara para probar el funcionamiento
+     * de la ordenación por ubicación en el MainPresenter
+     */
     @Test
     public void filtradoPorUbicacionTest() {
+        // UGIC.2a
         ArgumentCaptor<List<Gasolinera>> listaDevuelta = ArgumentCaptor.forClass(List.class);
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -222,6 +228,7 @@ public class MainITest {
             }
         }
 
+        // UGIC.2b
         prefs.putString("idComunidad", ""); // en los datos estaticos todas son de cantabria
         prefs.putString("tipoGasolina", "normal95");
         prefs.putString("ubicacion", "si");
@@ -257,6 +264,7 @@ public class MainITest {
     /**
      * Test de integración realizado por Mario Ingelmo y Álvaro Alcántara para probar del main
      * que los dos filtros desarrollados funcionan en conjunto y también con otros filtros
+     * Prueba determinada en el documento US454113-BuscarGasolinerasCercanasMedianteLocalizacion-TestPlan
      */
     @Test
     public void mainFiltradoPorMarcaUbicacionYOtrosFiltrosTest() {
@@ -265,7 +273,7 @@ public class MainITest {
         locAct.setLatitude(43.468732);
         locAct.setLongitude(-3.805011);
 
-        // Caso 1: Filtrar por la marca REPSOL con ordenación por ubicación, se comprueba que
+        // UGIC3.a: Filtrar por la marca REPSOL con ordenación por ubicación, se comprueba que
         // la lista sea de 38 gasolineras, todas ellas de REPSOL y que estén ordenadas.
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -296,7 +304,7 @@ public class MainITest {
             }
         }
 
-        // Caso 2: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de combustible,
+        // UGIC3.b: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de combustible,
         // se selecciona Gasolina 95 E5 (normal95), se comprueba que la lista sea de 37 gasolineras,
         // todas ellas de REPSOL, con valor en el campo de la Gasolina 95 E5 y que estén ordenadas.
         prefs.putString("idComunidad", "");
@@ -329,7 +337,7 @@ public class MainITest {
             }
         }
 
-        // Caso 3: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de precio 1,80€,
+        // UGIC3.c: Filtrar por la marca REPSOL con ordenación por ubicación y filtro de precio 1,80€,
         // se comprueba que la lista sea de 17 gasolineras todas ellas de REPSOL y que estén ordenadas.
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -360,7 +368,7 @@ public class MainITest {
             }
         }
 
-        // Caso 4: Filtrar por la marca REPSOL con ordenación por ubicación, filtro de precio 1,80€
+        // UGIC3.d: Filtrar por la marca REPSOL con ordenación por ubicación, filtro de precio 1,80€
         // y filtro de combustible se selecciona Gasolina 95 E5 (normal95),
         // se comprueba que la lista sea de 17 gasolineras todas ellas de REPSOL,
         // con valor en el campo de la Gasolina 95 E5 y que estén ordenadas.
@@ -394,7 +402,7 @@ public class MainITest {
             }
         }
 
-        // Caso 5: Filtrar por la marca REPSOL, ordenación por ubicación y un precio
+        // UGIC3.e: Filtrar por la marca REPSOL, ordenación por ubicación y un precio
         // muy restrictivo, ninguna gasolinera cumple con la propiedad, lista vacía
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "");
@@ -407,7 +415,7 @@ public class MainITest {
         verify(view, times(5)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 6: Filtrar por la marca REPSOL, ordenación por ubicación y un combustible que
+        // UGIC3.f: Filtrar por la marca REPSOL, ordenación por ubicación y un combustible que
         // no haya, Hidrógeno (h2), ninguna gasolinera cumple con la propiedad, lista vacía
         prefs.putString("idComunidad", "");
         prefs.putString("tipoGasolina", "h2");
@@ -420,7 +428,7 @@ public class MainITest {
         verify(view, times(6)).showGasolineras(listaDevuelta.capture());
         assertEquals(0, listaDevuelta.getValue().size());
 
-        // Caso 7: Filtrar por la marca REPSOL, ordenación por ubicación, un precio
+        // UGIC3.g: Filtrar por la marca REPSOL, ordenación por ubicación, un precio
         // muy restrictivo y un combustible que no haya, Hidrógeno (h2),
         // ninguna gasolinera cumple con la propiedad, lista vacía
         prefs.putString("idComunidad", "");
