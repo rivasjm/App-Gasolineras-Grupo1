@@ -190,6 +190,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void openInfoView() {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -197,6 +198,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Intent intent = new Intent(this, FiltrarView.class);
         intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -205,6 +207,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         prefs.putString("maxPrecio","");
         prefs.putString("marca", "");
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        openMenuPrincipal();
     }
 
     private void conseguirUbicacion() {
