@@ -133,5 +133,4 @@ public class FiltrarView extends AppCompatActivity implements  IFiltrarContract.
         startActivity(myIntent);
         finish();
     }
-
 }
