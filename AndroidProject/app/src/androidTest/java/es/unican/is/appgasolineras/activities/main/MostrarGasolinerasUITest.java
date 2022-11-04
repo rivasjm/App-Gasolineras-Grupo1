@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.main;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
@@ -36,7 +37,7 @@ public class MostrarGasolinerasUITest {
 
     @Test
     public void openDetailViewTest() {
-        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
     }
 

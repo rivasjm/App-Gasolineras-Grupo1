@@ -3,6 +3,7 @@ package es.unican.is.appgasolineras.activities.filtroPermanente;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -48,27 +49,28 @@ public class OrdenaPorUbicacionUITest {
     public ActivityScenarioRule<MenuPrincipalView> activityRule =
             new ActivityScenarioRule(MenuPrincipalView.class);
 
-    @Rule public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+    @Rule
+    public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     @Test
     public void guardarFiltrosTest() {
         //PRUEBA: Exito con todos los filtros
-        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
-        onView(withId(R.id.spinner_combustible)).perform(click());
+        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
+        onView(withId(R.id.spinner_combustible)).perform(scrollTo(), click());
         // Selecciono en el spinner del combustible: Gasolina 95 E5
-        onData(anything()).atPosition(1).perform(click());
+        onData(anything()).atPosition(1).perform(scrollTo(), click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
-        onView(withId(R.id.spinner_CCAA)).perform(click());
+        onView(withId(R.id.spinner_CCAA)).perform(scrollTo(), click());
         // Selecciono en el spinner de la comunidad: Todas
-        onData(anything()).atPosition(0).perform(click());
+        onData(anything()).atPosition(0).perform(scrollTo(), click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         //Selecciono Si en el checkbox
-        onView(withId(R.id.checkBoxSi)).perform(click());
+        onView(withId(R.id.checkBoxSi)).perform(scrollTo(), click());
         onView(withId(R.id.checkBoxSi)).check(matches(isChecked()));
         // Guardo filtros
-        onView(withId(R.id.btnGuardarPermanentes)).perform(click());
+        onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
         //Veo Lista
-        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
 
         //Dos primeras gasolineras de la lista
@@ -82,22 +84,22 @@ public class OrdenaPorUbicacionUITest {
 
         //PRUEBA. No se activa el ordenar por localizacion
         Espresso.pressBack();
-        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
-        onView(withId(R.id.spinner_combustible)).perform(click());
+        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
+        onView(withId(R.id.spinner_combustible)).perform(scrollTo(), click());
         // Selecciono en el spinner del combustible: Gasolina 95 E5
-        onData(anything()).atPosition(1).perform(click());
+        onData(anything()).atPosition(1).perform(scrollTo(), click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Gasolina 95 E5")));
-        onView(withId(R.id.spinner_CCAA)).perform(click());
+        onView(withId(R.id.spinner_CCAA)).perform(scrollTo(), click());
         // Selecciono en el spinner de la comunidad: Todas
-        onData(anything()).atPosition(0).perform(click());
+        onData(anything()).atPosition(0).perform(scrollTo(), click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         //Selecciono No en el checkbox
-        onView(withId(R.id.checkBoxNo)).perform(click());
+        onView(withId(R.id.checkBoxNo)).perform(scrollTo(), click());
         onView(withId(R.id.checkBoxNo)).check(matches(isChecked()));
         // Guardo filtros
-        onView(withId(R.id.btnGuardarPermanentes)).perform(click());
+        onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
         //Veo Lista
-        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
         onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
 
         //Dos primeras gasolineras de la lista
@@ -111,43 +113,43 @@ public class OrdenaPorUbicacionUITest {
 
         //PRUEBA. Filtros demasiado restrictivos
         Espresso.pressBack();
-        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
-        onView(withId(R.id.spinner_combustible)).perform(click());
+        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
+        onView(withId(R.id.spinner_combustible)).perform(scrollTo(), click());
         // Selecciono en el spinner del combustible: Hidrogeno
-        onData(anything()).atPosition(14).perform(click());
+        onData(anything()).atPosition(14).perform(scrollTo(), click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Hidrógeno")));
-        onView(withId(R.id.spinner_CCAA)).perform(click());
+        onView(withId(R.id.spinner_CCAA)).perform(scrollTo(), click());
         // Selecciono en el spinner de la comunidad: Todas
-        onData(anything()).atPosition(0).perform(click());
+        onData(anything()).atPosition(0).perform(scrollTo(), click());
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         //Selecciono Si en el checkbox
-        onView(withId(R.id.checkBoxSi)).perform(click());
+        onView(withId(R.id.checkBoxSi)).perform(scrollTo(), click());
         onView(withId(R.id.checkBoxSi)).check(matches(isChecked()));
         // Guardo filtros
-        onView(withId(R.id.btnGuardarPermanentes)).perform(click());
+        onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
         //Veo Lista
-        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
         onView(withId(R.id.lvGasolineras)).check(matches(sizeElements(0)));
 
         //PRUEBA. Comprobar si persisten los filtros
         Espresso.pressBack();
-        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
+        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Hidrógeno")));
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         onView(withId(R.id.checkBoxSi)).check(matches(isChecked()));
-        onView(withId(R.id.btnGuardarPermanentes)).perform(click());
+        onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
 
 
         //PRUEBA:Reseteo
-        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(click());
-        onView(withId(R.id.btnResetearPermanentes)).perform(click());
+        onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
+        onView(withId(R.id.btnResetearPermanentes)).perform(scrollTo(), click());
         // Compruebo que los filtros se han reseteado
         onView(withId(R.id.spinner_combustible)).check(matches(withSpinnerText("Todos")));
         onView(withId(R.id.spinner_CCAA)).check(matches(withSpinnerText("Todas")));
         onView(withId(R.id.checkBoxNo)).check(matches(isChecked()));
 
-        onView(withId(R.id.btnGuardarPermanentes)).perform(click());
-        onView(withId(R.id.btnAccederLista)).perform(click());
+        onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
 
     }
 
