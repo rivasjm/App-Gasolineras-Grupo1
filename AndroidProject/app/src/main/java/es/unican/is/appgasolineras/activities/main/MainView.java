@@ -216,15 +216,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     private void conseguirUbicacion() {
-        if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (pruebas) {
+            prefs.putString(LATITUD, "43.3578");
+            prefs.putString(LONGITUD, "-3.9260");
+            presenter.init();
+        } else if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             presenter.init();
             // alerta
-        } else if (pruebas) {
-            prefs.putString(LATITUD, "43.3578");
-            prefs.putString(LONGITUD, "-3.9260");
-            presenter.init();
         } else {
             CancellationToken c = new CancellationToken() {
                 CancellationToken devolver;
