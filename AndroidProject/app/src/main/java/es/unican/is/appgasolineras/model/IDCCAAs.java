@@ -27,19 +27,19 @@ public enum IDCCAAs {
     CEUTA("18"),
     MELILLA("19");
 
-
-
     public final String id;
 
     private IDCCAAs(String id) {
         this.id = id;
     }
+
     public String getId() {
         return id;
     }
-    public static IDCCAAs getEnumByString(String code){
-        for(IDCCAAs e : IDCCAAs.values()){
-            if(e.name().equals(code)) return e ;
+
+    public static IDCCAAs getEnumByString(String code) {
+        for (IDCCAAs e : IDCCAAs.values()) {
+            if (e.name().equals(code)) return e;
         }
         return null;
     }

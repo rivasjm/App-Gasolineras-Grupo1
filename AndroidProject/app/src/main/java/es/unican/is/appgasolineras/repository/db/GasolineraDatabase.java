@@ -20,14 +20,18 @@ public abstract class GasolineraDatabase extends RoomDatabase {
     private static GasolineraDatabase db;
 
     public static GasolineraDatabase getDB(Context context) {
-        // Como debería estar db == null || !db.isOpen()
-        if (Boolean.TRUE) {
+        if (db == null || !db.isOpen()) {
             db = Room
                     .databaseBuilder(context, GasolineraDatabase.class, GasolineraDatabase.GASOLINERAS_DB_NAME)
                     .allowMainThreadQueries()
                     .build();
         }
         return db;
+    }
+
+    public static void closeDB() {
+        if (db!=null && db.isOpen())
+            db.close();
     }
 
     public abstract GasolineraDao gasolineraDao();

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="es.unican.is.appgasolineras">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,25 +17,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppGasolineras"
+        android:usesCleartextTraffic="false"
+        tools:ignore="LockedOrientationActivity"
         tools:targetApi="32">
         <activity
-            android:name=".activities.filtrar.FiltrarPorPrecioView"
+            android:name=".activities.filtrar.FiltrarView"
             android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.filtrosPermanentes.FiltroPermanenteView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.detail.GasolineraDetailView"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.main.MainView"
+            android:screenOrientation="portrait"
             android:exported="false"/>
         <activity
             android:name=".activities.menuPrincipal.MenuPrincipalView"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

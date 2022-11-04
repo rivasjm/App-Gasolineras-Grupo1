@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="225dp"
-                android:text="@string/lista_de_gasolineras" />
+                android:text="@string/lista_de_gasolineras"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/btnAccederFiltrosPermanentes"
@@ -33,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="100dp"
-                android:text="@string/filtros_permanentes" />
+                android:text="@string/filtros_permanentes"
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 

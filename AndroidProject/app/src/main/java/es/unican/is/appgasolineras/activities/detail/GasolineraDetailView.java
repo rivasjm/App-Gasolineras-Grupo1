@@ -54,6 +54,11 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     public void setInfo(String municipio, String rotulo, String horario, String normal95,
                         String dieselA, String media, String direccion) {
         ImageView ivRotulo = findViewById(R.id.ivRotulo);

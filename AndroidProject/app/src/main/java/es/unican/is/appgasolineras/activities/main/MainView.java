@@ -3,8 +3,11 @@ package es.unican.is.appgasolineras.activities.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,23 +19,34 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
+
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
 
-import es.unican.is.appgasolineras.activities.filtrar.FiltrarPorPrecioView;
+import es.unican.is.appgasolineras.activities.filtrar.FiltrarView;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
+import es.unican.is.appgasolineras.activities.info.InfoView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
-import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
-import es.unican.is.appgasolineras.activities.info.InfoView;
 
 public class MainView extends AppCompatActivity implements IMainContract.View {
     IPrefs prefs;
     private IMainContract.Presenter presenter;
+    private FusedLocationProviderClient fusedLocationClient;
+    private static boolean pruebas = false;
+
+    private static final String LATITUD = "latitud";
+    private static final String LONGITUD = "longitud";
 
 
 
@@ -43,6 +57,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * This method is automatically called when the activity is created
      * It fills the activity with the widgets (buttons, lists, etc.)
+     *
      * @param savedInstanceState
      */
     @Override
@@ -55,6 +70,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         prefs = Prefs.from(this);
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -62,13 +79,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         } else {
             presenter = new MainPresenter(this, prefs, false);
         }
-
-        presenter.init();
+        if (prefs.getString("ubicacion").equals("si")) {
+            this.conseguirUbicacion();
+        } else {
+            presenter.init();
+        }
         this.init();
     }
 
     /**
      * Create a menu in this activity (three dot menu on the top left)
+     *
      * @param menu
      * @return
      */
@@ -81,6 +102,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /**
      * This is the listener to the three-dot menu on the top left
+     *
      * @param item
      * @return
      */
@@ -110,15 +132,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // init UI listeners
         ListView lvGasolineras = findViewById(R.id.lvGasolineras);
         lvGasolineras.setOnItemClickListener((parent, view, position, id) ->
-            presenter.onGasolineraClicked(position)
+                presenter.onGasolineraClicked(position)
         );
         Button precio = findViewById(R.id.btnFiltroPrecio);
         precio.setOnClickListener(view ->
-            presenter.onPrecioClicked()
+                presenter.onPrecioClicked()
         );
         ImageButton resetFiltroPrecio = findViewById(R.id.btnResetearFiltros);
         resetFiltroPrecio.setOnClickListener(view ->
-            presenter.onResetFiltroPrecioClicked()
+                presenter.onResetFiltroPrecioClicked()
         );
     }
 
@@ -139,7 +161,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         if (gasolinerasCount == 0) {
             String text = getResources().getString(R.string.no_gasolineras_con_filtros);
             Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-        } else{
+        } else {
             String text = getResources().getString(R.string.loadCorrect);
             Toast.makeText(this, String.format(text, gasolinerasCount), Toast.LENGTH_SHORT).show();
         }
@@ -168,21 +190,82 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void openInfoView() {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void openFiltroPrecio() {
-        Intent intent = new Intent(this, FiltrarPorPrecioView.class);
+        Intent intent = new Intent(this, FiltrarView.class);
         intent.putExtra("max", presenter.getMaximoEntreTodas());
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
-        startActivity(intent);
         prefs.putString("maxPrecio","");
+        prefs.putString("marca", "");
+        startActivity(intent);
+        finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        openMenuPrincipal();
+    }
+
+    private void conseguirUbicacion() {
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            presenter.init();
+            // alerta
+        } else {
+            CancellationToken c = new CancellationToken() {
+                CancellationToken devolver;
+                @NonNull
+                @Override
+                public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                    return devolver;
+                }
+
+                @Override
+                public boolean isCancellationRequested() {
+                    return false;
+                }
+            };
+            fusedLocationClient.getCurrentLocation(100, c)
+                    .addOnSuccessListener(this, new OnSuccessListener<>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                if (!pruebas) {
+                                    String lat = String.valueOf(location.getLatitude());
+                                    String lon = String.valueOf(location.getLongitude());
+                                    prefs.putString(LATITUD, lat);
+                                    prefs.putString(LONGITUD, lon);
+                                } else {
+                                    prefs.putString(LATITUD, "43.3578");
+                                    prefs.putString(LONGITUD, "-3.9260");
+                                }
+                            } else {
+                                if(!pruebas) {
+                                    prefs.putString(LATITUD, "");
+                                    prefs.putString(LONGITUD, "");
+                                } else {
+                                    prefs.putString(LATITUD, "43.3578");
+                                    prefs.putString(LONGITUD, "-3.9260");
+                                }
+                            }
+                            presenter.init();
+                        }
+                    });
+        }
+    }
+
+    public static void setPruebas(boolean p){
+        pruebas = p;
+    }
 
 }
