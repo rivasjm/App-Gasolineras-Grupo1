@@ -50,7 +50,6 @@ public class OrdenaPorUbicacionUITest {
 
     @Rule public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
-
     @Test
     public void guardarFiltrosTest() {
         //PRUEBA: Exito con todos los filtros
