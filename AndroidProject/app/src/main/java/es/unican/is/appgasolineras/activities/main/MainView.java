@@ -204,7 +204,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void openMenuPrincipal() {
         Intent intent = new Intent(this, MenuPrincipalView.class);
-        prefs.putString("maxPrecio","");
+        prefs.putString("maxPrecio", "");
         prefs.putString("marca", "");
         startActivity(intent);
         finish();
@@ -216,7 +216,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     private void conseguirUbicacion() {
-        if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (pruebas) {
+            prefs.putString(LATITUD, "43.3578");
+            prefs.putString(LONGITUD, "-3.9260");
+            presenter.init();
+        } else if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             presenter.init();
@@ -224,6 +228,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         } else {
             CancellationToken c = new CancellationToken() {
                 CancellationToken devolver;
+
                 @NonNull
                 @Override
                 public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
@@ -240,23 +245,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                if (!pruebas) {
-                                    String lat = String.valueOf(location.getLatitude());
-                                    String lon = String.valueOf(location.getLongitude());
-                                    prefs.putString(LATITUD, lat);
-                                    prefs.putString(LONGITUD, lon);
-                                } else {
-                                    prefs.putString(LATITUD, "43.3578");
-                                    prefs.putString(LONGITUD, "-3.9260");
-                                }
+                                String lat = String.valueOf(location.getLatitude());
+                                String lon = String.valueOf(location.getLongitude());
+                                prefs.putString(LATITUD, lat);
+                                prefs.putString(LONGITUD, lon);
                             } else {
-                                if(!pruebas) {
-                                    prefs.putString(LATITUD, "");
-                                    prefs.putString(LONGITUD, "");
-                                } else {
-                                    prefs.putString(LATITUD, "43.3578");
-                                    prefs.putString(LONGITUD, "-3.9260");
-                                }
+                                prefs.putString(LATITUD, "");
+                                prefs.putString(LONGITUD, "");
                             }
                             presenter.init();
                         }
@@ -264,7 +259,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
     }
 
-    public static void setPruebas(boolean p){
+    public static void setPruebas(boolean p) {
         pruebas = p;
     }
 

@@ -150,7 +150,5 @@ public class OrdenaPorUbicacionUITest {
 
         onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
         onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
-
     }
-
 }
