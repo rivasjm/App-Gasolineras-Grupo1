@@ -69,6 +69,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         prefs = Prefs.from(this);
+        prefs.putString("favoritas", "");
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 

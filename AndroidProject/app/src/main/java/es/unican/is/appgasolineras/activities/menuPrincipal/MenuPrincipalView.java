@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
-import es.unican.is.appgasolineras.activities.listaFavoritos.ListaFavoritasView;
+import es.unican.is.appgasolineras.activities.listaFavoritas.ListaFavoritasView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
@@ -35,11 +35,11 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
         prefs.putString("marca", "");
         Button botonIrALista = findViewById(R.id.btnAccederLista);
         botonIrALista.setOnClickListener(view ->
-            this.openMainView()
+                this.openMainView()
         );
         Button botonIrAFiltrosPermanentes = findViewById(R.id.btnAccederFiltrosPermanentes);
         botonIrAFiltrosPermanentes.setOnClickListener(view ->
-            this.openFiltrosPermanentesView()
+                this.openFiltrosPermanentesView()
         );
         Button botonIrAListaFavoritas = findViewById(R.id.btnAccederFavoritos);
         botonIrAListaFavoritas.setOnClickListener(view ->

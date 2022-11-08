@@ -21,19 +21,9 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="32">
         <activity
-            android:name=".ListaFavoritasView"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ListaFavoritasActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".activities.listaFavoritas.ListaFavoritasView"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.filtrar.FiltrarView"
             android:exported="false"
