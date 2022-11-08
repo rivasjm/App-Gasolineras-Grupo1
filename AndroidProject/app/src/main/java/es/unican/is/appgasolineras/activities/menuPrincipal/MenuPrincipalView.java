@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
+import es.unican.is.appgasolineras.activities.listaFavoritos.ListaFavoritasView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
@@ -40,6 +41,10 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
         botonIrAFiltrosPermanentes.setOnClickListener(view ->
             this.openFiltrosPermanentesView()
         );
+        Button botonIrAListaFavoritas = findViewById(R.id.btnAccederFavoritos);
+        botonIrAListaFavoritas.setOnClickListener(view ->
+                this.openListaFavoritasView()
+        );
     }
 
     @Override
@@ -61,6 +66,13 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     @Override
     public void openFiltrosPermanentesView() {
         Intent intent = new Intent(this, FiltroPermanenteView.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void openListaFavoritasView() {
+        Intent intent = new Intent(this, ListaFavoritasView.class);
         startActivity(intent);
         finish();
     }
