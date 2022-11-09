@@ -2,10 +2,12 @@ package es.unican.is.appgasolineras.activities.detail;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import java.util.Locale;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.model.Gasolinera;
+import es.unican.is.appgasolineras.repository.db.GasolineraDao;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class GasolineraDetailView extends AppCompatActivity implements IDetailContract.View {
 
@@ -21,7 +25,8 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        GasolineraDatabase db = Room.databaseBuilder(getApplicationContext(),
+                GasolineraDatabase.class, "database-name").allowMainThreadQueries().build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasolinera_detail_view);
         Gasolinera g = getIntent().getExtras().getParcelable(INTENT_GASOLINERA);
@@ -34,13 +39,15 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         // Set logo
 
 
-        IDetailContract.Presenter presenter = new GasolineraDetailPresenter(g,this);
+        IDetailContract.Presenter presenter = new GasolineraDetailPresenter(g,this, db);
         presenter.init();
 
         getSupportActionBar().setTitle("Vista detallada");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        Button btnAnhadirGasolineraFavoritas = findViewById(R.id.btnAnhadirGasolineraFavoritas);
+        btnAnhadirGasolineraFavoritas.setOnClickListener(view -> {
+            presenter.anhadeADb();
+        });
         // Set Texts
 
     }
@@ -86,4 +93,6 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         tvDiesel.setText("DiéselA: " + dieselA);
         tvMedia.setText("Media: " + media);
     }
+
+
 }

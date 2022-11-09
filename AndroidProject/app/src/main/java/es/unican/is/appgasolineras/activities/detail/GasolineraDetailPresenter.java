@@ -1,17 +1,26 @@
 package es.unican.is.appgasolineras.activities.detail;
 
+import androidx.room.Room;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import es.unican.is.appgasolineras.model.Gasolinera;
+import es.unican.is.appgasolineras.repository.db.GasolineraDao;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class GasolineraDetailPresenter implements IDetailContract.Presenter {
     Gasolinera g;
     private final IDetailContract.View view;
-    public GasolineraDetailPresenter (Gasolinera g, IDetailContract.View view) {
+    GasolineraDatabase db;
+
+    public GasolineraDetailPresenter (Gasolinera g, IDetailContract.View view, GasolineraDatabase db) {
         this.view = view;
         this.g = g;
+        this.db = db;
     }
     @Override
     public void init() {
-
         String municipio = "";
         if(!g.getMunicipio().isEmpty()) {
             municipio = g.getMunicipio();
@@ -59,5 +68,14 @@ public class GasolineraDetailPresenter implements IDetailContract.Presenter {
         double diesel = Double.parseDouble(g.getDieselA().replace(",", "."));
         double gasolina = Double.parseDouble(g.getNormal95().replace(",", "."));
         return String.valueOf ((2*gasolina + diesel)/3).replace(".", ",").substring(0,4) + " €";
+    }
+    public void anhadeADb () {
+        GasolineraDao dao = db.gasolineraDao();
+        dao.insertAll(g);
+        List<Gasolinera> prueba = dao.getAll();
+        for (Gasolinera g : prueba){
+            System.out.println(g.getDireccion());
+        }
+
     }
 }

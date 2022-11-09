@@ -13,6 +13,7 @@ public interface IDetailContract {
          */
         String calcula();
 
+        void anhadeADb();
     }
     public interface View {
         /**

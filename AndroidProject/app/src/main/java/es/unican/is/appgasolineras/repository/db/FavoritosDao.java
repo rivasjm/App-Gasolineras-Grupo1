@@ -8,14 +8,8 @@ import java.util.List;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
 
-
-/**
- * DAO defined with Room
- * Usage: https://developer.android.com/training/data-storage/room
- */
 @Dao
-public interface GasolineraDao {
-
+public interface FavoritosDao {
     @Query("SELECT * FROM gasolineras")
     List<Gasolinera> getAll();
 
@@ -24,5 +18,4 @@ public interface GasolineraDao {
 
     @Query("DELETE FROM gasolineras")
     void deleteAll();
-
 }
