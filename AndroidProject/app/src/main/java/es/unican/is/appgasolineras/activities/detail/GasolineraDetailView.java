@@ -30,14 +30,6 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasolinera_detail_view);
         Gasolinera g = getIntent().getExtras().getParcelable(INTENT_GASOLINERA);
-        // Link to view elements
-
-
-        // Get Gas Station from the intent that triggered this activity
-
-
-        // Set logo
-
 
         IDetailContract.Presenter presenter = new GasolineraDetailPresenter(g,this, db);
         presenter.init();
@@ -48,8 +40,6 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         btnAnhadirGasolineraFavoritas.setOnClickListener(view -> {
             presenter.anhadeADb();
         });
-        // Set Texts
-
     }
 
     @Override

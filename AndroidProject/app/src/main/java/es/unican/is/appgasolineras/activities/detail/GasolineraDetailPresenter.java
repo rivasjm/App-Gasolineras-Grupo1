@@ -69,16 +69,12 @@ public class GasolineraDetailPresenter implements IDetailContract.Presenter {
         double gasolina = Double.parseDouble(g.getNormal95().replace(",", "."));
         return String.valueOf ((2*gasolina + diesel)/3).replace(".", ",").substring(0,4) + " €";
     }
+
+    @Override
     public void anhadeADb () {
         GasolineraDao dao = db.gasolineraDao();
         if (dao.getGasolineraById(Integer.parseInt(g.getId())) == null) {
             dao.insertAll(g);
         }
-
-        List<Gasolinera> prueba = dao.getAll();
-        for (Gasolinera g : prueba){
-            System.out.println(g.getDireccion());
-        }
-
     }
 }

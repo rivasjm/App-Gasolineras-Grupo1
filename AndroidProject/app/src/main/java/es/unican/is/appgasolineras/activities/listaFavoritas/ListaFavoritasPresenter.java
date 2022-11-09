@@ -5,6 +5,7 @@ import java.util.List;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ListaFavoritasPresenter implements IListaFavoritasContract.Presenter {
 
@@ -12,10 +13,12 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
     private final IListaFavoritasContract.View view;
     private IPrefs prefs;
     private IGasolinerasRepository repository;
+    private GasolineraDatabase db;
 
-    public ListaFavoritasPresenter(IListaFavoritasContract.View view, IPrefs prefs) {
+    public ListaFavoritasPresenter(IListaFavoritasContract.View view, IPrefs prefs, GasolineraDatabase db) {
         this.view = view;
         this.prefs = prefs;
+        this.db = db;
     }
 
     @Override

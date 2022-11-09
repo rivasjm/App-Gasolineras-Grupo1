@@ -2,6 +2,7 @@ package es.unican.is.appgasolineras.activities.listaFavoritas;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
+import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
 public class ListaFavoritasView extends AppCompatActivity implements IListaFavoritasContract.View{
 
@@ -28,6 +30,10 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        GasolineraDatabase db = Room.databaseBuilder(getApplicationContext(),
+                GasolineraDatabase.class, "database-name").allowMainThreadQueries().build();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_favoritas);
 
@@ -36,7 +42,7 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
         prefs = Prefs.from(this);
         prefs.putString("favoritas", "si");
-        presenter = new ListaFavoritasPresenter(this, prefs);
+        presenter = new ListaFavoritasPresenter(this, prefs, db);
         presenter.init();
         this.init();
     }

@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.filtrosPermanentes;
+package es.unican.is.appgasolineras.activities.filtroPermanente;
 
 public interface IPermanenteContract {
 

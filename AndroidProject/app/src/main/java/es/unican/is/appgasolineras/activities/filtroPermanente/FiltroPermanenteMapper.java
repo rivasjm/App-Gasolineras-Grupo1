@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.filtrosPermanentes;
+package es.unican.is.appgasolineras.activities.filtroPermanente;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
+import es.unican.is.appgasolineras.activities.filtroPermanente.FiltroPermanenteView;
 import es.unican.is.appgasolineras.activities.listaFavoritas.ListaFavoritasView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;

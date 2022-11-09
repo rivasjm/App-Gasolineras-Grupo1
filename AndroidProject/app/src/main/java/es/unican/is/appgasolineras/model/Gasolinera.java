@@ -23,6 +23,7 @@ import com.google.gson.annotations.SerializedName;
 public class Gasolinera implements Parcelable {
 
     @SerializedName("IDEESS") @NonNull @PrimaryKey  private String id;
+    @SerializedName("IDMunicipio")  private String idMun;
 
     @SerializedName("Rótulo") @ColumnInfo(name = "rotulo")  private String rotulo;
     @SerializedName("C.P.")   @ColumnInfo(name = "cp")  private String cp;
@@ -57,9 +58,16 @@ public class Gasolinera implements Parcelable {
         return id;
     }
 
-
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public String getIdMun() {
+        return idMun;
+    }
+
+    public void setIdMun(String idMun) {
+        this.idMun = idMun;
     }
 
     public String getRotulo() {
@@ -232,6 +240,7 @@ public class Gasolinera implements Parcelable {
 
     protected Gasolinera(Parcel in) {
         id = in.readString();
+        idMun = in.readString();
         rotulo = in.readString();
         cp = in.readString();
         direccion = in.readString();
@@ -275,6 +284,7 @@ public class Gasolinera implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
+        dest.writeString(idMun);
         dest.writeString(rotulo);
         dest.writeString(cp);
         dest.writeString(direccion);
