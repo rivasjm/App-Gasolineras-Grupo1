@@ -25,4 +25,7 @@ public interface GasolineraDao {
     @Query("DELETE FROM gasolineras")
     void deleteAll();
 
+    @Query("SELECT * FROM gasolineras where gasolineras.id = :id")
+    Gasolinera getGasolineraById(int id);
+
 }

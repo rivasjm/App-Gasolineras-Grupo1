@@ -71,7 +71,10 @@ public class GasolineraDetailPresenter implements IDetailContract.Presenter {
     }
     public void anhadeADb () {
         GasolineraDao dao = db.gasolineraDao();
-        dao.insertAll(g);
+        if (dao.getGasolineraById(Integer.parseInt(g.getId())) == null) {
+            dao.insertAll(g);
+        }
+
         List<Gasolinera> prueba = dao.getAll();
         for (Gasolinera g : prueba){
             System.out.println(g.getDireccion());
