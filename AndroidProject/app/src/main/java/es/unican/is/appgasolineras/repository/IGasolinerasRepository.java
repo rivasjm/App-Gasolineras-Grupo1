@@ -29,4 +29,6 @@ public interface IGasolinerasRepository {
     public List<Gasolinera> getGasolineras(String idCCAA);
 
     public List<Gasolinera> todasGasolineras();
+
+    public List<Gasolinera> gasolinerasMunicipio(String idMun);
 }
