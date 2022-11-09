@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -23,7 +26,7 @@ import es.unican.is.appgasolineras.repository.GasolinerasRepository;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 
-public class ListaFavoritasView extends AppCompatActivity implements IListaFavoritasContract.View{
+public class ListaFavoritasView extends AppCompatActivity implements IListaFavoritasContract.View {
 
     IPrefs prefs;
     private IListaFavoritasContract.Presenter presenter;
@@ -42,7 +45,13 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
         prefs = Prefs.from(this);
         prefs.putString("favoritas", "si");
-        presenter = new ListaFavoritasPresenter(this, prefs, db);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            presenter = new ListaFavoritasPresenter(this, db, true);
+        } else {
+            presenter = new ListaFavoritasPresenter(this, db, false);
+        }
         presenter.init();
         this.init();
     }
@@ -89,6 +98,18 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
     @Override
     public void showLoadErrorServidor() {
         String text = getResources().getString(R.string.loadErrorServidor);
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoadErrorDAOVacia() {
+        String text = "No tiene gasolineras marcadas como favoritas";
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoadErrorRed() {
+        String text = getResources().getString(R.string.loadErrorRed);
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 

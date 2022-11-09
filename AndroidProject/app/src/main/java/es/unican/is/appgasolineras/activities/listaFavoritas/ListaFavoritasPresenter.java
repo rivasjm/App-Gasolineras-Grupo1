@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDao;
@@ -17,17 +17,15 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
 
     private List<Gasolinera> shownGasolineras;
     private final IListaFavoritasContract.View view;
-    private IPrefs prefs;
     private IGasolinerasRepository repository;
-    private GasolineraDatabase db;
-    private GasolineraDao dao;
-    private Map<String, List<String>> mapaMun;
-    public ListaFavoritasPresenter(IListaFavoritasContract.View view, IPrefs prefs, GasolineraDatabase db) {
+    private final GasolineraDao dao;
+    private final Boolean red;
+
+
+    public ListaFavoritasPresenter(IListaFavoritasContract.View view, GasolineraDatabase db, Boolean red) {
         this.view = view;
-        this.prefs = prefs;
-        this.db = db;
+        this.red = red;
         dao = db.gasolineraDao();
-        mapaMun = new HashMap<>();
     }
 
     @Override
@@ -36,43 +34,54 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
             repository = view.getGasolineraRepository();
         }
         if (repository != null) {
-            doSyncInitFavoritas();
+            if (Boolean.TRUE.equals(red)) {
+                doSyncInitFavoritas();
+            } else {
+                view.showLoadErrorRed();
+            }
         }
     }
 
     @Override
     public void doSyncInitFavoritas() {
+        Boolean repositorio = false;
         List<Gasolinera> dataSync;
         dataSync = dao.getAll();
-
-        for (Gasolinera g : dataSync) {
-            List<String> listaId = mapaMun.get(g.getIdMun());
-            if (listaId == null){
-                listaId = new ArrayList<>();
+        if (!dataSync.isEmpty()) {
+            Map<String, List<String>> mapaMun = new HashMap<>();
+            for (Gasolinera g : dataSync) {
+                List<String> listaId = mapaMun.get(g.getIdMun());
+                if (listaId == null) {
+                    listaId = new ArrayList<>();
+                }
                 listaId.add(g.getId());
-
-            } else {
-                listaId.add(g.getId());
+                mapaMun.put(g.getIdMun(), listaId);
             }
-            mapaMun.put(g.getIdMun(), listaId);
-        }
-        dataSync.clear();
-        for (String idMun : mapaMun.keySet()) {
-            List<Gasolinera> listaGas = MunicipioMapper.getGasolinerasMunicipio(idMun, repository);
-            Set<String> setId = new HashSet<>(mapaMun.get(idMun));
-            for (Gasolinera g: listaGas) {
-                if (setId.contains(g.getId())){
-                    dataSync.add(g);
+            dataSync.clear();
+            for (String idMun : mapaMun.keySet()) {
+                List<Gasolinera> listaGasolinerasMunicipio = repository.gasolinerasMunicipio(idMun);
+                if (listaGasolinerasMunicipio == null) {
+                    repositorio = true;
+                } else {
+                    Set<String> setId = new HashSet<>(mapaMun.get(idMun));
+                    for (Gasolinera g : listaGasolinerasMunicipio) {
+                        if (setId.contains(g.getId())) {
+                            dataSync.add(g);
+                        }
+                    }
                 }
             }
-        }
-        if (dataSync != null) {
-            view.showGasolineras(dataSync);
-            shownGasolineras = dataSync;
-            view.showLoadCorrect(dataSync.size());
+            if (repositorio) {
+                shownGasolineras = null;
+                view.showLoadErrorServidor();
+            } else {
+                view.showGasolineras(dataSync);
+                shownGasolineras = dataSync;
+                view.showLoadCorrect(dataSync.size());
+            }
         } else {
             shownGasolineras = null;
-            view.showLoadErrorServidor();
+            view.showLoadErrorDAOVacia();
         }
     }
 

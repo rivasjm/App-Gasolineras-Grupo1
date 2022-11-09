@@ -30,6 +30,10 @@ public interface IListaFavoritasContract {
 
         void showLoadErrorServidor();
 
+        void showLoadErrorRed();
+
         void openMenuPrincipal();
+
+        void showLoadErrorDAOVacia();
     }
 }
