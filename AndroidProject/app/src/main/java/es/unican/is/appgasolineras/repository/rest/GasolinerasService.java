@@ -61,6 +61,11 @@ public class GasolinerasService {
         return devolverResponse(call);
     }
 
+    public static GasolinerasResponse gasolinerasMunicipio(String id) {
+        final Call<GasolinerasResponse> call = getAPI().gasolinerasMunicipio(id);
+        return devolverResponse(call);
+    }
+
     private static GasolinerasResponse devolverResponse(Call<GasolinerasResponse> call) {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         CallRunnable<GasolinerasResponse> runnable = new CallRunnable<>(call);
