@@ -24,7 +24,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
-import es.unican.is.appgasolineras.activities.filtrosPermanentes.FiltroPermanenteView;
 import es.unican.is.appgasolineras.activities.main.MainView;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
