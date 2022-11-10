@@ -4,10 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -19,6 +16,7 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
+import es.unican.is.appgasolineras.common.Red;
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
 import es.unican.is.appgasolineras.common.prefs.Prefs;
 import es.unican.is.appgasolineras.model.Gasolinera;
@@ -45,9 +43,7 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
         prefs = Prefs.from(this);
         prefs.putString("favoritas", "si");
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (Red.isNetworkAvailable(this)) {
             presenter = new ListaFavoritasPresenter(this, db, true);
         } else {
             presenter = new ListaFavoritasPresenter(this, db, false);

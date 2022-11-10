@@ -2,11 +2,9 @@ package es.unican.is.appgasolineras.activities.listaFavoritas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -46,6 +44,7 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
     public void doSyncInitFavoritas() {
         Boolean repositorio = false;
         List<Gasolinera> dataSync;
+        List<Gasolinera> devueltas;
         dataSync = dao.getAll();
         if (!dataSync.isEmpty()) {
             Map<String, List<String>> mapaMun = new HashMap<>();
@@ -63,12 +62,9 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
                 if (listaGasolinerasMunicipio == null) {
                     repositorio = true;
                 } else {
-                    Set<String> setId = new HashSet<>(mapaMun.get(idMun));
-                    for (Gasolinera g : listaGasolinerasMunicipio) {
-                        if (setId.contains(g.getId())) {
-                            dataSync.add(g);
-                        }
-                    }
+                    List<String> setId = mapaMun.get(idMun);
+                    devueltas = listaGasolinerasMunicipio.stream().filter(g -> setId.contains(g.getId())).collect(Collectors.toList());
+                    dataSync.addAll(devueltas);
                 }
             }
             if (repositorio) {
