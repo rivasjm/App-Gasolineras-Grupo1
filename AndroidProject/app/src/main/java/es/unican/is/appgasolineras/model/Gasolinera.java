@@ -10,6 +10,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 /**
  * Class that represents a Gas Station, with the attributes defined in the following REST API
  * https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help
@@ -241,6 +243,7 @@ public class Gasolinera implements Parcelable {
     protected Gasolinera(Parcel in) {
         id = in.readString();
         idMun = in.readString();
+        IDCCAA = in.readString();
         rotulo = in.readString();
         cp = in.readString();
         direccion = in.readString();
@@ -285,6 +288,7 @@ public class Gasolinera implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(idMun);
+        dest.writeString(IDCCAA);
         dest.writeString(rotulo);
         dest.writeString(cp);
         dest.writeString(direccion);
@@ -306,5 +310,18 @@ public class Gasolinera implements Parcelable {
         dest.writeString(biodiesel);
         dest.writeString(latitud);
         dest.writeString(longitud);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gasolinera that = (Gasolinera) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
