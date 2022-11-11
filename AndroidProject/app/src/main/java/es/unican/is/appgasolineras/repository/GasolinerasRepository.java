@@ -50,21 +50,21 @@ public class GasolinerasRepository implements IGasolinerasRepository {
     public List<Gasolinera> getGasolineras(String idCCAA) {
         GasolinerasResponse response = GasolinerasService.getGasolineras(idCCAA);
         List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
-        //persistToDB(gasolineras);
+        persistToDB(gasolineras);
         return gasolineras;
     }
 
     public List<Gasolinera> todasGasolineras() {
         GasolinerasResponse response = GasolinerasService.todasGasolineras();
         List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
-        //persistToDB(gasolineras);
+        persistToDB(gasolineras);
         return gasolineras;
     }
 
     public List<Gasolinera> gasolinerasMunicipio(String idMun) {
         GasolinerasResponse response = GasolinerasService.gasolinerasMunicipio(idMun);
         List<Gasolinera> gasolineras = response != null ? response.getStations() : null;
-        //persistToDB(gasolineras);
+        persistToDB(gasolineras);
         return gasolineras;
     }
 

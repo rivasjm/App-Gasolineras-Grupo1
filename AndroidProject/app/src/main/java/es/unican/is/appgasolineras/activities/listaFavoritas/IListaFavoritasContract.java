@@ -12,8 +12,6 @@ public interface IListaFavoritasContract {
         void init();
 
         void doSyncInitFavoritas();
-
-        void onGasolineraClicked(int index);
     }
 
     public interface View {
@@ -21,8 +19,6 @@ public interface IListaFavoritasContract {
         void init();
 
         void showGasolineras(List<Gasolinera> gasolineras);
-
-        void openGasolineraDetails(Gasolinera gasolinera);
 
         IGasolinerasRepository getGasolineraRepository();
 

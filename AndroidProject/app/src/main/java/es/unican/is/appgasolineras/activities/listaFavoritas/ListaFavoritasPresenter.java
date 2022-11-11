@@ -1,12 +1,11 @@
 package es.unican.is.appgasolineras.activities.listaFavoritas;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import es.unican.is.appgasolineras.model.Gasolinera;
 import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
@@ -20,6 +19,7 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
     private IGasolinerasRepository repository;
     private final GasolineraDao dao;
     private final Boolean red;
+    private Boolean estaRepositorioCaido = false;
 
 
     public ListaFavoritasPresenter(IListaFavoritasContract.View view, GasolineraDatabase db, Boolean red) {
@@ -44,40 +44,41 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
 
     @Override
     public void doSyncInitFavoritas() {
-        Boolean repositorio = false;
-        List<Gasolinera> dataSync;
-        dataSync = dao.getAll();
-        if (!dataSync.isEmpty()) {
-            Map<String, List<String>> mapaMun = new HashMap<>();
-            for (Gasolinera g : dataSync) {
-                List<String> listaId = mapaMun.get(g.getIdMun());
-                if (listaId == null) {
-                    listaId = new ArrayList<>();
-                }
-                listaId.add(g.getId());
-                mapaMun.put(g.getIdMun(), listaId);
+        List<Gasolinera> gasolinerasFavoritasSinActualizar = dao.getAll();
+        Iterator<Gasolinera> it = gasolinerasFavoritasSinActualizar.iterator();
+        boolean hayMasDeUnaComunidad = false;
+        String idComunidadUnica = null;
+        // En este while comprobamos si hay mas de una comunidad autonoma en la lista
+        while (it.hasNext() && !hayMasDeUnaComunidad) {
+            String idComunidadActual = it.next().getIDCCAA();
+            if (idComunidadUnica == null) {
+                idComunidadUnica = idComunidadActual;
+            } else if (!idComunidadUnica.equals(idComunidadActual)) {
+                hayMasDeUnaComunidad = true;
             }
-            dataSync.clear();
-            for (String idMun : mapaMun.keySet()) {
-                List<Gasolinera> listaGasolinerasMunicipio = repository.gasolinerasMunicipio(idMun);
-                if (listaGasolinerasMunicipio == null) {
-                    repositorio = true;
-                } else {
-                    Set<String> setId = new HashSet<>(mapaMun.get(idMun));
-                    for (Gasolinera g : listaGasolinerasMunicipio) {
-                        if (setId.contains(g.getId())) {
-                            dataSync.add(g);
-                        }
+        }
+        if (!gasolinerasFavoritasSinActualizar.isEmpty()) {
+            // Conseguimos las gasolineras actualizadas
+            List<Gasolinera> todasGasolineras = conseguirGasolinerasActualizadas(hayMasDeUnaComunidad, gasolinerasFavoritasSinActualizar, idComunidadUnica);
+            // De las gasolineras filtradas nos quedamos solo con las que tenemos en favoritas
+            todasGasolineras.retainAll(gasolinerasFavoritasSinActualizar);
+            List<Gasolinera> listaFinal = new ArrayList<>();
+            // Ordenamos la lista actualizada para respetar el orden anterior
+            for (Gasolinera gDao : gasolinerasFavoritasSinActualizar) {
+                for (Gasolinera gTodas : todasGasolineras) {
+                    if (gDao.getId().equals(gTodas.getId())) {
+                        listaFinal.add(gTodas);
                     }
                 }
             }
-            if (repositorio) {
+            Collections.reverse(listaFinal);
+            if (estaRepositorioCaido) {
                 shownGasolineras = null;
                 view.showLoadErrorServidor();
             } else {
-                view.showGasolineras(dataSync);
-                shownGasolineras = dataSync;
-                view.showLoadCorrect(dataSync.size());
+                view.showGasolineras(listaFinal);
+                shownGasolineras = listaFinal;
+                view.showLoadCorrect(listaFinal.size());
             }
         } else {
             shownGasolineras = null;
@@ -85,11 +86,30 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
         }
     }
 
-    @Override
-    public void onGasolineraClicked(int index) {
-        if (shownGasolineras != null && index < shownGasolineras.size()) {
-            Gasolinera gasolinera = shownGasolineras.get(index);
-            view.openGasolineraDetails(gasolinera);
+    public List<Gasolinera> conseguirGasolinerasActualizadas(boolean masDeUnaComunidad, List<Gasolinera> lista, String idComunidad) {
+        List<Gasolinera> todasGasolineras = new ArrayList<>();
+        if (!masDeUnaComunidad) {
+            todasGasolineras = repository.getGasolineras(idComunidad);
+        } else {
+            Map<String, List<String>> mapaMun = new HashMap<>();
+            for (Gasolinera g : lista) {
+                List<String> listaId = mapaMun.get(g.getIdMun());
+                if (listaId == null) {
+                    listaId = new ArrayList<>();
+                }
+                listaId.add(g.getId());
+                mapaMun.put(g.getIdMun(), listaId);
+            }
+            for (String idMun : mapaMun.keySet()) {
+                List<Gasolinera> listaGasolinerasMunicipio = repository.gasolinerasMunicipio(idMun);
+                if (listaGasolinerasMunicipio == null) {
+                    estaRepositorioCaido = true;
+                } else {
+                    todasGasolineras.addAll(listaGasolinerasMunicipio);
+                }
+            }
         }
+        return todasGasolineras;
     }
+
 }
