@@ -37,9 +37,9 @@ public class GasolineraDetailView extends AppCompatActivity implements IDetailCo
         getSupportActionBar().setTitle("Vista detallada");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button btnAnhadirGasolineraFavoritas = findViewById(R.id.btnAnhadirGasolineraFavoritas);
-        btnAnhadirGasolineraFavoritas.setOnClickListener(view -> {
-            presenter.anhadeADb();
-        });
+        btnAnhadirGasolineraFavoritas.setOnClickListener(view ->
+            presenter.anhadeADb()
+        );
     }
 
     @Override

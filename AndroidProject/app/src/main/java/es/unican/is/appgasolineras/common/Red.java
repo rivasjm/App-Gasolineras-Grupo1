@@ -12,6 +12,10 @@ import android.util.Log;
 
 public class Red {
 
+    private Red() {
+        // No hace nada
+    }
+
     public static boolean isNetworkAvailable(Context context) {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
