@@ -1,4 +1,4 @@
-package es.unican.is.appgasolineras.activities.filtrosPermanentes;
+package es.unican.is.appgasolineras.activities.filtroPermanente;
 
 import android.Manifest;
 import android.content.Intent;
@@ -100,11 +100,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
         Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
         btnGuardarPermanentes.setOnClickListener(view -> {
-            if (checkSi.isChecked()) {
-                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), true);
-            } else {
-                presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), false);
-            }
+            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), checkSi.isChecked());
             openMainView();
         });
 
