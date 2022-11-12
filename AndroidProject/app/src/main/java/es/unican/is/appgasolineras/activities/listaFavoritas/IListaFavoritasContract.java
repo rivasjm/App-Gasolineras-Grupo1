@@ -12,6 +12,8 @@ public interface IListaFavoritasContract {
         void init();
 
         void doSyncInitFavoritas();
+
+        void onGasolineraClicked(int index);
     }
 
     public interface View {
@@ -27,6 +29,8 @@ public interface IListaFavoritasContract {
         void showLoadErrorServidor();
 
         void showLoadErrorRed();
+
+        void openGasolineraDetails(Gasolinera gasolinera);
 
         void openMenuPrincipal();
 

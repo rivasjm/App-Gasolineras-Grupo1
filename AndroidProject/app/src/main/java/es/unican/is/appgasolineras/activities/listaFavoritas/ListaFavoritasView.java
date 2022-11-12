@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.unican.is.appgasolineras.R;
+import es.unican.is.appgasolineras.activities.detail.GasolineraDetailView;
 import es.unican.is.appgasolineras.activities.main.GasolinerasArrayAdapter;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.common.Red;
@@ -53,7 +54,11 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
     @Override
     public void init() {
-
+        // init UI listeners
+        ListView lvGasolineras = findViewById(R.id.lvGasolineras2);
+        lvGasolineras.setOnItemClickListener((parent, view, position, id) ->
+                presenter.onGasolineraClicked(position)
+        );
     }
 
     @Override
@@ -95,6 +100,13 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
     public void showLoadErrorRed() {
         String text = getResources().getString(R.string.loadErrorRed);
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void openGasolineraDetails(Gasolinera gasolinera) {
+        Intent intent = new Intent(this, GasolineraDetailView.class);
+        intent.putExtra(GasolineraDetailView.INTENT_GASOLINERA, gasolinera);
+        startActivity(intent);
     }
 
     @Override
