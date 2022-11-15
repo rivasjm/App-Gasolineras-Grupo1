@@ -37,17 +37,14 @@ import org.junit.Test;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
-import es.unican.is.appgasolineras.repository.IGasolinerasRepository;
 import es.unican.is.appgasolineras.repository.db.GasolineraDao;
-import es.unican.is.appgasolineras.repository.db.GasolineraDao_Impl;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class ListaFavoritasUITest {
 
-    static View decorView;
-    GasolineraDatabase db;
-    static GasolineraDao gas;
+    private static View decorView;
+    private static GasolineraDao gas;
 
     @BeforeClass
     public static void setUp() {
@@ -62,9 +59,10 @@ public class ListaFavoritasUITest {
 
     @Before
     public void inicializa() {
-        db = Room.databaseBuilder(getApplicationContext(),
+        GasolineraDatabase db = Room.databaseBuilder(getApplicationContext(),
                 GasolineraDatabase.class, "database-name").allowMainThreadQueries().build();
         gas = db.gasolineraDao();
+        gas.deleteAll();
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
     }
 
@@ -76,9 +74,9 @@ public class ListaFavoritasUITest {
     @Test
     public void anhadirGasolineraAListaFavoritasTest() {
 
-        /**
-         * Seleccionamos Cantabria como comunidad ya que el fichero estatico solo
-         * dispone de gasolineras de esta comunidad autonoma
+        /*
+          Seleccionamos Cantabria como comunidad ya que el fichero estatico solo
+          dispone de gasolineras de esta comunidad autonoma
          */
         // Anhadimos a los filtros Cantabria
         onView(withId(R.id.btnAccederFiltrosPermanentes)).perform(scrollTo(), click());
@@ -90,13 +88,13 @@ public class ListaFavoritasUITest {
         // Guardo los filtros
         onView(withId(R.id.btnGuardarPermanentes)).perform(scrollTo(), click());
 
-        /**
-         * Caso de prueba PI.1: Exito, Anhadir gasolinera (se prueba anhadiendo
-         *     la primera gasolinera mostrada y la ultima
+        /*
+          Caso de prueba PI.1: Exito, Anhadir gasolinera (se prueba anhadiendo
+              la primera gasolinera mostrada y la ultima
          */
 
-        /**
-         * Se anhade la primera y se comprueba
+        /*
+          Se anhade la primera y se comprueba
          */
 
         // Se comprueba que se muestran elementos en la lista y el toast mostrado
@@ -138,8 +136,8 @@ public class ListaFavoritasUITest {
         Espresso.pressBack();
 
 
-        /**
-         * Se anhade la ultima y se comprueba
+        /*
+          Se anhade la ultima y se comprueba
          */
 
         // Se comprueba que se muestran elementos en la lista y el toast mostrado
@@ -185,11 +183,11 @@ public class ListaFavoritasUITest {
         // Volvemos al menu principal
         Espresso.pressBack();
 
-        /**
-         * Caso de prueba PI.2: Anhadir gasolinera ya anhadida anteriormente
-         *      Se prueba con la segunda gasolinera de la lista.
-         *      Se prueba tanto que se ha anhadido a la lista como que no se
-         *      ha anhadido dos veces
+        /*
+          Caso de prueba PI.2: Anhadir gasolinera ya anhadida anteriormente
+               Se prueba con la segunda gasolinera de la lista.
+               Se prueba tanto que se ha anhadido a la lista como que no se
+               ha anhadido dos veces
          */
 
         // Se comprueba que se muestran elementos en la lista y el toast mostrado
@@ -243,19 +241,19 @@ public class ListaFavoritasUITest {
         Espresso.pressBack();
 
 
-        /**
-         * Caso de prueba PI.3 : Persisten las gasolineras en favoritas si se cierra la aplicacion
-         *
-         * Como ya se ha comprobado en los casos de prueba anteriores el hecho de anhadir la
-         * gasolinera a la lista de favoritos, esta prueba va a consistir en cerrar la aplicacion
-         * por completo, volver a iniciarla y comprobar que las gasolineras aun estan en la lista
-         * de favoritas
-         *
-         * El test se encuentra comentado debido a problemas de integracion con gitHub Actions,
-         * pero se puede probar localmente
+        /*
+          Caso de prueba PI.3 : Persisten las gasolineras en favoritas si se cierra la aplicacion
+
+          Como ya se ha comprobado en los casos de prueba anteriores el hecho de anhadir la
+          gasolinera a la lista de favoritos, esta prueba va a consistir en cerrar la aplicacion
+          por completo, volver a iniciarla y comprobar que las gasolineras aun estan en la lista
+          de favoritas
+
+          El test se encuentra comentado debido a problemas de integracion con gitHub Actions,
+          pero se puede probar localmente
          */
 
-        /**
+        /*
         // Cerramos la aplicacion
         pressBackUnconditionally();
         activityRule.getScenario().close();
