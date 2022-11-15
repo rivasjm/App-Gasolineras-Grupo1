@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.not;
 import static es.unican.is.appgasolineras.utils.Matchers.hasElements;
 import static es.unican.is.appgasolineras.utils.Matchers.sizeElements;
 
+import android.Manifest;
 import android.view.View;
 
 import androidx.room.Room;
@@ -26,20 +27,23 @@ import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.rule.GrantPermissionRule;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 
 import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.activities.menuPrincipal.MenuPrincipalView;
 import es.unican.is.appgasolineras.repository.db.GasolineraDao;
 import es.unican.is.appgasolineras.repository.db.GasolineraDatabase;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
+import es.unican.is.appgasolineras.utils.ScreenshotTestRule;
 
 public class ListaFavoritasUITest {
 
@@ -66,9 +70,20 @@ public class ListaFavoritasUITest {
         activityRule.getScenario().onActivity(activity -> decorView = activity.getWindow().getDecorView());
     }
 
-    @Rule
+    // IMPORTANTE: No tiene rule, se incluye en el rule de abajo
     public ActivityScenarioRule<MenuPrincipalView> activityRule =
             new ActivityScenarioRule(MenuPrincipalView.class);
+
+    // Aquí se combinan el ActivityScenarioRule y el ScreenshotTestRule,
+    // de forma que la captura de pantalla se haga antes de que se cierre la actividad
+    @Rule
+    public final TestRule activityAndScreenshotRule = RuleChain
+            .outerRule(activityRule)
+            .around(new ScreenshotTestRule());
+
+    @Rule
+    public GrantPermissionRule permissionRule =
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
     @Test
