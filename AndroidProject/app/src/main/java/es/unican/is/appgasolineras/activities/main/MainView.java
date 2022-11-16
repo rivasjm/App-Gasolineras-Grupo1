@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,6 +61,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("DEBUG", "main view 1");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,6 +71,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         prefs = Prefs.from(this);
         prefs.putString("favoritas", "");
 
+        Log.d("DEBUG", "main view 2");
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (Red.isNetworkAvailable(this)) {
@@ -76,12 +79,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         } else {
             presenter = new MainPresenter(this, prefs, false);
         }
+
+        Log.d("DEBUG", "main view 3");
         if (prefs.getString("ubicacion").equals("si")) {
             this.conseguirUbicacion();
         } else {
             presenter.init();
         }
+
+        Log.d("DEBUG", "main view 4");
         this.init();
+
+        Log.d("DEBUG", "main view 5");
     }
 
     /**

@@ -7,6 +7,8 @@ import static es.unican.is.appgasolineras.common.Filters.maximoEntreTodas;
 import static es.unican.is.appgasolineras.common.Sortings.ordenaPorUbicacion;
 
 
+import android.util.Log;
+
 import java.util.List;
 
 import es.unican.is.appgasolineras.common.prefs.IPrefs;
@@ -42,6 +44,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void init() {
+        Log.d("DEBUG", "main presenter 1");
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
@@ -87,11 +90,15 @@ public class MainPresenter implements IMainContract.Presenter {
 
     private void doSyncInit() {
         List<Gasolinera> dataSync;
+
+        Log.d("DEBUG", "main presenter 2");
         if (prefs.getString(IDCOMUNIDAD).equals("")) {
             dataSync = repository.todasGasolineras();
         } else {
             dataSync = repository.getGasolineras(prefs.getString(IDCOMUNIDAD));
         }
+
+        Log.d("DEBUG", "main presenter 3");
         if (dataSync != null) {
             String tipoCombustible = prefs.getString(TIPOGASOLINA);
             dataSync = filtraTipo(dataSync, tipoCombustible);
@@ -101,13 +108,18 @@ public class MainPresenter implements IMainContract.Presenter {
             if (prefs.getString(UBICACION).equals("si")) {
                 dataSync = ordenaPorUbicacion(dataSync, prefs.getString(LATITUD), prefs.getString(LONGITUD));
             }
+
+            Log.d("DEBUG", "main presenter 4");
+
             this.data = dataSync;
             prefs.putString(MAXPRECIOSTRING, maxPrecio);
             prefs.putString(MAXPRECIOSTRING, "");
             view.showGasolineras(dataSync);
             shownGasolineras = dataSync;
             view.showLoadCorrect(dataSync.size());
+
         } else {
+            Log.d("DEBUG", "main presenter 5");
             shownGasolineras = null;
             view.showLoadErrorServidor();
         }

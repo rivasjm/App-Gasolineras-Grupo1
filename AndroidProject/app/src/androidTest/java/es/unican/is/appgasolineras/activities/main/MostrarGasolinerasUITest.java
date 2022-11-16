@@ -21,24 +21,24 @@ import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class MostrarGasolinerasUITest {
 
-    @BeforeClass
-    public static void setUp() {
-        GasolinerasServiceConstants.setStaticURL2();
-    }
-
-    @AfterClass
-    public static void clean() {
-        GasolinerasServiceConstants.setMinecoURL();
-    }
-
-    @Rule
-    public ActivityScenarioRule<MenuPrincipalView> activityRule =
-            new ActivityScenarioRule(MenuPrincipalView.class);
-
-    @Test
-    public void openDetailViewTest() {
-        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
-        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
-    }
+//    @BeforeClass
+//    public static void setUp() {
+//        GasolinerasServiceConstants.setStaticURL2();
+//    }
+//
+//    @AfterClass
+//    public static void clean() {
+//        GasolinerasServiceConstants.setMinecoURL();
+//    }
+//
+//    @Rule
+//    public ActivityScenarioRule<MenuPrincipalView> activityRule =
+//            new ActivityScenarioRule(MenuPrincipalView.class);
+//
+//    @Test
+//    public void openDetailViewTest() {
+//        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
+//        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
+//    }
 
 }

@@ -22,30 +22,30 @@ import es.unican.is.appgasolineras.R;
 import es.unican.is.appgasolineras.repository.rest.GasolinerasServiceConstants;
 
 public class FiltroPrecioUITest {
-//    @BeforeClass
-//    public static void setUp() {
-//        GasolinerasServiceConstants.setStaticURL2();
-//    }
-//
-//    @AfterClass
-//    public static void clean() {
-//        GasolinerasServiceConstants.setMinecoURL();
-//    }
-//
-//    @Rule
-//    public ActivityScenarioRule<MenuPrincipalView> activityRule =
-//            new ActivityScenarioRule(MenuPrincipalView.class);
-//
-//    @Test
-//    public void reseteaFiltroPrecioTest() {
-//        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
-//        onView(withId(R.id.btnFiltroPrecio)).perform(click());
-//        for (int i = 0; i < 10; i++) {
-//            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
-//        }
-//        onView(withId(R.id.btnResetear)).perform(scrollTo(), click());
-//        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
-//    }
+    @BeforeClass
+    public static void setUp() {
+        GasolinerasServiceConstants.setStaticURL2();
+    }
+
+    @AfterClass
+    public static void clean() {
+        GasolinerasServiceConstants.setMinecoURL();
+    }
+
+    @Rule
+    public ActivityScenarioRule<MenuPrincipalView> activityRule =
+            new ActivityScenarioRule(MenuPrincipalView.class);
+
+    @Test
+    public void reseteaFiltroPrecioTest() {
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
+        onView(withId(R.id.btnFiltroPrecio)).perform(click());
+        for (int i = 0; i < 10; i++) {
+            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
+        }
+        onView(withId(R.id.btnResetear)).perform(scrollTo(), click());
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
+    }
 //
 //
 //    @Test
