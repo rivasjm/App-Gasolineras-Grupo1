@@ -32,16 +32,16 @@ public class OrdenaPorUbicacionUITest {
 
     @BeforeClass
     public static void setUp() {
-        GasolinerasServiceConstants.setStaticURL2();
-        MainView.setPruebas(true);
-        FiltroPermanenteView.setPruebas(true);
+//        GasolinerasServiceConstants.setStaticURL2();
+//        MainView.setPruebas(true);
+//        FiltroPermanenteView.setPruebas(true);
     }
 
     @AfterClass
     public static void clean() {
-        GasolinerasServiceConstants.setMinecoURL();
-        MainView.setPruebas(false);
-        FiltroPermanenteView.setPruebas(false);
+//        GasolinerasServiceConstants.setMinecoURL();
+//        MainView.setPruebas(false);
+//        FiltroPermanenteView.setPruebas(false);
     }
 
     @Rule
