@@ -46,37 +46,37 @@ public class FiltroPrecioUITest {
         onView(withId(R.id.btnResetear)).perform(scrollTo(), click());
         onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
     }
-//
-//
-//    @Test
-//    public void modificaFiltroPrecioTest() {
-//        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
-//        onView(withId(R.id.btnFiltroPrecio)).perform(click());
-//
-//        //primero intento subir el precio para comprobar que no sobrepasa el limite superior
-//        for (int i = 0; i < 3; i++) {
-//            onView(withId(R.id.btnSubirPrecio)).perform(scrollTo(), click());
-//        }
-//        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
-//
-//        //resto 10 decimales al precio
-//        for (int i = 0; i < 10; i++) {
-//            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
-//        }
-//        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.93")));
-//
-//        //le sumo 3 decimales al precio
-//        for (int i = 0; i < 3; i++) {
-//            onView(withId(R.id.btnSubirPrecio)).perform(scrollTo(), click());
-//        }
-//        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.96")));
-//
-//        for (int i = 0; i < 210; i++) {
-//
-//            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
-//        }
-//        onView(withId(R.id.etPrecioLimite)).check(matches(withText("0.00")));
-//    }
+
+
+    @Test
+    public void modificaFiltroPrecioTest() {
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
+        onView(withId(R.id.btnFiltroPrecio)).perform(click());
+
+        //primero intento subir el precio para comprobar que no sobrepasa el limite superior
+        for (int i = 0; i < 3; i++) {
+            onView(withId(R.id.btnSubirPrecio)).perform(scrollTo(), click());
+        }
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("2.03")));
+
+        //resto 10 decimales al precio
+        for (int i = 0; i < 10; i++) {
+            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
+        }
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.93")));
+
+        //le sumo 3 decimales al precio
+        for (int i = 0; i < 3; i++) {
+            onView(withId(R.id.btnSubirPrecio)).perform(scrollTo(), click());
+        }
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("1.96")));
+
+        for (int i = 0; i < 210; i++) {
+
+            onView(withId(R.id.btnBajarPrecio)).perform(scrollTo(), click());
+        }
+        onView(withId(R.id.etPrecioLimite)).check(matches(withText("0.00")));
+    }
 //
 //    @Test
 //    public void muestraResultadosFiltroTest() {
