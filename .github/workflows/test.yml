@@ -69,6 +69,7 @@ jobs:
                 force-avd-creation: false
                 emulator-options: -no-window -wipe-data -gpu off -no-snapshot -noaudio -no-boot-anim
                 profile: pixel_2
+                arch: x86_64
                 target: google_apis
                 disable-animations: true
                 script: echo "Generated AVD snapshot for caching."
@@ -81,6 +82,7 @@ jobs:
                 force-avd-creation: false
                 working-directory: ./AndroidProject
                 profile: pixel_2
+                arch: x86_64
                 target: google_apis
                 disable-animations: true
                 emulator-options: -no-snapshot-save -wipe-data -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
