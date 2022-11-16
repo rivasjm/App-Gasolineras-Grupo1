@@ -83,7 +83,7 @@ public class ListaFavoritasUITest {
 
     @Rule
     public GrantPermissionRule permissionRule =
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
 
     @Test
