@@ -60,7 +60,7 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
@@ -74,6 +74,6 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openListaFavoritasView() {
         Intent intent = new Intent(this, ListaFavoritasView.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 }

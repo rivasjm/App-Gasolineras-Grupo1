@@ -142,7 +142,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     public void openMainView() {
         Intent myIntent = new Intent(this, MenuPrincipalView.class);
         startActivity(myIntent);
-        finish();
+//        finish();
     }
 
     public static void setPruebas(boolean p) {
