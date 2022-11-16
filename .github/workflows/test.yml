@@ -31,6 +31,9 @@ jobs:
 
     android-integration-tests:
         runs-on: macos-latest
+        strategy:
+          matrix:
+          api-level: [21, 23, 25, 27, 29, 31, 33]
         steps:
             - name: checkout
               uses: actions/checkout@v2
@@ -55,13 +58,13 @@ jobs:
                 path: |
                   ~/.android/avd/*
                   ~/.android/adb*
-                key: avd-28
+                key: avd-${{ matrix.api-level }}
 
             - name: create AVD and generate snapshot for caching
               if: steps.avd-cache.outputs.cache-hit != 'true'
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                api-level: 28
+                api-level: ${{ matrix.api-level }}
                 force-avd-creation: false
                 emulator-options: -no-window -wipe-data -gpu off -no-snapshot -noaudio -no-boot-anim
                 profile: pixel_2
@@ -73,7 +76,7 @@ jobs:
             - name: Android UI tests
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                api-level: 28  # api level > 27 seems to be failing at sdk installation step
+                api-level: ${{ matrix.api-level }} 
                 force-avd-creation: false
                 working-directory: ./AndroidProject
                 profile: pixel_2
