@@ -71,19 +71,20 @@ public class ListaFavoritasUITest {
     }
 
     // IMPORTANTE: No tiene rule, se incluye en el rule de abajo
+    @Rule
     public ActivityScenarioRule<MenuPrincipalView> activityRule =
             new ActivityScenarioRule(MenuPrincipalView.class);
 
     // Aquí se combinan el ActivityScenarioRule y el ScreenshotTestRule,
     // de forma que la captura de pantalla se haga antes de que se cierre la actividad
-    @Rule
-    public final TestRule activityAndScreenshotRule = RuleChain
-            .outerRule(activityRule)
-            .around(new ScreenshotTestRule());
+//    @Rule
+//    public final TestRule activityAndScreenshotRule = RuleChain
+//            .outerRule(activityRule)
+//            .around(new ScreenshotTestRule());
 
-    @Rule
-    public GrantPermissionRule permissionRule =
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+//    @Rule
+//    public GrantPermissionRule permissionRule =
+//            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
 
     @Test
