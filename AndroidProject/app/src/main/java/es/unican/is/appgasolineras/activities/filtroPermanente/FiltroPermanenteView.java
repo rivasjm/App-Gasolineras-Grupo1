@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,18 +36,24 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("DEBUG", "1");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros_permanentes);
 
         prefs = Prefs.from(this);
         mapper = new FiltroPermanenteMapper();
 
+        Log.d("DEBUG", "2");
+
         getSupportActionBar().setTitle("Filtros permanentes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Log.d("DEBUG", "3");
         presenter = new FiltroPermanentePresenter(prefs);
         presenter.init();
         this.init();
+
+        Log.d("DEBUG", "F");
     }
 
     @Override
@@ -60,6 +67,8 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         int comunidadGuardada = mapper.getCCAAIndex(prefs.getString("idComunidadName"));
         spnCCAA.setSelection(comunidadGuardada);
 
+        Log.d("DEBUG", "init 1");
+
         spnCombustible = findViewById(R.id.spinner_combustible);
         //Configuracion del spinner de los combustibles
         ArrayAdapter<CharSequence> adapterCombustibles = ArrayAdapter.createFromResource(this,
@@ -68,6 +77,8 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
         spnCombustible.setAdapter(adapterCombustibles);
         int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
         spnCombustible.setSelection(combustibleGuardado);
+
+        Log.d("DEBUG", "init 2");
 
         checkSi = findViewById(R.id.checkBoxSi);
         checkSi.setOnClickListener(view -> {
@@ -81,6 +92,8 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             }
         });
 
+        Log.d("DEBUG", "init 3");
+
         checkNo = findViewById(R.id.checkBoxNo);
         checkNo.setOnClickListener(view -> {
             if (checkSi.isChecked()) {
@@ -89,6 +102,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             checkNo.setChecked(true);
         });
 
+        Log.d("DEBUG", "init 4");
 
         if (prefs.getString("ubicacion").equals("si")) {
             checkSi.setChecked(true);
@@ -98,11 +112,15 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             checkSi.setChecked(false);
         }
 
+        Log.d("DEBUG", "init 5");
+
         Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
         btnGuardarPermanentes.setOnClickListener(view -> {
             presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), checkSi.isChecked());
             openMainView();
         });
+
+        Log.d("DEBUG", "init 6");
 
         Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
         btnResetPermanentes.setOnClickListener(view -> {
@@ -110,6 +128,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
             this.init();
         });
 
+        Log.d("DEBUG", "init 7");
 
     }
 
@@ -142,7 +161,7 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
     public void openMainView() {
         Intent myIntent = new Intent(this, MenuPrincipalView.class);
         startActivity(myIntent);
-        finish();
+//        finish();
     }
 
     public static void setPruebas(boolean p) {

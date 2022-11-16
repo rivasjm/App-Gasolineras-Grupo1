@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -60,20 +61,22 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openMainView() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
     public void openFiltrosPermanentesView() {
         Intent intent = new Intent(this, FiltroPermanenteView.class);
+        Log.d("DEBUG", "0");
         startActivity(intent);
-        finish();
+        Log.d("DEBUG", "00");
+//        finish();
     }
 
     @Override
     public void openListaFavoritasView() {
         Intent intent = new Intent(this, ListaFavoritasView.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 }
