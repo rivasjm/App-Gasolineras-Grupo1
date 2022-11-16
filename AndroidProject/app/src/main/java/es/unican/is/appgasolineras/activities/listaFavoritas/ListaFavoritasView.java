@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        Log.d("DEBUG", "favoritas 1");
         GasolineraDatabase db = Room.databaseBuilder(getApplicationContext(),
                 GasolineraDatabase.class, "database-name").allowMainThreadQueries().build();
 
@@ -42,6 +43,8 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
         getSupportActionBar().setTitle("Lista gasolineras favoritas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Log.d("DEBUG", "favoritas 2");
+
         prefs = Prefs.from(this);
         prefs.putString("favoritas", "si");
         if (Red.isNetworkAvailable(this)) {
@@ -49,8 +52,12 @@ public class ListaFavoritasView extends AppCompatActivity implements IListaFavor
         } else {
             presenter = new ListaFavoritasPresenter(this, db, false);
         }
+
+        Log.d("DEBUG", "favoritas 3");
         presenter.init();
         this.init();
+
+        Log.d("DEBUG", "favoritas 4");
     }
 
     @Override

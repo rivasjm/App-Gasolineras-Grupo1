@@ -22,8 +22,12 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("DEBUG", "principal 0");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
+
+        Log.d("DEBUG", "principal 1");
 
         getSupportActionBar().setTitle("Menú Principal");
         prefs = Prefs.from(this);
@@ -46,12 +50,14 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
         botonIrAListaFavoritas.setOnClickListener(view ->
                 this.openListaFavoritasView()
         );
+
+        Log.d("DEBUG", "principal 2");
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-//            finish();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

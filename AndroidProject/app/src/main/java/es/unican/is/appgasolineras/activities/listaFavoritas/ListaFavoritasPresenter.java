@@ -1,5 +1,7 @@
 package es.unican.is.appgasolineras.activities.listaFavoritas;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
 
     @Override
     public void init() {
+        Log.d("DEBUG", "presenter 1");
         if (repository == null) {
             repository = view.getGasolineraRepository();
         }
@@ -44,6 +47,7 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
 
     @Override
     public void doSyncInitFavoritas() {
+        Log.d("DEBUG", "presenter 2");
         List<Gasolinera> gasolinerasFavoritasSinActualizar = dao.getAll();
         Iterator<Gasolinera> it = gasolinerasFavoritasSinActualizar.iterator();
         boolean hayMasDeUnaComunidad = false;
@@ -57,6 +61,9 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
                 hayMasDeUnaComunidad = true;
             }
         }
+
+        Log.d("DEBUG", "presenter 3");
+
         if (!gasolinerasFavoritasSinActualizar.isEmpty()) {
             // Conseguimos las gasolineras actualizadas
             List<Gasolinera> todasGasolineras = conseguirGasolinerasActualizadas(hayMasDeUnaComunidad, gasolinerasFavoritasSinActualizar, idComunidadUnica);
@@ -71,16 +78,22 @@ public class ListaFavoritasPresenter implements IListaFavoritasContract.Presente
                     }
                 }
             }
+
+            Log.d("DEBUG", "presenter 4");
+
             Collections.reverse(listaFinal);
             if (estaRepositorioCaido) {
                 shownGasolineras = null;
                 view.showLoadErrorServidor();
             } else {
+
+                Log.d("DEBUG", "presenter 5");
                 view.showGasolineras(listaFinal);
                 shownGasolineras = listaFinal;
                 view.showLoadCorrect(listaFinal.size());
             }
         } else {
+            Log.d("DEBUG", "presenter 6");
             shownGasolineras = null;
             view.showLoadErrorDAOVacia();
         }
