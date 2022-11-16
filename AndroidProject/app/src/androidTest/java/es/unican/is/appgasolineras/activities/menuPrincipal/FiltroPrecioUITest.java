@@ -77,15 +77,15 @@ public class FiltroPrecioUITest {
         }
         onView(withId(R.id.etPrecioLimite)).check(matches(withText("0.00")));
     }
-//
-//    @Test
-//    public void muestraResultadosFiltroTest() {
-//        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
-//        onView(withId(R.id.btnFiltroPrecio)).perform(click());
-//
-//        onView(withId(R.id.btnMostrarResultados)).perform(scrollTo(), click());
-//        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
-//    }
+
+    @Test
+    public void muestraResultadosFiltroTest() {
+        onView(withId(R.id.btnAccederLista)).perform(scrollTo(), click());
+        onView(withId(R.id.btnFiltroPrecio)).perform(click());
+
+        onView(withId(R.id.btnMostrarResultados)).perform(scrollTo(), click());
+        onView(withId(R.id.lvGasolineras)).check(matches(hasElements()));
+    }
 
 
 }
