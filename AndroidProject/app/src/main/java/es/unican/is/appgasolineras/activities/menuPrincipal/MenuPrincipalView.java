@@ -67,7 +67,7 @@ public class MenuPrincipalView extends AppCompatActivity implements IMenuPrincip
     public void openFiltrosPermanentesView() {
         Intent intent = new Intent(this, FiltroPermanenteView.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override
