@@ -51,64 +51,64 @@ public class FiltroPermanenteView extends AppCompatActivity implements IPermanen
 
     @Override
     public void init() {
-        spnCCAA = findViewById(R.id.spinner_CCAA);
-        //Configuracion del spinner de las provincias
-        ArrayAdapter<CharSequence> adapterCCAA = ArrayAdapter.createFromResource(this,
-                R.array.comunidadesArray, android.R.layout.simple_spinner_item);
-        adapterCCAA.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spnCCAA.setAdapter(adapterCCAA);
-        int comunidadGuardada = mapper.getCCAAIndex(prefs.getString("idComunidadName"));
-        spnCCAA.setSelection(comunidadGuardada);
-
-        spnCombustible = findViewById(R.id.spinner_combustible);
-        //Configuracion del spinner de los combustibles
-        ArrayAdapter<CharSequence> adapterCombustibles = ArrayAdapter.createFromResource(this,
-                R.array.combustiblesArray, android.R.layout.simple_spinner_item);
-        adapterCombustibles.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spnCombustible.setAdapter(adapterCombustibles);
-        int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
-        spnCombustible.setSelection(combustibleGuardado);
-
-        checkSi = findViewById(R.id.checkBoxSi);
-        checkSi.setOnClickListener(view -> {
-            checkNo.setChecked(false);
-            checkSi.setChecked(true);
-            if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && !pruebas) {
-                String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
-                ActivityCompat.requestPermissions(this, permisos, 0);
-            }
-        });
-
-        checkNo = findViewById(R.id.checkBoxNo);
-        checkNo.setOnClickListener(view -> {
-            if (checkSi.isChecked()) {
-                checkSi.setChecked(false);
-            }
-            checkNo.setChecked(true);
-        });
-
-
-        if (prefs.getString("ubicacion").equals("si")) {
-            checkSi.setChecked(true);
-            checkNo.setChecked(false);
-        } else {
-            checkNo.setChecked(true);
-            checkSi.setChecked(false);
-        }
-
-        Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
-        btnGuardarPermanentes.setOnClickListener(view -> {
-            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), checkSi.isChecked());
-            openMainView();
-        });
-
-        Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
-        btnResetPermanentes.setOnClickListener(view -> {
-            presenter.reseteaFiltroPermanente();
-            this.init();
-        });
+//        spnCCAA = findViewById(R.id.spinner_CCAA);
+//        //Configuracion del spinner de las provincias
+//        ArrayAdapter<CharSequence> adapterCCAA = ArrayAdapter.createFromResource(this,
+//                R.array.comunidadesArray, android.R.layout.simple_spinner_item);
+//        adapterCCAA.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//        spnCCAA.setAdapter(adapterCCAA);
+//        int comunidadGuardada = mapper.getCCAAIndex(prefs.getString("idComunidadName"));
+//        spnCCAA.setSelection(comunidadGuardada);
+//
+//        spnCombustible = findViewById(R.id.spinner_combustible);
+//        //Configuracion del spinner de los combustibles
+//        ArrayAdapter<CharSequence> adapterCombustibles = ArrayAdapter.createFromResource(this,
+//                R.array.combustiblesArray, android.R.layout.simple_spinner_item);
+//        adapterCombustibles.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//        spnCombustible.setAdapter(adapterCombustibles);
+//        int combustibleGuardado = mapper.getCombustibleIndex(prefs.getString("tipoGasolina"));
+//        spnCombustible.setSelection(combustibleGuardado);
+//
+//        checkSi = findViewById(R.id.checkBoxSi);
+//        checkSi.setOnClickListener(view -> {
+//            checkNo.setChecked(false);
+//            checkSi.setChecked(true);
+//            if (androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                    != PackageManager.PERMISSION_GRANTED && androidx.core.content.ContextCompat.checkSelfPermission(this,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && !pruebas) {
+//                String permisos[] = {Manifest.permission.ACCESS_FINE_LOCATION};
+//                ActivityCompat.requestPermissions(this, permisos, 0);
+//            }
+//        });
+//
+//        checkNo = findViewById(R.id.checkBoxNo);
+//        checkNo.setOnClickListener(view -> {
+//            if (checkSi.isChecked()) {
+//                checkSi.setChecked(false);
+//            }
+//            checkNo.setChecked(true);
+//        });
+//
+//
+//        if (prefs.getString("ubicacion").equals("si")) {
+//            checkSi.setChecked(true);
+//            checkNo.setChecked(false);
+//        } else {
+//            checkNo.setChecked(true);
+//            checkSi.setChecked(false);
+//        }
+//
+//        Button btnGuardarPermanentes = findViewById(R.id.btnGuardarPermanentes);
+//        btnGuardarPermanentes.setOnClickListener(view -> {
+//            presenter.guardaFiltroPermanente(spnCCAA.getSelectedItemPosition(), spnCombustible.getSelectedItemPosition(), checkSi.isChecked());
+//            openMainView();
+//        });
+//
+//        Button btnResetPermanentes = findViewById(R.id.btnResetearPermanentes);
+//        btnResetPermanentes.setOnClickListener(view -> {
+//            presenter.reseteaFiltroPermanente();
+//            this.init();
+//        });
 
 
     }
