@@ -63,7 +63,7 @@ jobs:
               with:
                 api-level: 27
                 force-avd-creation: false
-                emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
+                emulator-options: -no-window -wipe-data -gpu off -no-snapshot -noaudio -no-boot-anim
                 profile: pixel_2
                 target: google_apis
                 disable-animations: true
@@ -79,7 +79,7 @@ jobs:
                 profile: pixel_2
                 target: google_apis
                 disable-animations: true
-                emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
+                emulator-options: -no-snapshot-save -wipe-data -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
                 script: ./gradlew connectedCheck
                 
             - name: Android UI tests artifacts
